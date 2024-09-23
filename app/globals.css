@@ -2,26 +2,50 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-}
-
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  .custom-transition-class {
+    @apply transition-all duration-150 hover:text-red-400 hover:underline dark:hover:text-red-300;
   }
+  /* Text Colors */
+  .custom-white-text {
+    @apply text-gray-100;
+  }
+  .custom-gray-text {
+    @apply text-gray-400;
+  }
+  /* Text Sizing */
+  .custom-header-large {
+    @apply text-6xl font-bold;
+  }
+  .custom-header {
+    @apply text-4xl font-semibold;
+  }
+  .custom-subheader {
+    @apply text-2xl font-semibold;
+  }
+  .custom-large-text {
+    @apply text-lg;
+  }
+  .custom-text {
+    @apply font-normal;
+  }
+  .custom-link-text {
+    @apply font-semibold;
+  }
+  .custom-small-text {
+    @apply text-sm;
+  }
+  /* Effects, Borders & Backgrounds */
+  .custom-hover-effect {
+    @apply transition-colors duration-300 ease-in-out hover:bg-gray-800;
+  }
+  .custom-gradient-background {
+    @apply bg-gradient-to-tl from-gray-950 to-gray-950;
+  }
+  .custom-border {
+    @apply rounded-xl border border-gray-500 shadow-xl;
+  }
+}
+html {
+  scroll-behavior: smooth;
 }
