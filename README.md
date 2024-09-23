@@ -40,7 +40,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with
 
 ## 2. MongoDB w/ Mongoose Implementation
 
-- 
+- npm i mongodb mongoose 
 
 ## 3. The Spaced-Repetition Algorith
 

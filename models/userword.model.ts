@@ -35,3 +35,5 @@
 // Some considerations:
   // Users should have some extra control over the intervals - maybe they can set the I(1-2) for example
   // How does the code implementation get the words to be reviewed?
+
+  
