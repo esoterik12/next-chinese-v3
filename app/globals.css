@@ -7,18 +7,21 @@
     @apply transition-all duration-150 hover:text-red-400 hover:underline dark:hover:text-red-300;
   }
   /* Text Colors */
-  .custom-white-text {
-    @apply text-gray-100;
-  }
   .custom-gray-text {
     @apply text-gray-400;
+  }
+  .custom-primary-color {
+    @apply text-blue-500;
+  }
+  .custom-secondary-color {
+    @apply text-rose-700;
   }
   /* Text Sizing */
   .custom-header-large {
     @apply text-6xl font-bold;
   }
   .custom-header {
-    @apply text-4xl font-semibold;
+    @apply text-4xl font-semibold  leading-relaxed;
   }
   .custom-subheader {
     @apply text-2xl font-semibold;
@@ -29,8 +32,14 @@
   .custom-text {
     @apply font-normal;
   }
-  .custom-link-text {
-    @apply font-semibold;
+  .custom-link {
+    @apply font-semibold hover:cursor-pointer hover:underline;
+  }
+  .custom-primary-link {
+    @apply custom-link custom-primary-color;
+  }
+  .custom-secondary-link {
+    @apply custom-link custom-secondary-color;
   }
   .custom-small-text {
     @apply text-sm;
@@ -46,6 +55,7 @@
     @apply rounded-xl border border-gray-500 shadow-xl;
   }
 }
+
 html {
   scroll-behavior: smooth;
 }

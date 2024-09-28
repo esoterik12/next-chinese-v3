@@ -3,7 +3,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with
 
 ### Contents
 1. Getting Started (setting up the NextJS project with Tailwind and NextAuth and Framer-Motion)
-2. MongoDB models, functions and implementation
+2. MongoDB models, functions, and implementation
 3. The Spaced-Repetition Algorith (theory and practice)
 
 ## Further Documentation
@@ -40,7 +40,14 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with
 
 ## 2. MongoDB w/ Mongoose Implementation
 
-- npm i mongodb mongoose 
+# Connect to DB
+- npm i mongodb mongoose
+- set up .env.local with MONGODB_ULR 
+- `/lib/mongoose.ts` contains connectToDB() to be used in server actions
+
+# Models
+
+# Actions
 
 ## 3. The Spaced-Repetition Algorith
 

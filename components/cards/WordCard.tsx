@@ -13,20 +13,23 @@ type WordCardProps = {
 
 const WordCard = ({ show, handleClick }: WordCardProps) => {
   return (
-    <section className='custom-gradient-background custom-border h-[340px] w-[250px]'>
-      <div className='flex h-[100px] flex-col items-center justify-end gap-y-4'>
-        <p className='custom-header custom-white-text'>
+    <div className='custom-gradient-background custom-border h-[340px] w-[250px]'>
+      <div className='flex h-[110px] flex-col items-center justify-end gap-y-4'>
+        <p className='custom-header'>
           {dummyWordData[3].traditional}
+        </p>
+        <p>
+          {dummyWordData[3].simplified}
         </p>
       </div>
 
-      <div className='flex h-[240px] flex-col items-center justify-center'>
+      <div className='flex h-[230px] flex-col items-center justify-center'>
         <AnimatePresence mode='wait'>
           {!show && (
             <AnimatedSection motionKey='button'>
               <DefaultButton
                 handleClick={handleClick}
-                customClasses='mb-14 mt-14'
+                customClasses='mb-14 p-2'
               >
                 <IconDownChevron classes='h-6 w-6' />
               </DefaultButton>
@@ -35,11 +38,11 @@ const WordCard = ({ show, handleClick }: WordCardProps) => {
 
           {show && (
             <AnimatedSection
-              classes=' h-full flex-col items-stretch mt-10 justify-between'
+              classes='h-full flex-col items-stretch mt-10 justify-between'
               motionKey='answer'
             >
               <>
-                <h1 className='font-bold text-blue-400'>
+                <h1 className='font-bold text-sky-400'>
                   {dummyWordData[3].partOfSpeech}
                 </h1>
                 <div>
@@ -51,16 +54,16 @@ const WordCard = ({ show, handleClick }: WordCardProps) => {
                 <div className='mb-3 flex w-full flex-row items-center justify-between gap-x-0.5'>
                   <ResultButton text='1' textColor='text-rose-600' />
                   <ResultButton text='2' textColor='text-rose-400' />
-                  <ResultButton text='3' textColor='text-blue-300' />
-                  <ResultButton text='4' textColor='text-blue-400' />
-                  <ResultButton text='5' textColor='text-blue-500' />
+                  <ResultButton text='3' textColor='text-sky-300' />
+                  <ResultButton text='4' textColor='text-sky-400' />
+                  <ResultButton text='5' textColor='text-sky-500' />
                 </div>
               </>
             </AnimatedSection>
           )}
         </AnimatePresence>
       </div>
-    </section>
+    </div>
   )
 }
 

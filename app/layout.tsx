@@ -49,6 +49,7 @@ export default function RootLayout({
       <body
         className={`${inter.className} min-h-screen w-full bg-[radial-gradient(circle,_#020617,_#01030d)] antialiased text-gray-100`}
       >
+        
         <ThemeProvider attribute='class' defaultTheme='dark'>
           <NextAuthProvider>
             <NavHeader />

@@ -22,7 +22,7 @@ const DefaultButton = ({
     <button
       onClick={handleClick}
       type={btnType || 'button'}
-      className={`custom-hover-effect bg-gray-900 rounded-lg p-2 disabled:cursor-not-allowed ${customClasses}`}
+      className={`custom-hover-effect bg-gray-900 rounded-lg disabled:cursor-not-allowed ${customClasses}`}
       disabled={isDisabled}
     >
       <div className=''>{children}</div>
