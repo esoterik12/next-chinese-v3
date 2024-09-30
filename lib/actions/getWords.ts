@@ -1,4 +1,8 @@
+'use server'
+import Word from '@/models/word.model'
 // this server action will be the most fundamental to the app
+
+import { connectToDB } from '../mongoose'
 
 /*
   The key here will that it fetches a set of the most urgent words to review
@@ -16,3 +20,13 @@
     -Interrupted Session: this will trigger the same update if the session is closed or connection is lost
     using event listener beforeunload
 */
+
+export async function fetchWords() {
+  await connectToDB()
+
+  const fetchedWords = await Word.find({}).sort({ wordNumber: 1 }).limit(5)
+
+  console.log('fetchedWords', fetchedWords)
+
+  return fetchedWords
+}

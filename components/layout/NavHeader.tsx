@@ -1,8 +1,12 @@
 import Logo from './Logo'
 import NavLink from './NavLink'
 import GoogleSignIn from '../buttons/GoogleSignIn'
+import { getServerSession } from 'next-auth'
+import SignOut from '../buttons/SignOut'
 
 export default async function NavHeader() {
+  const session = await getServerSession()
+
   return (
     <header className='z-20 h-14 bg-gray-900'>
       <nav className='flex flex-row items-center justify-between'>
@@ -23,9 +27,16 @@ export default async function NavHeader() {
             <li>
               <NavLink href='/design/ui'>Cards</NavLink>
             </li>
-            <li>
-              <GoogleSignIn />
-            </li>
+            {session && (
+              <li>
+                <SignOut />
+              </li>
+            )}
+            {!session && (
+              <li>
+                <GoogleSignIn />
+              </li>
+            )}
           </ul>
         </div>
       </nav>
