@@ -3,7 +3,6 @@ import Word from '@/models/word.model'
 // this server action will be the most fundamental to the app
 
 import { connectToDB } from '../mongoose'
-
 /*
   The key here will that it fetches a set of the most urgent words to review
   according to the next review date
@@ -21,12 +20,28 @@ import { connectToDB } from '../mongoose'
     using event listener beforeunload
 */
 
-export async function fetchWords() {
-  await connectToDB()
+export async function fetchNewWords({
+  newWordsDue,
+  latestWordNumber
+}: {
+  newWordsDue: number
+  latestWordNumber: number
+}) {
+  try {
+    await connectToDB()
+    const fetchedNewWords = await Word.find({
+      wordNumber: { $gte: latestWordNumber + 1 }
+    })
+      .sort({ wordNumber: 1 })
+      .limit(newWordsDue)
+    return fetchedNewWords
+  } catch (error) {
+    console.error('Error context: Fetching new words from MongoDB', error)
 
-  const fetchedWords = await Word.find({}).sort({ wordNumber: 1 }).limit(5)
-
-  console.log('fetchedWords', fetchedWords)
-
-  return fetchedWords
+    throw {
+      message: 'Failed to fetch new words',
+      code: 500,
+      originalError: error
+    }
+  }
 }

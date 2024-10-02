@@ -1,3 +1,5 @@
+import mongoose from 'mongoose'
+
 export const dummyWordData = [
   {
     traditional: '魚',
@@ -66,5 +68,63 @@ export const dummySentenceData = [
     upvotes: 7,
     downvotes: 9
   }
-];
+]
 
+export const dummyUserWords = [
+  {
+    wordId: new mongoose.Types.ObjectId('66fae9e84c2ae3ac289446c8'), // dummy ObjectId for Word
+    repetitions: 3,
+    interval: 6,
+    easeFactor: 2.8,
+    nextReviewDate: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000), // 2 days ago
+    reviewHistory: [
+      { date: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), quality: 5 }, // Last review: 7 days ago
+      { date: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000), quality: 4 } // Recent review: 1 day ago
+    ]
+  },
+  {
+    wordId: new mongoose.Types.ObjectId('66fae9e84c2ae3ac289446c9'),
+    repetitions: 2,
+    interval: 3,
+    easeFactor: 2.6,
+    nextReviewDate: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000), // 3 days ago
+    reviewHistory: [
+      { date: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000), quality: 4 },
+      { date: new Date(Date.now() - 6 * 24 * 60 * 60 * 1000), quality: 3 }
+    ]
+  },
+  {
+    wordId: new mongoose.Types.ObjectId('66fae9e84c2ae3ac289446ca'),
+    repetitions: 4,
+    interval: 10,
+    easeFactor: 3.0,
+    nextReviewDate: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000), // 10 days ago
+    reviewHistory: [
+      { date: new Date(Date.now() - 22 * 24 * 60 * 60 * 1000), quality: 5 },
+      { date: new Date(Date.now() - 18 * 24 * 60 * 60 * 1000), quality: 4 }
+    ]
+  },
+  {
+    wordId: new mongoose.Types.ObjectId('66fae9e84c2ae3ac289446cc'),
+    repetitions: 1,
+    interval: 1,
+    easeFactor: 2.5,
+    nextReviewDate: new Date(Date.now() + 24 * 60 * 60 * 1000), // 1 day from now
+    reviewHistory: [
+      { date: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000), quality: 2 }
+    ]
+  },
+  {
+    wordId: new mongoose.Types.ObjectId('66fae9e84c2ae3ac289446cd'),
+    repetitions: 5,
+    interval: 15,
+    easeFactor: 3.1,
+    nextReviewDate: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000), // 15 days from now
+    reviewHistory: [
+      { date: new Date(Date.now() - 16 * 24 * 60 * 60 * 1000), quality: 5 },
+      { date: new Date(Date.now() - 11 * 24 * 60 * 60 * 1000), quality: 5 }
+    ]
+  }
+]
+
+export default dummyUserWords

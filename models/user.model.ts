@@ -20,6 +20,10 @@ const userSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now
+  },
+  latestWord: {
+    type: Number,
+    default: 0 // Zero so function can select gt when looking for next words
   }
 })
 

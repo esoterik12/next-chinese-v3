@@ -55,6 +55,9 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with
 # Models
 
 # Actions
+- Two server actions form the core of the backend:
+  - `/lib/actions/fetchWords.ts` which gets all words with nextReviewDate before current time from UserWords collection and then adds new words depending on length of wordsDue from Words collection
+  - `/lib/action/updateUserWords.ts` which takes React state from a review session and updates/adds UserWords with results from the session
 
 ## 3. The Spaced-Repetition Algorith
 

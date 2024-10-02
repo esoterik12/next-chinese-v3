@@ -37,29 +37,6 @@ Some considerations:
 Users should have some extra control over the intervals - maybe they can set the I(1-2) for example
 How does the code implementation get the words to be reviewed?
 
-The broad structure of the database is that there are:
-A. Users collection (auth and profile), 
-B. Words collection to be learned (with translations, parts of speech, a level, an order number in which they are learned),
-C. WordRecords collection of each user's experiences with the words: their repetitions, ease factor, next view date, etc.
-D. ContextSentences collection (multiple) that apply to each word: sentences and their translations
-
-Users have a one to many relationship with Words (the words they've learned)
-Users have a one to many relationship with their WordRecords (learning statistics etc) 
-Words have a one to many relationship with with WordRecords (one word being learned by mutiple users)
-Words have a one to many relationship with their context sentences of which there can be multiple for each word (the same sentences will not be used for multiple words)
-
-I have a few questions and general issues with how to structure this database and whether I
-have identified the correct collections / tables to use
-
-1. If each user has 100s or 1000s of WordRecords, is it acceptable for all those word records
-to be stored in the same collection and to retrieve them (say 50 at a time) using the userId AND 
-according to their next interval date. Would that be too time consuming?
-
-2. Is the option of storing all of a user's WordRecords in the user's entry, say as an
-array of objects for each word worth exploring?
-
-3.
-
 */
 import mongoose from 'mongoose'
 
