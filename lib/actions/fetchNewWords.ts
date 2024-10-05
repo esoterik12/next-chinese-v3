@@ -1,7 +1,5 @@
 'use server'
 import Word from '@/models/word.model'
-// this server action will be the most fundamental to the app
-
 import { connectToDB } from '../mongoose'
 /*
   The key here will that it fetches a set of the most urgent words to review
@@ -32,6 +30,7 @@ export async function fetchNewWords({
     const fetchedNewWords = await Word.find({
       wordNumber: { $gte: latestWordNumber + 1 }
     })
+      .lean() // Ensures only JS objects returned - removes mongoose overhead
       .sort({ wordNumber: 1 })
       .limit(newWordsDue)
     return fetchedNewWords

@@ -65,7 +65,7 @@ const userWordSchema = new mongoose.Schema(
     easeFactor: {
       type: Number,
       required: true,
-      default: 2.5 // SM-2
+      default: 2.5 // SM-2 default
     },
     nextReviewDate: {
       type: Date,
@@ -81,6 +81,10 @@ const userWordSchema = new mongoose.Schema(
   },
   { timestamps: true }
 )
+
+export interface UserWordDocument
+  extends Document,
+    mongoose.InferSchemaType<typeof userWordSchema> {}
 
 const UserWord =
   mongoose.models.UserWord || mongoose.model('UserWord', userWordSchema)

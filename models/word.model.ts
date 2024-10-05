@@ -52,6 +52,10 @@ const wordSchema = new mongoose.Schema({
   ]
 })
 
+export interface WordDocument
+  extends Document,
+    mongoose.InferSchemaType<typeof wordSchema> {}
+
 const Word = mongoose.models.Word || mongoose.model('Word', wordSchema)
 
 export default Word

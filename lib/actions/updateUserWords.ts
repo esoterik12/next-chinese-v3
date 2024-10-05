@@ -1,6 +1,5 @@
-import UserWord from '@/models/userword.model'
+import UserWord, { UserWordDocument } from '@/models/userword.model'
 import { connectToDB } from '../mongoose'
-import { ReviewResult } from '../tpyes/review.types'
 import mongoose from 'mongoose'
 
 // This function should use a complete result object array from app state after a review session
@@ -9,7 +8,7 @@ export async function updateUserWords({
   reviewResults,
   userId
 }: {
-  reviewResults: ReviewResult[]
+  reviewResults: any[]
   userId: mongoose.Types.ObjectId
 }) {
   try {
@@ -21,6 +20,8 @@ export async function updateUserWords({
         filter: { _id: word.wordId, userId: userId }, // Multiple conditions
         update: {
           $set: {
+            wordId: word.wordId,
+            userId: userId,
             repetitions: word.repetitions,
             interval: word.interval,
             easeFactor: word.easeFactor,

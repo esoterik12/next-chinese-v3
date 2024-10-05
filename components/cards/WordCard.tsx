@@ -5,32 +5,47 @@ import ResultButton from './ResultButton'
 import IconDownChevron from '../icons/IconDownChevron'
 import AnimatedSection from './AnimatedSection'
 import { dummyWordData } from '@/lib/dummyData'
+import { useAppContext } from '@/lib/context/ReviewSessionContext'
+import { useEffect, useState } from 'react'
+import { ReviewResultDocument } from '@/types/review.types'
 
 type WordCardProps = {
-  show: boolean
-  handleClick: () => void
+  fetchedWords: ReviewResultDocument[]
 }
 
-const WordCard = ({ show, handleClick }: WordCardProps) => {
+const WordCard = ({ fetchedWords }: WordCardProps) => {
+  const [show, setShow] = useState(false)
+  const { dispatch, finishedWords, unfinishedWords } = useAppContext()
+
+  useEffect(() => {
+    dispatch({ type: 'loadWords', fetchedWords: fetchedWords })
+  }, [])
+
+  const handleShow = () => {
+    setShow(prevState => !prevState)
+  }
+
+  const handleResult = (result: number) => {
+    dispatch({
+      type: 'firstResult',
+      firstResult: result
+    })
+  }
+
+  console.log('unfinishedWords', unfinishedWords)
+
   return (
     <div className='custom-gradient-background custom-border h-[340px] w-[250px]'>
       <div className='flex h-[110px] flex-col items-center justify-end gap-y-4'>
-        <p className='custom-header'>
-          {dummyWordData[3].traditional}
-        </p>
-        <p>
-          {dummyWordData[3].simplified}
-        </p>
+        <p className='custom-header'>{fetchedWords[0].wordTraditional}</p>
+        <p>{fetchedWords[0].wordSimplified}</p>
       </div>
 
       <div className='flex h-[230px] flex-col items-center justify-center'>
         <AnimatePresence mode='wait'>
           {!show && (
             <AnimatedSection motionKey='button'>
-              <DefaultButton
-                handleClick={handleClick}
-                customClasses='mb-14 p-2'
-              >
+              <DefaultButton handleClick={handleShow} customClasses='mb-14 p-2'>
                 <IconDownChevron classes='h-6 w-6' />
               </DefaultButton>
             </AnimatedSection>
@@ -43,7 +58,7 @@ const WordCard = ({ show, handleClick }: WordCardProps) => {
             >
               <>
                 <h1 className='font-bold text-sky-400'>
-                  {dummyWordData[3].partOfSpeech}
+                  {fetchedWords[3].partOfSpeech}
                 </h1>
                 <div>
                   <p>{show && dummyWordData[3].pinyin}</p>
@@ -52,11 +67,31 @@ const WordCard = ({ show, handleClick }: WordCardProps) => {
                   </p>
                 </div>
                 <div className='mb-3 flex w-full flex-row items-center justify-between gap-x-0.5'>
-                  <ResultButton text='1' textColor='text-rose-600' />
-                  <ResultButton text='2' textColor='text-rose-400' />
-                  <ResultButton text='3' textColor='text-sky-300' />
-                  <ResultButton text='4' textColor='text-sky-400' />
-                  <ResultButton text='5' textColor='text-sky-500' />
+                  <ResultButton
+                    handleClick={() => handleResult(1)}
+                    text='1'
+                    textColor='text-rose-600'
+                  />
+                  <ResultButton
+                    handleClick={() => handleResult(2)}
+                    text='2'
+                    textColor='text-rose-400'
+                  />
+                  <ResultButton
+                    handleClick={() => handleResult(3)}
+                    text='3'
+                    textColor='text-sky-300'
+                  />
+                  <ResultButton
+                    handleClick={() => handleResult(4)}
+                    text='4'
+                    textColor='text-sky-400'
+                  />
+                  <ResultButton
+                    handleClick={() => handleResult(5)}
+                    text='5'
+                    textColor='text-sky-500'
+                  />
                 </div>
               </>
             </AnimatedSection>

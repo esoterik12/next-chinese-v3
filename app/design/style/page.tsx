@@ -78,11 +78,31 @@ export default function StyleDesignPage() {
             <p>Attention</p>
           </DefaultButton>
           <div className='mb-3 flex w-full flex-row items-center justify-between gap-x-0.5'>
-            <ResultButton text='1' textColor='text-rose-600' />
-            <ResultButton text='2' textColor='text-rose-400' />
-            <ResultButton text='3' textColor='text-sky-300' />
-            <ResultButton text='4' textColor='text-sky-400' />
-            <ResultButton text='5' textColor='text-sky-500' />
+            <ResultButton
+              handleClick={() => {}}
+              text='1'
+              textColor='text-rose-600'
+            />
+            <ResultButton
+              handleClick={() => {}}
+              text='2'
+              textColor='text-rose-400'
+            />
+            <ResultButton
+              handleClick={() => {}}
+              text='3'
+              textColor='text-sky-300'
+            />
+            <ResultButton
+              handleClick={() => {}}
+              text='4'
+              textColor='text-sky-400'
+            />
+            <ResultButton
+              handleClick={() => {}}
+              text='5'
+              textColor='text-sky-500'
+            />
           </div>
         </section>
       </div>

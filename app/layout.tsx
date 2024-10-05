@@ -4,6 +4,7 @@ import { ThemeProvider } from 'next-themes'
 import NextAuthProvider from '@/components/layout/NextAuthProvider'
 import { Inter } from 'next/font/google'
 import NavHeader from '@/components/layout/NavHeader'
+import { ContextProvider } from '@/lib/context/ReviewSessionContext'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -47,13 +48,14 @@ export default function RootLayout({
   return (
     <html lang='en' suppressHydrationWarning>
       <body
-        className={`${inter.className} min-h-screen w-full bg-[radial-gradient(circle,_#020617,_#01030d)] antialiased text-gray-100`}
+        className={`${inter.className} min-h-screen w-full bg-[radial-gradient(circle,_#020617,_#01030d)] text-gray-100 antialiased`}
       >
-        
         <ThemeProvider attribute='class' defaultTheme='dark'>
           <NextAuthProvider>
-            <NavHeader />
-            {children}
+            <ContextProvider>
+              <NavHeader />
+              {children}
+            </ContextProvider>
           </NextAuthProvider>
         </ThemeProvider>
       </body>

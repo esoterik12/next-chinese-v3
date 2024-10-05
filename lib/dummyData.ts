@@ -72,7 +72,8 @@ export const dummySentenceData = [
 
 export const dummyUserWords = [
   {
-    wordId: new mongoose.Types.ObjectId('66fae9e84c2ae3ac289446c8'), // dummy ObjectId for Word
+    userId: new mongoose.Types.ObjectId('66fae9e84c2ae3ac289446cd'),
+    wordId: new mongoose.Types.ObjectId('670106fac77bd237768330eb'), // dummy ObjectId for Word
     repetitions: 3,
     interval: 6,
     easeFactor: 2.8,
@@ -83,7 +84,8 @@ export const dummyUserWords = [
     ]
   },
   {
-    wordId: new mongoose.Types.ObjectId('66fae9e84c2ae3ac289446c9'),
+    userId: new mongoose.Types.ObjectId('66fae9e84c2ae3ac289446cd'),
+    wordId: new mongoose.Types.ObjectId('670106fac77bd237768330ec'),
     repetitions: 2,
     interval: 3,
     easeFactor: 2.6,
@@ -94,7 +96,9 @@ export const dummyUserWords = [
     ]
   },
   {
-    wordId: new mongoose.Types.ObjectId('66fae9e84c2ae3ac289446ca'),
+    userId: new mongoose.Types.ObjectId('66fae9e84c2ae3ac289446cd'),
+
+    wordId: new mongoose.Types.ObjectId('670106fac77bd237768330ed'),
     repetitions: 4,
     interval: 10,
     easeFactor: 3.0,
@@ -105,7 +109,8 @@ export const dummyUserWords = [
     ]
   },
   {
-    wordId: new mongoose.Types.ObjectId('66fae9e84c2ae3ac289446cc'),
+    userId: new mongoose.Types.ObjectId('66fae9e84c2ae3ac289446cd'),
+    wordId: new mongoose.Types.ObjectId('670106fac77bd237768330ee'),
     repetitions: 1,
     interval: 1,
     easeFactor: 2.5,
@@ -115,7 +120,8 @@ export const dummyUserWords = [
     ]
   },
   {
-    wordId: new mongoose.Types.ObjectId('66fae9e84c2ae3ac289446cd'),
+    userId: new mongoose.Types.ObjectId('66fae9e84c2ae3ac289446cd'),
+    wordId: new mongoose.Types.ObjectId('670106fac77bd237768330ef'),
     repetitions: 5,
     interval: 15,
     easeFactor: 3.1,
@@ -127,4 +133,10 @@ export const dummyUserWords = [
   }
 ]
 
-export default dummyUserWords
+export const dummyUserData = {
+  _id: new mongoose.Types.ObjectId('66fae9e84c2ae3ac289446cd'),
+  email: 'luke.hide@gmail.com',
+  username: 'Luke Hide',
+  createdAt: new Date('2024-10-02T10:41:27.501+00:00'),
+  latestWord: 5
+}

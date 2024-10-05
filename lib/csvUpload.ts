@@ -90,7 +90,7 @@ export const readCSV = async () => {
       wordSimplified: newWord.wordSimplified,
       wordTraditional: newWord.wordTraditional,
       wordPinyin: newWord.wordPinyin,
-      wordType: newWord.wordType,
+      partOfSpeech: newWord.partOfSpeech,
       wordTranslation: newWord.wordTranslation
     }
   })
