@@ -1,5 +1,4 @@
 'use client'
-import mongoose from 'mongoose'
 import React, { createContext, useContext, useReducer, ReactNode } from 'react'
 import sm2 from '../sm2/sm2Algo'
 import { ReviewResultDocument } from '@/types/review.types'
@@ -8,6 +7,7 @@ import { ReviewResultDocument } from '@/types/review.types'
 interface AppContextTypes {
   unfinishedWords: any[]
   finishedWords: any[]
+  loading: boolean
   dispatch: React.Dispatch<ReducerAction>
 }
 
@@ -29,7 +29,7 @@ interface ReducerState {
 const initialContext = {
   unfinishedWords: [],
   finishedWords: [],
-  loading: false,
+  loading: true,
   error: null
 }
 
@@ -39,6 +39,7 @@ const reducer = (state: ReducerState, action: ReducerAction): ReducerState => {
       if (action.fetchedWords) {
         return {
           ...state,
+          loading: false,
           unfinishedWords: action.fetchedWords,
           finishedWords: []
         }
@@ -48,7 +49,8 @@ const reducer = (state: ReducerState, action: ReducerAction): ReducerState => {
     // B: add reviewHistory (push) - (also first view only recorded)
     case 'firstResult':
       // The current word should always be at the start of the unfinished array
-      const word = state.unfinishedWords.shift()
+      const currentUnfinishedWords = [...state.unfinishedWords];
+      const word = currentUnfinishedWords.shift(); // Get the first word
 
       // Return state if no payload or no word
       if (!action.firstResult || !word) {
@@ -80,15 +82,14 @@ const reducer = (state: ReducerState, action: ReducerAction): ReducerState => {
       if (action.firstResult >= 3) {
         return {
           ...state,
-          unfinishedWords: state.unfinishedWords,
+          unfinishedWords: currentUnfinishedWords,
           finishedWords: [...state.finishedWords, word]
         }
       } else {
         // Otherwise return it to the unfinished words to be seen once more until correct
         return {
           ...state,
-          unfinishedWords: [...state.unfinishedWords, word],
-          finishedWords: state.finishedWords
+          unfinishedWords: [...currentUnfinishedWords, word]
         }
       }
 
@@ -116,6 +117,7 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       value={{
         unfinishedWords: state.unfinishedWords,
         finishedWords: state.finishedWords,
+        loading: state.loading,
         dispatch
       }}
     >

@@ -15,7 +15,7 @@ type WordCardProps = {
 
 const WordCard = ({ fetchedWords }: WordCardProps) => {
   const [show, setShow] = useState(false)
-  const { dispatch, finishedWords, unfinishedWords } = useAppContext()
+  const { dispatch, finishedWords, unfinishedWords, loading } = useAppContext()
 
   useEffect(() => {
     dispatch({ type: 'loadWords', fetchedWords: fetchedWords })
@@ -33,12 +33,17 @@ const WordCard = ({ fetchedWords }: WordCardProps) => {
   }
 
   console.log('unfinishedWords', unfinishedWords)
+  console.log('finishedWords', finishedWords)
+
+  if (loading) {
+    return <p>Loading...</p>
+  }
 
   return (
     <div className='custom-gradient-background custom-border h-[340px] w-[250px]'>
       <div className='flex h-[110px] flex-col items-center justify-end gap-y-4'>
-        <p className='custom-header'>{fetchedWords[0].wordTraditional}</p>
-        <p>{fetchedWords[0].wordSimplified}</p>
+        <p className='custom-header'>{unfinishedWords[0].wordTraditional}</p>
+        <p>{unfinishedWords[0].wordSimplified}</p>
       </div>
 
       <div className='flex h-[230px] flex-col items-center justify-center'>
@@ -58,12 +63,12 @@ const WordCard = ({ fetchedWords }: WordCardProps) => {
             >
               <>
                 <h1 className='font-bold text-sky-400'>
-                  {fetchedWords[3].partOfSpeech}
+                  {unfinishedWords[0].partOfSpeech}
                 </h1>
                 <div>
-                  <p>{show && dummyWordData[3].pinyin}</p>
+                  <p>{show && unfinishedWords[0].wordPinyin}</p>
                   <p className='custom-gray-text'>
-                    {show && dummyWordData[3].translation}
+                    {show && unfinishedWords[0].wordTranslation}
                   </p>
                 </div>
                 <div className='mb-3 flex w-full flex-row items-center justify-between gap-x-0.5'>
