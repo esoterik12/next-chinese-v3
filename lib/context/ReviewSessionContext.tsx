@@ -34,6 +34,10 @@ const initialContext = {
 }
 
 const reducer = (state: ReducerState, action: ReducerAction): ReducerState => {
+  // Get the current word - should always be at the start of the unfinished array
+  const currentUnfinishedWords = [...state.unfinishedWords]
+  const word = currentUnfinishedWords.shift() // Get the first word
+
   switch (action.type) {
     case 'loadWords':
       if (action.fetchedWords) {
@@ -48,10 +52,6 @@ const reducer = (state: ReducerState, action: ReducerAction): ReducerState => {
     // A: update easeFactor to new easeFactor from payload (always first view recorded)
     // B: add reviewHistory (push) - (also first view only recorded)
     case 'firstResult':
-      // The current word should always be at the start of the unfinished array
-      const currentUnfinishedWords = [...state.unfinishedWords];
-      const word = currentUnfinishedWords.shift(); // Get the first word
-
       // Return state if no payload or no word
       if (!action.firstResult || !word) {
         return { ...state }
@@ -93,14 +93,24 @@ const reducer = (state: ReducerState, action: ReducerAction): ReducerState => {
         }
       }
 
-    // Needs to
+    // Adds word to finished array
     case 'correctResult':
-      return {
-        ...state
+      if (!word) {
+        return { ...state }
       }
-    case 'incorrectResult':
       return {
-        ...state
+        ...state,
+        unfinishedWords: currentUnfinishedWords,
+        finishedWords: [...state.finishedWords, word]
+      }
+    // Returns word to unfinished array
+    case 'incorrectResult':
+      if (!word) {
+        return { ...state }
+      }
+      return {
+        ...state,
+        unfinishedWords: [...currentUnfinishedWords, word]
       }
     default:
       throw new Error('Unknown action')

@@ -1,13 +1,15 @@
 'use client'
 import DefaultButton from '../buttons/DefaultButton'
 import { AnimatePresence } from 'framer-motion'
-import ResultButton from './ResultButton'
+import ResultButton from '../buttons/ResultButton'
 import IconDownChevron from '../icons/IconDownChevron'
 import AnimatedSection from './AnimatedSection'
-import { dummyWordData } from '@/lib/dummyData'
 import { useAppContext } from '@/lib/context/ReviewSessionContext'
 import { useEffect, useState } from 'react'
 import { ReviewResultDocument } from '@/types/review.types'
+import CorrectButton from '../buttons/CorrectButton'
+import IconXCircle from '../icons/IconXCircle'
+import IconCheckCircle from '../icons/IconCheckCircle'
 
 type WordCardProps = {
   fetchedWords: ReviewResultDocument[]
@@ -26,9 +28,24 @@ const WordCard = ({ fetchedWords }: WordCardProps) => {
   }
 
   const handleResult = (result: number) => {
+    setShow(false)
     dispatch({
       type: 'firstResult',
       firstResult: result
+    })
+  }
+
+  const handleCorrect = () => {
+    setShow(false)
+    dispatch({
+      type: 'correctResult'
+    })
+  }
+
+  const handleIncorrect = () => {
+    setShow(false)
+    dispatch({
+      type: 'incorrectResult'
     })
   }
 
@@ -37,6 +54,10 @@ const WordCard = ({ fetchedWords }: WordCardProps) => {
 
   if (loading) {
     return <p>Loading...</p>
+  }
+
+  if (unfinishedWords.length === 0) {
+    return <p>Session complete.</p>
   }
 
   return (
@@ -71,33 +92,50 @@ const WordCard = ({ fetchedWords }: WordCardProps) => {
                     {show && unfinishedWords[0].wordTranslation}
                   </p>
                 </div>
-                <div className='mb-3 flex w-full flex-row items-center justify-between gap-x-0.5'>
-                  <ResultButton
-                    handleClick={() => handleResult(1)}
-                    text='1'
-                    textColor='text-rose-600'
-                  />
-                  <ResultButton
-                    handleClick={() => handleResult(2)}
-                    text='2'
-                    textColor='text-rose-400'
-                  />
-                  <ResultButton
-                    handleClick={() => handleResult(3)}
-                    text='3'
-                    textColor='text-sky-300'
-                  />
-                  <ResultButton
-                    handleClick={() => handleResult(4)}
-                    text='4'
-                    textColor='text-sky-400'
-                  />
-                  <ResultButton
-                    handleClick={() => handleResult(5)}
-                    text='5'
-                    textColor='text-sky-500'
-                  />
-                </div>
+
+                {!unfinishedWords[0].seenToday && (
+                  <div className='mb-3 flex w-full flex-row items-center justify-between gap-x-0.5'>
+                    <ResultButton
+                      handleClick={() => handleResult(1)}
+                      text='1'
+                      textColor='text-rose-600'
+                    />
+                    <ResultButton
+                      handleClick={() => handleResult(2)}
+                      text='2'
+                      textColor='text-rose-400'
+                    />
+                    <ResultButton
+                      handleClick={() => handleResult(3)}
+                      text='3'
+                      textColor='text-sky-300'
+                    />
+                    <ResultButton
+                      handleClick={() => handleResult(4)}
+                      text='4'
+                      textColor='text-sky-400'
+                    />
+                    <ResultButton
+                      handleClick={() => handleResult(5)}
+                      text='5'
+                      textColor='text-sky-500'
+                    />
+                  </div>
+                )}
+                {unfinishedWords[0].seenToday && (
+                  <div className='mb-3 flex w-full flex-row items-center justify-between gap-x-2'>
+                    <CorrectButton
+                      handleClick={() => handleIncorrect()}
+                      icon={<IconXCircle classes='h-6 w-6' />}
+                      textColor='text-rose-500'
+                    />
+                    <CorrectButton
+                      handleClick={() => handleCorrect()}
+                      icon={<IconCheckCircle classes='h-6 w-6' />}
+                      textColor='text-emerald-500'
+                    />
+                  </div>
+                )}
               </>
             </AnimatedSection>
           )}

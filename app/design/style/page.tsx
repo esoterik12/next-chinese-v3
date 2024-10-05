@@ -1,6 +1,7 @@
+'use client'
 import DefaultButton from '@/components/buttons/DefaultButton'
 import PageContainer from '@/components/containers/PageContainer'
-import ResultButton from '@/components/cards/ResultButton'
+import ResultButton from '@/components/buttons/ResultButton'
 
 const spacingValues = [1, 2, 3, 4, 6, 8, 12, 24, 40, 60]
 
