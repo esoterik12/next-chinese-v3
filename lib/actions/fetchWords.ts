@@ -50,7 +50,7 @@ export async function fetchWords({
         interval: 0,
         easeFactor: 2.5,
         nextReviewDate: new Date(Date.now() + 24 * 60 * 60 * 1000), // First review after 1 day
-        reviewHistory: []
+        reviewHistory: [],
       }))
 
       // Combines results

@@ -10,6 +10,7 @@ import { ReviewResultDocument } from '@/types/review.types'
 import CorrectButton from '../buttons/CorrectButton'
 import IconXCircle from '../icons/IconXCircle'
 import IconCheckCircle from '../icons/IconCheckCircle'
+import { useKeyboard } from '@/lib/custom-hooks/useKeyboard'
 
 type WordCardProps = {
   fetchedWords: ReviewResultDocument[]
@@ -49,8 +50,8 @@ const WordCard = ({ fetchedWords }: WordCardProps) => {
     })
   }
 
-  console.log('unfinishedWords', unfinishedWords)
-  console.log('finishedWords', finishedWords)
+  // Custom hook for keyboard input adapted from dev.to post
+  useKeyboard({ show, setShow })
 
   if (loading) {
     return <p>Loading...</p>
