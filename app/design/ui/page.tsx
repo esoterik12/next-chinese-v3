@@ -1,4 +1,3 @@
-import WordCard from '@/components/cards/WordCard'
 import ReviewContainer from '@/components/containers/ReviewContainer'
 import { fetchWords } from '@/lib/actions/fetchWords'
 import { dummyUserData } from '@/lib/dummyData'

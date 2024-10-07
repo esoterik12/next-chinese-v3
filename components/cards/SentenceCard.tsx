@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import { dummySentenceData } from '@/lib/dummyData'
 import DefaultButton from '../buttons/DefaultButton'
@@ -5,14 +6,16 @@ import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import AnimatedSection from './AnimatedSection'
 import SentenceVote from './SentenceVote'
+import { useAppContext } from '@/lib/context/ReviewSessionContext'
 
-type SentenceCardProps = {}
-
-const SentenceCard = (props: SentenceCardProps) => {
+const SentenceCard = () => {
+  const { dispatch, unfinishedWords, loading } = useAppContext()
   const [sentence, setSentence] = useState(false)
   const handleSentence = () => {
     setSentence(prevState => !prevState)
   }
+
+  console.log('unfinishedWords in sentence card', unfinishedWords)
 
   return (
     <div className='mt-2 flex h-[40px] flex-col'>

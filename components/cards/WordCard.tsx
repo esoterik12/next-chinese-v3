@@ -15,7 +15,7 @@ import useVoices from '@/lib/custom-hooks/useVoice'
 const WordCard = () => {
   const [show, setShow] = useState(false)
   const { dispatch, unfinishedWords, loading } = useAppContext()
-  const voices = useVoices()
+  const voice = useVoices()
 
   const handleShow = () => {
     if (
@@ -27,8 +27,8 @@ const WordCard = () => {
         unfinishedWords[0].wordTraditional
       )
 
-      if (voices) {
-        speech.voice = voices
+      if (voice) {
+        speech.voice = voice
       } else {
         console.log('Voice not found; make sure you are using Chrome.')
       }
@@ -64,7 +64,7 @@ const WordCard = () => {
   }
 
   // Custom hook for keyboard input adapted from dev.to post
-  useKeyboard({ show, setShow })
+  useKeyboard({ show, setShow, handleShow, voice })
 
   if (loading || !unfinishedWords) {
     return <p>Loading...</p>

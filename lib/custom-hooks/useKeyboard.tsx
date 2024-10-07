@@ -1,13 +1,19 @@
 import { useEffect } from 'react'
 import { useAppContext } from '../context/ReviewSessionContext'
-import textToVoice from '../textToVoice'
 
 interface useKeyboardProps {
   show: boolean
   setShow: React.Dispatch<React.SetStateAction<boolean>>
+  handleShow: () => void
+  voice: SpeechSynthesisVoice | undefined
 }
 
-export function useKeyboard({ show, setShow }: useKeyboardProps) {
+export function useKeyboard({
+  show,
+  setShow,
+  handleShow,
+  voice
+}: useKeyboardProps) {
   const { dispatch, unfinishedWords } = useAppContext()
 
   useEffect(() => {
@@ -18,8 +24,7 @@ export function useKeyboard({ show, setShow }: useKeyboardProps) {
         return
       }
       if (!show && e.code === 'Space') {
-        setShow(true)
-        textToVoice(word.wordTraditional)
+        handleShow()
       }
       if (show && /^[1-5]$/.test(e.key) && !word.seenToday) {
         setShow(false)
@@ -47,5 +52,6 @@ export function useKeyboard({ show, setShow }: useKeyboardProps) {
     return () => {
       document.removeEventListener('keydown', keyDownHandler)
     }
-  }, [show, setShow, unfinishedWords[0], dispatch])
+  }, [show, setShow, unfinishedWords[0], dispatch, voice])
+  // voice included to ensure handleShow renders with voice on first page load
 }

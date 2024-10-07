@@ -1,8 +1,9 @@
 'use client'
 import { useAppContext } from '@/lib/context/ReviewSessionContext'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { ReviewResultDocument } from '@/types/review.types'
 import WordCard from '../cards/WordCard'
+import SentenceCard from '../cards/SentenceCard'
 
 type WordCardProps = {
   fetchedWords: ReviewResultDocument[]
@@ -26,6 +27,7 @@ const ReviewContainer = ({ fetchedWords }: WordCardProps) => {
   return (
     <>
       <WordCard />
+      <SentenceCard />
     </>
   )
 }
