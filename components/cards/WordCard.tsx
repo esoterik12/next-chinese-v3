@@ -5,27 +5,40 @@ import ResultButton from '../buttons/ResultButton'
 import IconDownChevron from '../icons/IconDownChevron'
 import AnimatedSection from './AnimatedSection'
 import { useAppContext } from '@/lib/context/ReviewSessionContext'
-import { useEffect, useState } from 'react'
-import { ReviewResultDocument } from '@/types/review.types'
+import { useState } from 'react'
 import CorrectButton from '../buttons/CorrectButton'
 import IconXCircle from '../icons/IconXCircle'
 import IconCheckCircle from '../icons/IconCheckCircle'
 import { useKeyboard } from '@/lib/custom-hooks/useKeyboard'
+import useVoices from '@/lib/custom-hooks/useVoice'
 
-type WordCardProps = {
-  fetchedWords: ReviewResultDocument[]
-}
-
-const WordCard = ({ fetchedWords }: WordCardProps) => {
+const WordCard = () => {
   const [show, setShow] = useState(false)
-  const { dispatch, finishedWords, unfinishedWords, loading } = useAppContext()
-
-  useEffect(() => {
-    dispatch({ type: 'loadWords', fetchedWords: fetchedWords })
-  }, [])
+  const { dispatch, unfinishedWords, loading } = useAppContext()
+  const voices = useVoices()
 
   const handleShow = () => {
-    setShow(prevState => !prevState)
+    if (
+      unfinishedWords &&
+      unfinishedWords.length > 0 &&
+      unfinishedWords[0].wordTraditional
+    ) {
+      const speech = new SpeechSynthesisUtterance(
+        unfinishedWords[0].wordTraditional
+      )
+
+      if (voices) {
+        speech.voice = voices
+      } else {
+        console.log('Voice not found; make sure you are using Chrome.')
+      }
+
+      speechSynthesis.speak(speech)
+
+      setShow(true)
+    } else {
+      console.log('Speech data is not available yet.')
+    }
   }
 
   const handleResult = (result: number) => {
@@ -53,7 +66,7 @@ const WordCard = ({ fetchedWords }: WordCardProps) => {
   // Custom hook for keyboard input adapted from dev.to post
   useKeyboard({ show, setShow })
 
-  if (loading) {
+  if (loading || !unfinishedWords) {
     return <p>Loading...</p>
   }
 
@@ -63,10 +76,15 @@ const WordCard = ({ fetchedWords }: WordCardProps) => {
 
   return (
     <div className='custom-gradient-background custom-border h-[340px] w-[250px]'>
-      <div className='flex h-[110px] flex-col items-center justify-end gap-y-4'>
-        <p className='custom-header'>{unfinishedWords[0].wordTraditional}</p>
-        <p>{unfinishedWords[0].wordSimplified}</p>
-      </div>
+      <AnimatedSection
+        classes='flex h-[110px] flex-col items-center justify-end gap-y-4'
+        motionKey='words'
+      >
+        <>
+          <p className='custom-header'>{unfinishedWords[0].wordTraditional}</p>
+          <p>{unfinishedWords[0].wordSimplified}</p>
+        </>
+      </AnimatedSection>
 
       <div className='flex h-[230px] flex-col items-center justify-center'>
         <AnimatePresence mode='wait'>

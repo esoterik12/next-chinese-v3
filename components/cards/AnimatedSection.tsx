@@ -12,8 +12,8 @@ type AnimatedSectionProps = {
 
 const AnimatedSection = ({
   children,
-  entryDelay = 0.15,
-  initialY = -12, // default is to come from the top
+  entryDelay = 0.06,
+  initialY = -5, // default is to come from the top
   exitY = 10, // default is to exit to the bottom
   classes,
   motionKey

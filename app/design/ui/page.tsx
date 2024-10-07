@@ -1,4 +1,5 @@
 import WordCard from '@/components/cards/WordCard'
+import ReviewContainer from '@/components/containers/ReviewContainer'
 import { fetchWords } from '@/lib/actions/fetchWords'
 import { dummyUserData } from '@/lib/dummyData'
 import { ReviewResultDocument } from '@/types/review.types'
@@ -23,7 +24,7 @@ export default async function UiDesignPage() {
     <main className='flex h-[calc(100vh-64px)] flex-col items-center'>
       {/* First section, takes up 50% */}
       <section className='mt-6 flex h-full w-full flex-grow flex-col items-center justify-center'>
-        <WordCard fetchedWords={fetchedWordsSeenToday} />
+        <ReviewContainer fetchedWords={fetchedWordsSeenToday} />
       </section>
     </main>
   )

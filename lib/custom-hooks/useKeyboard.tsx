@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { useAppContext } from '../context/ReviewSessionContext'
+import textToVoice from '../textToVoice'
 
 interface useKeyboardProps {
   show: boolean
@@ -18,6 +19,7 @@ export function useKeyboard({ show, setShow }: useKeyboardProps) {
       }
       if (!show && e.code === 'Space') {
         setShow(true)
+        textToVoice(word.wordTraditional)
       }
       if (show && /^[1-5]$/.test(e.key) && !word.seenToday) {
         setShow(false)
