@@ -2,6 +2,7 @@
 import React, { createContext, useContext, useReducer, ReactNode } from 'react'
 import sm2 from '../sm2/sm2Algo'
 import { ReviewResultDocument } from '@/types/review.types'
+import { GeneratedSentenceProps } from '@/components/cards/SentenceCard'
 
 // Unfinished: temporary any state until word types defined
 interface AppContextTypes {
@@ -14,9 +15,15 @@ interface AppContextTypes {
 // firstResult are the first 1-5 easeFactor outcome that the user inputs
 // correct and incorrect are subsequent views, incorrect returns the word to the unfinished queue
 interface ReducerAction {
-  type: 'loadWords' | 'firstResult' | 'correctResult' | 'incorrectResult'
+  type:
+    | 'loadWords'
+    | 'addSentence'
+    | 'firstResult'
+    | 'correctResult'
+    | 'incorrectResult'
   firstResult?: number
   fetchedWords?: ReviewResultDocument[]
+  newSentence?: GeneratedSentenceProps
 }
 
 interface ReducerState {
@@ -38,6 +45,7 @@ const reducer = (state: ReducerState, action: ReducerAction): ReducerState => {
   const currentUnfinishedWords = [...state.unfinishedWords]
   const word = currentUnfinishedWords.shift() // Get the first word
 
+  // Loads fetchedWords into the context
   switch (action.type) {
     case 'loadWords':
       if (action.fetchedWords) {
@@ -48,9 +56,25 @@ const reducer = (state: ReducerState, action: ReducerAction): ReducerState => {
           finishedWords: []
         }
       }
-    // firtsResult Needs to:
-    // A: update easeFactor to new easeFactor from payload (always first view recorded)
-    // B: add reviewHistory (push) - (also first view only recorded)
+
+    // Adds a generated sentence into an array for new sentences generated
+    case 'addSentence':
+      // Return state if no payload or no word
+      if (!action.newSentence || !word) {
+        return { ...state }
+      }
+
+      // Puts the new sentence in the word variable
+      // Creates a new copy of the word and its sentences array
+      const updatedWord = {
+        ...word,
+        newSentencesArray: [...word.newSentencesArray, action.newSentence]
+      }
+      // Keeps the active word at the front of the array
+      return {
+        ...state,
+        unfinishedWords: [updatedWord, ...currentUnfinishedWords]
+      }
     case 'firstResult':
       // Return state if no payload or no word
       if (!action.firstResult || !word) {

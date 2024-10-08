@@ -5,14 +5,19 @@ import ResultButton from '../buttons/ResultButton'
 import IconDownChevron from '../icons/IconDownChevron'
 import AnimatedSection from './AnimatedSection'
 import { useAppContext } from '@/lib/context/ReviewSessionContext'
-import { useState } from 'react'
+import { SetStateAction, useState } from 'react'
 import CorrectButton from '../buttons/CorrectButton'
 import IconXCircle from '../icons/IconXCircle'
 import IconCheckCircle from '../icons/IconCheckCircle'
 import { useKeyboard } from '@/lib/custom-hooks/useKeyboard'
 import useVoices from '@/lib/custom-hooks/useVoice'
 
-const WordCard = () => {
+interface WordCardProps {
+  setShowSentence: React.Dispatch<SetStateAction<boolean>>
+  fetching: boolean
+}
+
+const WordCard = ({ setShowSentence, fetching }: WordCardProps) => {
   const [show, setShow] = useState(false)
   const { dispatch, unfinishedWords, loading } = useAppContext()
   const voice = useVoices()
@@ -41,8 +46,14 @@ const WordCard = () => {
     }
   }
 
-  const handleResult = (result: number) => {
+  // General function to clear up ui after each card
+  const completeCard = () => {
     setShow(false)
+    setShowSentence(false)
+  }
+
+  const handleResult = (result: number) => {
+    completeCard()
     dispatch({
       type: 'firstResult',
       firstResult: result
@@ -50,14 +61,14 @@ const WordCard = () => {
   }
 
   const handleCorrect = () => {
-    setShow(false)
+    completeCard()
     dispatch({
       type: 'correctResult'
     })
   }
 
   const handleIncorrect = () => {
-    setShow(false)
+    completeCard()
     dispatch({
       type: 'incorrectResult'
     })
@@ -115,26 +126,31 @@ const WordCard = () => {
                 {!unfinishedWords[0].seenToday && (
                   <div className='mb-3 flex w-full flex-row items-center justify-between gap-x-0.5'>
                     <ResultButton
+                      disabled={fetching}
                       handleClick={() => handleResult(1)}
                       text='1'
                       textColor='text-rose-600'
                     />
                     <ResultButton
+                      disabled={fetching}
                       handleClick={() => handleResult(2)}
                       text='2'
                       textColor='text-rose-400'
                     />
                     <ResultButton
+                      disabled={fetching}
                       handleClick={() => handleResult(3)}
                       text='3'
                       textColor='text-sky-300'
                     />
                     <ResultButton
+                      disabled={fetching}
                       handleClick={() => handleResult(4)}
                       text='4'
                       textColor='text-sky-400'
                     />
                     <ResultButton
+                      disabled={fetching}
                       handleClick={() => handleResult(5)}
                       text='5'
                       textColor='text-sky-500'
@@ -144,11 +160,13 @@ const WordCard = () => {
                 {unfinishedWords[0].seenToday && (
                   <div className='mb-3 flex w-full flex-row items-center justify-between gap-x-2'>
                     <CorrectButton
+                      disabled={fetching}
                       handleClick={() => handleIncorrect()}
                       icon={<IconXCircle classes='h-6 w-6' />}
                       textColor='text-rose-500'
                     />
                     <CorrectButton
+                      disabled={fetching}
                       handleClick={() => handleCorrect()}
                       icon={<IconCheckCircle classes='h-6 w-6' />}
                       textColor='text-emerald-500'

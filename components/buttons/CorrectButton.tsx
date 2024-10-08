@@ -2,13 +2,20 @@ type ResultButtonProps = {
   icon: React.ReactNode
   textColor: string
   handleClick: () => void
+  disabled: boolean
 }
 
-const CorrectButton = ({ icon, textColor, handleClick }: ResultButtonProps) => {
+const CorrectButton = ({
+  icon,
+  textColor,
+  handleClick,
+  disabled
+}: ResultButtonProps) => {
   return (
     <button
+      disabled={disabled}
       onClick={handleClick}
-      className='custom-hover-effect flex items-center h-[45px] w-[110px] flex-col justify-center rounded-lg bg-gray-900'
+      className='custom-hover-effect flex h-[45px] w-[110px] flex-col items-center justify-center rounded-lg bg-gray-900'
     >
       <p className={`font-semibold ${textColor}`}>{icon}</p>
     </button>

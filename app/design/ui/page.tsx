@@ -15,7 +15,8 @@ export default async function UiDesignPage() {
   const fetchedWordsSeenToday = fetchedWords.result.map(
     (word: ReviewResultDocument[]) => ({
       ...word,
-      seenToday: false
+      seenToday: false,
+      newSentencesArray: []
     })
   )
 

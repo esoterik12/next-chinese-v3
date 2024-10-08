@@ -1,6 +1,6 @@
 'use client'
 import { useAppContext } from '@/lib/context/ReviewSessionContext'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { ReviewResultDocument } from '@/types/review.types'
 import WordCard from '../cards/WordCard'
 import SentenceCard from '../cards/SentenceCard'
@@ -11,6 +11,8 @@ type WordCardProps = {
 
 const ReviewContainer = ({ fetchedWords }: WordCardProps) => {
   const { dispatch, unfinishedWords, loading } = useAppContext()
+  const [showSentence, setShowSentence] = useState(false)
+  const [fetching, setFetching] = useState(false)
 
   useEffect(() => {
     dispatch({ type: 'loadWords', fetchedWords: fetchedWords })
@@ -24,10 +26,17 @@ const ReviewContainer = ({ fetchedWords }: WordCardProps) => {
     return <p>Session complete.</p>
   }
 
+  console.log('unfinishedWords in ReviewContainer', unfinishedWords)
+
   return (
     <>
-      <WordCard />
-      <SentenceCard />
+      <WordCard fetching={fetching} setShowSentence={setShowSentence} />
+      <SentenceCard
+        showSentence={showSentence}
+        setShowSentence={setShowSentence}
+        fetching={fetching}
+        setFetching={setFetching}
+      />
     </>
   )
 }
