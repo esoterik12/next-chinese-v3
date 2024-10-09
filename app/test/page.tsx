@@ -2,9 +2,7 @@ import TestButton from '@/components/buttons/TestButton'
 import React from 'react'
 import { getServerSession } from 'next-auth'
 
-type Props = {}
-
-const ServerActionTestPage = async (props: Props) => {
+const ServerActionTestPage = async () => {
   const serverSession = await getServerSession()
   console.log('serverSession', serverSession)
 

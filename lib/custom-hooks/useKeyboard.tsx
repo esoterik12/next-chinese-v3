@@ -3,22 +3,21 @@ import { useAppContext } from '../context/ReviewSessionContext'
 
 interface useKeyboardProps {
   show: boolean
-  setShow: React.Dispatch<React.SetStateAction<boolean>>
+  completeCard: () => void
   handleShow: () => void
   voice: SpeechSynthesisVoice | undefined
 }
 
 export function useKeyboard({
   show,
-  setShow,
+  completeCard,
   handleShow,
   voice
 }: useKeyboardProps) {
   const { dispatch, unfinishedWords } = useAppContext()
+  const word = unfinishedWords[0]
 
   useEffect(() => {
-    const word = unfinishedWords[0]
-
     function keyDownHandler(e: globalThis.KeyboardEvent) {
       if (unfinishedWords.length === 0) {
         return
@@ -27,20 +26,20 @@ export function useKeyboard({
         handleShow()
       }
       if (show && /^[1-5]$/.test(e.key) && !word.seenToday) {
-        setShow(false)
+        completeCard()
         dispatch({
           type: 'firstResult',
           firstResult: Number(e.key)
         })
       }
       if (show && e.key === '2' && word.seenToday) {
-        setShow(false)
+        completeCard()
         dispatch({
           type: 'incorrectResult'
         })
       }
       if (show && e.key === '4' && word.seenToday) {
-        setShow(false)
+        completeCard()
         dispatch({
           type: 'correctResult'
         })
@@ -52,6 +51,6 @@ export function useKeyboard({
     return () => {
       document.removeEventListener('keydown', keyDownHandler)
     }
-  }, [show, setShow, unfinishedWords[0], dispatch, voice])
+  }, [show, completeCard, word, dispatch, voice, handleShow, unfinishedWords.length])
   // voice included to ensure handleShow renders with voice on first page load
 }

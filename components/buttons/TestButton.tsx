@@ -1,9 +1,8 @@
 'use client'
 import React from 'react'
 import { testDbFunction } from '@/lib/actions/testDbFunction'
-type Props = {}
 
-const TestButton = (props: Props) => {
+const TestButton = () => {
   const handleTestClick = async () => {
     testDbFunction()
   }

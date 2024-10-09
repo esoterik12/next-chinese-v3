@@ -1,7 +1,9 @@
+'use server'
 import UserWord from '@/models/userword.model'
-import { connectToDB } from '../mongoose'
 import { fetchNewWords } from './fetchNewWords'
 import mongoose from 'mongoose'
+import { connectToDB } from '@/lib/mongoose'
+// import { startLearnSession } from '../session/startLearnSession'
 
 // This function fetches words due for review and then fills up the sessonWordGoal
 // with new words if necessary
@@ -14,6 +16,16 @@ export async function fetchWords({
 }) {
   try {
     await connectToDB()
+
+    // const learnSession = await startLearnSession(userId)
+    // if (learnSession.code === 409) {
+    //   return {
+    //     message: 'Failed to fetch words; session already active.',
+    //     code: learnSession.code,
+    //     originalError: learnSession.message
+    //   }
+    // }
+    // console.log('learnSession', learnSession)
 
     // First: fetch due words
     const today = new Date()
@@ -50,7 +62,7 @@ export async function fetchWords({
         interval: 0,
         easeFactor: 2.5,
         nextReviewDate: new Date(Date.now() + 24 * 60 * 60 * 1000), // First review after 1 day
-        reviewHistory: [],
+        reviewHistory: []
       }))
 
       // Combines results

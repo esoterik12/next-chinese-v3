@@ -3,8 +3,6 @@ import DefaultButton from '@/components/buttons/DefaultButton'
 import PageContainer from '@/components/containers/PageContainer'
 import ResultButton from '@/components/buttons/ResultButton'
 
-const spacingValues = [1, 2, 3, 4, 6, 8, 12, 24, 40, 60]
-
 export default function StyleDesignPage() {
   return (
     <PageContainer>
@@ -80,26 +78,31 @@ export default function StyleDesignPage() {
           </DefaultButton>
           <div className='mb-3 flex w-full flex-row items-center justify-between gap-x-0.5'>
             <ResultButton
+              disabled={false}
               handleClick={() => {}}
               text='1'
               textColor='text-rose-600'
             />
             <ResultButton
+              disabled={false}
               handleClick={() => {}}
               text='2'
               textColor='text-rose-400'
             />
             <ResultButton
+              disabled={false}
               handleClick={() => {}}
               text='3'
               textColor='text-sky-300'
             />
             <ResultButton
+              disabled={false}
               handleClick={() => {}}
               text='4'
               textColor='text-sky-400'
             />
             <ResultButton
+              disabled={false}
               handleClick={() => {}}
               text='5'
               textColor='text-sky-500'

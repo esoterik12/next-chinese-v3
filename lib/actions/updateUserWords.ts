@@ -1,3 +1,4 @@
+'use server'
 import UserWord, { UserWordDocument } from '@/models/userword.model'
 import { connectToDB } from '../mongoose'
 import mongoose from 'mongoose'
@@ -8,14 +9,15 @@ export async function updateUserWords({
   reviewResults,
   userId
 }: {
-  reviewResults: any[]
+  // TODO: any type
+  reviewResults: UserWordDocument[] | any
   userId: mongoose.Types.ObjectId
 }) {
   try {
-    // Unifinished: Define input type
     await connectToDB()
 
-    const bulkUserWordsUpdate = reviewResults.map(word => ({
+    // TODO: Any type
+    const bulkUserWordsUpdate = reviewResults.map((word: any) => ({
       updateOne: {
         filter: { _id: word.wordId, userId: userId }, // Multiple conditions
         update: {

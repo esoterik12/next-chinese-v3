@@ -21,7 +21,7 @@
     @apply text-6xl font-bold;
   }
   .custom-header {
-    @apply text-4xl font-semibold  leading-relaxed;
+    @apply text-4xl font-semibold leading-relaxed;
   }
   .custom-subheader {
     @apply text-2xl font-semibold;
@@ -32,8 +32,11 @@
   .custom-text {
     @apply font-normal;
   }
+  .custom-small-text {
+    @apply text-sm;
+  }
   .custom-link {
-    @apply font-semibold hover:cursor-pointer hover:underline;
+    @apply hover:cursor-pointer hover:underline;
   }
   .custom-primary-link {
     @apply custom-link custom-primary-color;
@@ -41,9 +44,10 @@
   .custom-secondary-link {
     @apply custom-link custom-secondary-color;
   }
-  .custom-small-text {
-    @apply text-sm;
+  .custom-tertiary-link {
+    @apply custom-small-text custom-gray-text transition-colors duration-300 hover:cursor-pointer hover:text-gray-200;
   }
+
   /* Effects, Borders & Backgrounds */
   .custom-hover-effect {
     @apply transition-colors duration-300 ease-in-out hover:bg-gray-800;

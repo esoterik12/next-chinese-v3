@@ -5,7 +5,7 @@ import ResultButton from '../buttons/ResultButton'
 import IconDownChevron from '../icons/IconDownChevron'
 import AnimatedSection from './AnimatedSection'
 import { useAppContext } from '@/lib/context/ReviewSessionContext'
-import { SetStateAction, useState } from 'react'
+import { SetStateAction, useState, useCallback } from 'react'
 import CorrectButton from '../buttons/CorrectButton'
 import IconXCircle from '../icons/IconXCircle'
 import IconCheckCircle from '../icons/IconCheckCircle'
@@ -22,29 +22,22 @@ const WordCard = ({ setShowSentence, fetching }: WordCardProps) => {
   const { dispatch, unfinishedWords, loading } = useAppContext()
   const voice = useVoices()
 
-  const handleShow = () => {
-    if (
-      unfinishedWords &&
-      unfinishedWords.length > 0 &&
-      unfinishedWords[0].wordTraditional
-    ) {
-      const speech = new SpeechSynthesisUtterance(
-        unfinishedWords[0].wordTraditional
-      )
+  const handleShow = useCallback(() => {
+    if (unfinishedWords && unfinishedWords.length > 0 && unfinishedWords[0].wordTraditional) {
+      const speech = new SpeechSynthesisUtterance(unfinishedWords[0].wordTraditional);
 
       if (voice) {
-        speech.voice = voice
+        speech.voice = voice;
       } else {
-        console.log('Voice not found; make sure you are using Chrome.')
+        console.log('Voice not found; make sure you are using Chrome.');
       }
 
-      speechSynthesis.speak(speech)
-
-      setShow(true)
+      speechSynthesis.speak(speech);
+      setShow(true);
     } else {
-      console.log('Speech data is not available yet.')
+      console.log('Speech data is not available yet.');
     }
-  }
+  }, [unfinishedWords, voice]);
 
   // General function to clear up ui after each card
   const completeCard = () => {
@@ -75,7 +68,7 @@ const WordCard = ({ setShowSentence, fetching }: WordCardProps) => {
   }
 
   // Custom hook for keyboard input adapted from dev.to post
-  useKeyboard({ show, setShow, handleShow, voice })
+  useKeyboard({ show, completeCard, handleShow, voice })
 
   if (loading || !unfinishedWords) {
     return <p>Loading...</p>
@@ -86,9 +79,10 @@ const WordCard = ({ setShowSentence, fetching }: WordCardProps) => {
   }
 
   return (
-    <div className='custom-gradient-background custom-border h-[340px] w-[250px]'>
+    <div className='custom-gradient-background custom-border h-[380px] w-[270px]'>
+      {/* Word section - fixed height */}
       <AnimatedSection
-        classes='flex h-[110px] flex-col items-center justify-end gap-y-4'
+        classes='flex h-[130px] flex-col items-center justify-end gap-y-4'
         motionKey='words'
       >
         <>
@@ -97,12 +91,12 @@ const WordCard = ({ setShowSentence, fetching }: WordCardProps) => {
         </>
       </AnimatedSection>
 
-      <div className='flex h-[230px] flex-col items-center justify-center'>
+      <div className='flex h-[250px] flex-col items-center justify-center'>
         <AnimatePresence mode='wait'>
           {!show && (
             <AnimatedSection motionKey='button'>
               <DefaultButton handleClick={handleShow} customClasses='mb-14 p-2'>
-                <IconDownChevron classes='h-6 w-6' />
+                <IconDownChevron classes='h-6 w-6 text-gray-400' />
               </DefaultButton>
             </AnimatedSection>
           )}
@@ -124,7 +118,7 @@ const WordCard = ({ setShowSentence, fetching }: WordCardProps) => {
                 </div>
 
                 {!unfinishedWords[0].seenToday && (
-                  <div className='mb-3 flex w-full flex-row items-center justify-between gap-x-0.5'>
+                  <div className='mb-3 flex w-full flex-row items-center justify-between gap-x-1'>
                     <ResultButton
                       disabled={fetching}
                       handleClick={() => handleResult(1)}

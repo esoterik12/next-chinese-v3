@@ -6,7 +6,7 @@ export default function IconXCircle({ classes }: { classes: string }) {
       viewBox='0 0 24 24'
       strokeWidth={1.5}
       stroke='currentColor'
-      className='size-6'
+      className={ classes }
     >
       <path
         strokeLinecap='round'

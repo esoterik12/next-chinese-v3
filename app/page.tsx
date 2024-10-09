@@ -1,5 +1,4 @@
 'use client'
-import WordCardHomepage from '@/components/cards/WordCardHomepage'
 import PageContainer from '@/components/containers/PageContainer'
 
 export default function Home() {
@@ -24,7 +23,7 @@ export default function Home() {
           </p>
         </section>
         <section className='w-full flex flex-col items-center p-20 md:w-2/5'>
-          <WordCardHomepage />
+          <p>Demo Here</p>
         </section>
       </div>
     </PageContainer>

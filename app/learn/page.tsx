@@ -31,3 +31,13 @@
 */
 
 // Review Session: this will have functionality to use an event listener beforeunload
+
+import React from 'react'
+
+const LearnPage = () => {
+  return (
+    <div>LearnPage</div>
+  )
+}
+
+export default LearnPage

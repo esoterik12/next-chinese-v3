@@ -1,6 +1,6 @@
 'use server'
 import Word from '@/models/word.model'
-import { connectToDB } from '../mongoose'
+import { connectToDB } from '@/lib/mongoose'
 /*
   The key here will that it fetches a set of the most urgent words to review
   according to the next review date

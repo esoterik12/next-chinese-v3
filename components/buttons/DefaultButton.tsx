@@ -16,16 +16,15 @@ const DefaultButton = ({
   customClasses,
   handleClick,
   btnType,
-  textStyles
 }: DefaultButtonProps) => {
   return (
     <button
       onClick={handleClick}
       type={btnType || 'button'}
-      className={`custom-hover-effect bg-gray-900 rounded-lg disabled:cursor-not-allowed ${customClasses}`}
+      className={`custom-hover-effect rounded-lg disabled:cursor-not-allowed ${customClasses}`}
       disabled={isDisabled}
     >
-      <div className=''>{children}</div>
+      {children}
     </button>
   )
 }

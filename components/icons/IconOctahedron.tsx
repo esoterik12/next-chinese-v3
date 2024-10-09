@@ -1,4 +1,4 @@
-export default function IconOctahedron({ classes }: { classes: string }) {
+export default function IconOctahedron() {
   return (
     <svg
       fill="#ffffff"

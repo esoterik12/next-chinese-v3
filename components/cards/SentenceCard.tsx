@@ -1,6 +1,6 @@
 'use client'
 import DefaultButton from '../buttons/DefaultButton'
-import { SetStateAction, useState, useEffect } from 'react'
+import { SetStateAction, useState, useEffect, useCallback } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import AnimatedSection from './AnimatedSection'
 import { useAppContext } from '@/lib/context/ReviewSessionContext'
@@ -30,7 +30,10 @@ const SentenceCard = ({
   const [sentenceData, setSentenceData] =
     useState<GeneratedSentenceProps | null>(null)
 
-  const handleSentence = async () => {
+  // useCallback to memoize the handleSentence function,
+  // prevents unnecessary re-renders and makes sure the
+  // useEffect only triggers when showSentence or unfinishedWords change.
+  const handleSentence = useCallback(async () => {
     setFetching(true)
     const sentenceResult = await generateSentence({
       word: unfinishedWords[0].wordTraditional,
@@ -41,7 +44,7 @@ const SentenceCard = ({
     setSentenceData(sentenceResult.result)
     dispatch({ type: 'addSentence', newSentence: sentenceResult.result })
     return sentenceResult
-  }
+  }, [unfinishedWords, dispatch, setFetching, setShowSentence])
 
   // Allows for c key to trigger sentence generation
   useEffect(() => {
@@ -57,18 +60,22 @@ const SentenceCard = ({
     return () => {
       document.removeEventListener('keydown', keyDownHandler)
     }
-  }, [showSentence])
+  }, [showSentence, handleSentence])
 
   return (
-    <div className='mt-2 flex h-[40px] flex-col'>
+    <div className='mt-2 flex h-[120px] w-full flex-col items-center'>
       <AnimatePresence mode='wait'>
         {!showSentence && (
           <AnimatedSection key='sentenceButton'>
             <DefaultButton
               handleClick={handleSentence}
-              customClasses='custom-hover-effect p-2 w-[250px]'
+              customClasses='custom-hover-effect bg-gray-900 p-2 w-[270px]'
             >
-              {!fetching ? <p>Context</p> : <p>Loading...</p>}
+              {!fetching ? (
+                <p className='text-center'>Context</p>
+              ) : (
+                <p className='text-center'>Loading</p>
+              )}
             </DefaultButton>
           </AnimatedSection>
         )}
@@ -79,7 +86,8 @@ const SentenceCard = ({
             classes='flex flex-col gap-1 p-4'
           >
             <>
-              <p className='custom-large-text'>
+              {/* This ml is to offset the issue of the Chinese period taking up full character length and making it not seem centered. */}
+              <p className='custom-large-text ml-2'>
                 {sentenceData.traditionalSentence}
               </p>
               <p className='custom-small-text'>{sentenceData.pinyin}</p>
