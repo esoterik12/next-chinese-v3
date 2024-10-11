@@ -41,6 +41,8 @@ export async function fetchWords({
         select: ''
       })
 
+    console.log('Tried fetching userWords - wordsDueResult: ', wordsDueResult)
+
     // Flattens the Word collection data into the wordsDue data
     const fetchWordsResult = wordsDueResult.map(userWord => {
       const { wordId, ...userWordWithoutWordId } = userWord.toObject()
@@ -51,12 +53,14 @@ export async function fetchWords({
     if (wordsDueResult.length < sessionWordGoal) {
       const newWordsResult = await fetchNewWords({
         newWordsDue: sessionWordGoal - wordsDueResult.length,
-        latestWordNumber: 3333
+        latestWordNumber: 5
       })
 
       // Adds review session stats and default sm2 values
       const expandedArray = newWordsResult.map(word => ({
         ...word,
+        // TODO Possible Issue: Saving id as a duplicate - find alternative?
+        wordId: word._id, // Added as duplicate for saving in UserWords after review
         userId: userId,
         repetitions: 0,
         interval: 0,
@@ -77,7 +81,7 @@ export async function fetchWords({
       result: jsonResults
     }
   } catch (error) {
-    console.error('Error context: Fetching words from MongoDB', error)
+    console.error('Error Fetching words from MongoDB: ', error)
 
     throw {
       message: 'Failed to fetch words',

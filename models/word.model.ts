@@ -8,9 +8,6 @@
 // This is especially relevant for Level 1 and 2, perhpas 3, but 4 and 5 order the orders in a strange way
 // Perhaps find an ordering that matches the Taiwan text books
 
-// IMPORTANT: Simplified and Traditional support is essential!
-
-// fields like wordTraditional
 import mongoose from 'mongoose'
 
 const wordSchema = new mongoose.Schema({
@@ -52,10 +49,22 @@ const wordSchema = new mongoose.Schema({
   ]
 })
 
-export interface WordDocument
-  extends Document,
-    mongoose.InferSchemaType<typeof wordSchema> {}
+// Manually defined schema - not extending mongoose types
+// TODO: find an alternative that doesn't require a rewriting of the types from the schema
+export interface Word {
+  tocflLevel?: number
+  wordNumber: number
+  wordTraditional: string
+  wordSimplified: string
+  wordPinyin: string
+  wordTranslation: string
+  partOfSpeech: string
+  wordSentences: mongoose.Types.ObjectId[]
+}
 
-const Word = mongoose.models.Word || mongoose.model('Word', wordSchema)
+// Extend the base Document type and add only the relevant properties
+export interface WordDocument extends Word, Document {}
+
+const Word = mongoose.models.Word || mongoose.model<WordDocument>('Word', wordSchema)
 
 export default Word

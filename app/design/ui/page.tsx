@@ -9,7 +9,7 @@ export default async function UiDesignPage() {
   // Returns object with code, message, result
   const fetchedWords = await fetchWords({
     userId: dummyUserData._id,
-    sessionWordGoal: 20
+    sessionWordGoal: 10
   })
 
   // if (fetchedWords.code === 409) {

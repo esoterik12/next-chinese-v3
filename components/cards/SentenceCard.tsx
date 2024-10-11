@@ -7,10 +7,10 @@ import { useAppContext } from '@/lib/context/ReviewSessionContext'
 import generateSentence from '@/lib/actions/generateSentence'
 
 export interface GeneratedSentenceProps {
-  pinyin: string
-  simplifiedSentence: string
-  traditionalSentence: string
-  translation: string
+  sentTraditional: string
+  sentSimplified: string
+  sentPinyin: string
+  sentTranslation: string
 }
 
 interface SentenceCardProps {
@@ -30,28 +30,42 @@ const SentenceCard = ({
   const [sentenceData, setSentenceData] =
     useState<GeneratedSentenceProps | null>(null)
 
-  // useCallback to memoize the handleSentence function,
-  // prevents unnecessary re-renders and makes sure the
+  // useCallback memoizes the handleSentence function, stops unnecessary re-renders
   // useEffect only triggers when showSentence or unfinishedWords change.
+
+  /* TODO:
+      1. handleSentence checks both existing sentence array AND new sentences (incase there is a newly generated sentence to use)
+      2. IF sentence in unfinishedWords array[0] then sinply setSentenceData to that
+      3. ELSE run generateSentence
+  */
+
   const handleSentence = useCallback(async () => {
-    setFetching(true)
-    const sentenceResult = await generateSentence({
-      word: unfinishedWords[0].wordTraditional,
-      level: unfinishedWords[0].tocflLevel
-    })
-    setFetching(false)
+    // If there is an existing sentence from the DB
+    if (unfinishedWords[0].wordSentences.length > 0) {
+      setShowSentence(unfinishedWords[0].wordSentences[0])
+      // If there is a new sentence generated this session in state
+    } else if (unfinishedWords[0].newSentencesArray.length > 0) {
+      setShowSentence(unfinishedWords[0].newSentencesArray[0])
+      // Else generate new sentence
+    } else {
+      setFetching(true)
+      const sentenceResult = await generateSentence({
+        word: unfinishedWords[0].wordTraditional,
+        level: unfinishedWords[0].tocflLevel
+      })
+      dispatch({ type: 'addSentence', newSentence: sentenceResult.result })
+      setSentenceData(sentenceResult.result)
+      setFetching(false)
+    }
+
     setShowSentence(true)
-    setSentenceData(sentenceResult.result)
-    dispatch({ type: 'addSentence', newSentence: sentenceResult.result })
-    return sentenceResult
   }, [unfinishedWords, dispatch, setFetching, setShowSentence])
 
   // Allows for c key to trigger sentence generation
   useEffect(() => {
     const keyDownHandler = async (e: globalThis.KeyboardEvent) => {
       if (!showSentence && e.key === 'c') {
-        const sentenceKeyResult = await handleSentence()
-        setSentenceData(sentenceKeyResult.result)
+        await handleSentence()
       }
     }
 
@@ -88,11 +102,11 @@ const SentenceCard = ({
             <>
               {/* This ml is to offset the issue of the Chinese period taking up full character length and making it not seem centered. */}
               <p className='custom-large-text ml-2'>
-                {sentenceData.traditionalSentence}
+                {sentenceData.sentTraditional}
               </p>
-              <p className='custom-small-text'>{sentenceData.pinyin}</p>
+              <p className='custom-small-text'>{sentenceData.sentPinyin}</p>
               <p className='custom-small-text custom-gray-text'>
-                {sentenceData.translation}
+                {sentenceData.sentTranslation}
               </p>
               {/* <SentenceVote
                 sentenceUpvotes={dummySentenceData[0].upvotes}

@@ -53,11 +53,20 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with
 - `/lib/csvUpload.ts` contains a function to upload `/public/word-data.csv`
 
 # Models
+- The NC application uses 5 models/collections with MongoDB:
+  - Users
+  - Words
+  - UserWords
+  - Sentences
+  - Sessions
 
 # Actions
 - Two server actions form the core of the backend:
-  - `/lib/actions/fetchWords.ts` which gets all words with nextReviewDate before current time from UserWords collection and then adds new words depending on length of wordsDue from Words collection
-  - `/lib/action/updateUserWords.ts` which takes React state from a review session and updates/adds UserWords with results from the session
+  - `/lib/actions/words/fetchWords.ts` which gets all words with nextReviewDate before current time from UserWords collection and then adds new words depending on length of wordsDue from Words collection
+  - `/lib/actions/words/updateUserWords.ts` which takes React state from a review session and updates/adds UserWords with results from the session
+  - `/lib/actions/sentences/fetchSentences.ts`
+  - `/lib/actions/sentences/saveSentences.ts`
+  - `/lib/actions/sentences/generateSentence.ts`
 
 ## 3. The Spaced-Repetition Algorith
 

@@ -6,8 +6,8 @@ import { GeneratedSentenceProps } from '@/components/cards/SentenceCard'
 
 // Unfinished: temporary any state until word types defined
 interface AppContextTypes {
-  unfinishedWords: any[]
-  finishedWords: any[]
+  unfinishedWords: ReviewResultDocument[]
+  finishedWords: ReviewResultDocument[]
   loading: boolean
   dispatch: React.Dispatch<ReducerAction>
 }
@@ -43,6 +43,7 @@ const initialContext = {
 const reducer = (state: ReducerState, action: ReducerAction): ReducerState => {
   // Get the current word - should always be at the start of the unfinished array
   const currentUnfinishedWords = [...state.unfinishedWords]
+  const currentFinishedWords = [...state.finishedWords]
   const word = currentUnfinishedWords.shift() // Get the first word
 
   // Loads fetchedWords into the context
@@ -66,14 +67,14 @@ const reducer = (state: ReducerState, action: ReducerAction): ReducerState => {
 
       // Puts the new sentence in the word variable
       // Creates a new copy of the word and its sentences array
-      const updatedWord = {
+      const updatedWordWithSent = {
         ...word,
         newSentencesArray: [...word.newSentencesArray, action.newSentence]
       }
       // Keeps the active word at the front of the array
       return {
         ...state,
-        unfinishedWords: [updatedWord, ...currentUnfinishedWords]
+        unfinishedWords: [updatedWordWithSent, ...currentUnfinishedWords]
       }
     case 'firstResult':
       // Return state if no payload or no word
@@ -81,11 +82,20 @@ const reducer = (state: ReducerState, action: ReducerAction): ReducerState => {
         return { ...state }
       }
 
+      // First, create a copy of the word and reviewHistory array to avoid mutation
+      const updatedReviewHistory = [
+        ...word.reviewHistory,
+        {
+          date: new Date(),
+          quality: action.firstResult
+        }
+      ]
+
       // First add outcome of this review session to reviewHistory
-      word.reviewHistory.push({
-        date: Date.now(),
-        quality: action.firstResult
-      })
+      // word.reviewHistory.push({
+      //   date: Date.now(),
+      //   quality: action.firstResult
+      // })
 
       // Compute new sm2 values based on result and previous values
       const { n, ef, i } = sm2(
@@ -95,25 +105,36 @@ const reducer = (state: ReducerState, action: ReducerAction): ReducerState => {
         word.interval
       )
 
-      // Update new sm2 values
-      word.repetitions = n
-      word.easeFactor = ef
-      word.interval = i
-      // Add new property to signal the words has been seen
-      word.seenToday = true
+      // // Update new sm2 values
+      // word.repetitions = n
+      // word.easeFactor = ef
+      // word.interval = i
+      // // Add new property to signal the words has been seen
+      // word.seenToday = true
+
+      // Update word properties immutably
+
+      const updatedWordWithStats = {
+        ...word,
+        reviewHistory: updatedReviewHistory, // Use the new reviewHistory array
+        repetitions: n,
+        easeFactor: ef,
+        interval: i,
+        seenToday: true
+      }
 
       // If result >= 3 then add the word to finishedWords
       if (action.firstResult >= 3) {
         return {
           ...state,
           unfinishedWords: currentUnfinishedWords,
-          finishedWords: [...state.finishedWords, word]
+          finishedWords: [...currentFinishedWords, updatedWordWithStats]
         }
       } else {
         // Otherwise return it to the unfinished words to be seen once more until correct
         return {
           ...state,
-          unfinishedWords: [...currentUnfinishedWords, word]
+          unfinishedWords: [...currentUnfinishedWords, updatedWordWithStats]
         }
       }
 

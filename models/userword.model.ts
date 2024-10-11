@@ -82,11 +82,23 @@ const userWordSchema = new mongoose.Schema(
   { timestamps: true }
 )
 
-export interface UserWordDocument
-  extends Document,
-    mongoose.InferSchemaType<typeof userWordSchema> {}
+// Manually defined schema - not extending mongoose types
+// TODO: find an alternative that doesn't require a rewriting of the types from the schema
+export interface UserWord {
+  userId: mongoose.Types.ObjectId
+  wordId: mongoose.Types.ObjectId
+  repetitions: number
+  interval: number
+  easeFactor: number
+  nextReviewDate: Date
+  reviewHistory: { date: Date; quality: number }[]
+}
+
+// Extend the base Document type and add only the relevant properties
+export interface UserWordDocument extends UserWord, Document {}
 
 const UserWord =
-  mongoose.models.UserWord || mongoose.model('UserWord', userWordSchema)
+  mongoose.models.UserWord ||
+  mongoose.model<UserWordDocument>('UserWord', userWordSchema)
 
 export default UserWord

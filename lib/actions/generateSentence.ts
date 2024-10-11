@@ -20,7 +20,7 @@ export default async function generateSentence({
     Only reply with the sentence in traditional chinese and simplified and no further comments. 
     Also include a translation of the sentence and the sentence in pinyin. 
     Reply with only JSON: 
-    { "traditionalSentence": "", "simplifiedSentence": "", "pinyin": "", "translation": ""} 
+    { "sentTraditional": "", "sentSimplified": "", "sentPinyin": "", "sentTranslation": ""} 
     where the sentence, the pinyin sentence, and the translation are each a property of the JSON object. 
     `
 

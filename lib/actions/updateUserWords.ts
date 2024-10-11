@@ -1,7 +1,8 @@
 'use server'
-import UserWord, { UserWordDocument } from '@/models/userword.model'
+import UserWord from '@/models/userword.model'
 import { connectToDB } from '../mongoose'
 import mongoose from 'mongoose'
+import { ReviewResultDocument } from '@/types/review.types'
 
 // This function should use a complete result object array from app state after a review session
 // It will update use bulkWrite with a mapped array into updateOne with upsert: true for new
@@ -10,20 +11,24 @@ export async function updateUserWords({
   userId
 }: {
   // TODO: any type
-  reviewResults: UserWordDocument[] | any
+  reviewResults: ReviewResultDocument[]
   userId: mongoose.Types.ObjectId
 }) {
   try {
     await connectToDB()
 
-    // TODO: Any type
-    const bulkUserWordsUpdate = reviewResults.map((word: any) => ({
+    console.log('reviewResults in updateUserWords: ', reviewResults)
+
+    // LEFT OFF: This works now, correctly updating or upserting UserWords
+    // Issues with state, particularly reviewHistory double entry
+    // Check repetitions as well and other sm-2 state - seem to be wrong
+    const bulkUserWordsUpdate = reviewResults.map((word: ReviewResultDocument) => ({
       updateOne: {
         filter: { _id: word.wordId, userId: userId }, // Multiple conditions
         update: {
           $set: {
-            wordId: word.wordId,
-            userId: userId,
+            wordId: word.wordId, // Sets the wordId to the correspond id of the word in Words collection
+            userId: userId, // Connects word to a user
             repetitions: word.repetitions,
             interval: word.interval,
             easeFactor: word.easeFactor,
