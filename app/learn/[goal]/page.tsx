@@ -7,14 +7,10 @@ import { ReviewResultDocument } from '@/types/review.types'
 import { useAppContext } from '@/lib/context/ReviewSessionContext'
 import { useEffect } from 'react'
 
-const LearnGoalPage = ({
-  params
-}: {
-  params: { goal: '20' | '50' | '80' | '100' }
-}) => {
+const LearnGoalPage = ({ params }: { params: { goal: string } }) => {
   const { dispatch } = useAppContext()
   const { data: session, status } = useSession()
-  
+
   if (!params.goal || !session) return null // TODO add error handling for this
 
   // Uses goal from params and user.id from jwt session to fetch words and adds them to react context state
@@ -52,7 +48,7 @@ const LearnGoalPage = ({
 
   return (
     <main className='flex h-[calc(100vh-64px)] flex-col items-center justify-center'>
-      <ReviewContainer userId={session.user.id} />
+      <ReviewContainer userId={session.user.id} goal={params.goal} />
     </main>
   )
 }

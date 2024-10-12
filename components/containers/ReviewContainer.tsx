@@ -1,27 +1,51 @@
 'use client'
 import { useAppContext } from '@/lib/context/ReviewSessionContext'
-import { useEffect, useState } from 'react'
+import { useState, useEffect } from 'react'
 import WordCard from '../cards/WordCard'
 import SentenceCard from '../cards/SentenceCard'
 import IconSettings from '../icons/IconSettings'
-import { endLearnSession } from '@/lib/actions/session/endLearnSession'
 import { useRouter } from 'next/navigation'
 import EndLearnSession from '../buttons/EndLearnSession'
-// import EndLearnSession from '../buttons/EndLearnSession'
+import { endLearnSession } from '@/lib/actions/session/endLearnSession'
 
 type WordCardProps = {
   userId: string
+  goal: string
 }
 
-const ReviewContainer = ({ userId }: WordCardProps) => {
-  const { unfinishedWords, finishedWords, loading } = useAppContext()
+const ReviewContainer = ({ userId, goal }: WordCardProps) => {
+  const { unfinishedWords, finishedWords, loadingState } = useAppContext()
   const [showSentence, setShowSentence] = useState(false)
   const [fetching, setFetching] = useState(false)
   const router = useRouter()
 
-  if (loading) {
+  // Sends update when unfinishedWords.length === 0
+  useEffect(() => {
+    // TODO Ensure loading Effect
+    const sendUpdate = async () => {
+      if (finishedWords.length === +goal) {
+        // TODO: Improve error handling
+        try {
+          await endLearnSession({ userId, finishedWords })
+          router.push('/')
+        } catch (error) {
+          console.error('Error sending update:', error)
+        }
+      }
+    }
+    sendUpdate()
+  }, [unfinishedWords])
+
+  if (loadingState) {
     return <p>Loading...</p>
   }
+
+  if (finishedWords.length === +goal) {
+    return <p>Session complete.</p>
+  }
+
+  // console.log('unfinishedWords in ReviewContainer.tsx', unfinishedWords)
+  // console.log('finishedWords in ReviewContainer.tsx', finishedWords)
 
   const buttonStyles =
     'h-6 w-6 text-gray-400 rounded-full transition-colors duration-300 hover:text-gray-300 hover:cursor-pointer'

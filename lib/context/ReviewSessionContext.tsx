@@ -8,7 +8,7 @@ import { SentenceProps } from '@/components/cards/SentenceCard'
 interface AppContextTypes {
   unfinishedWords: ReviewResultDocument[]
   finishedWords: ReviewResultDocument[]
-  loading: boolean
+  loadingState: boolean
   dispatch: React.Dispatch<ReducerAction>
 }
 
@@ -29,14 +29,14 @@ interface ReducerAction {
 interface ReducerState {
   unfinishedWords: ReviewResultDocument[]
   finishedWords: ReviewResultDocument[]
-  loading: boolean
+  loadingState: boolean
   error: string | null
 }
 
 const initialContext = {
   unfinishedWords: [],
   finishedWords: [],
-  loading: true,
+  loadingState: true,
   error: null
 }
 
@@ -52,7 +52,7 @@ const reducer = (state: ReducerState, action: ReducerAction): ReducerState => {
       if (action.fetchedWords) {
         return {
           ...state,
-          loading: false,
+          loadingState: false,
           unfinishedWords: action.fetchedWords,
           finishedWords: []
         }
@@ -158,7 +158,7 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       value={{
         unfinishedWords: state.unfinishedWords,
         finishedWords: state.finishedWords,
-        loading: state.loading,
+        loadingState: state.loadingState,
         dispatch
       }}
     >

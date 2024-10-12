@@ -5,12 +5,13 @@ import ResultButton from '../buttons/ResultButton'
 import IconDownChevron from '../icons/IconDownChevron'
 import AnimatedSection from './AnimatedSection'
 import { useAppContext } from '@/lib/context/ReviewSessionContext'
-import { SetStateAction, useState, useCallback } from 'react'
+import { SetStateAction, useState, useCallback, useEffect } from 'react'
 import CorrectButton from '../buttons/CorrectButton'
 import IconXCircle from '../icons/IconXCircle'
 import IconCheckCircle from '../icons/IconCheckCircle'
 import { useKeyboard } from '@/lib/custom-hooks/useKeyboard'
 import useVoices from '@/lib/custom-hooks/useVoice'
+import { useRouter } from 'next/navigation'
 
 interface WordCardProps {
   setShowSentence: React.Dispatch<SetStateAction<boolean>>
@@ -18,26 +19,33 @@ interface WordCardProps {
 }
 
 const WordCard = ({ setShowSentence, fetching }: WordCardProps) => {
+  const router = useRouter()
   const [show, setShow] = useState(false)
-  const { dispatch, unfinishedWords, loading } = useAppContext()
+  const { dispatch, unfinishedWords, finishedWords, loadingState } = useAppContext()
   const voice = useVoices()
 
   const handleShow = useCallback(() => {
-    if (unfinishedWords && unfinishedWords.length > 0 && unfinishedWords[0].wordTraditional) {
-      const speech = new SpeechSynthesisUtterance(unfinishedWords[0].wordTraditional);
+    if (
+      unfinishedWords &&
+      unfinishedWords.length > 0 &&
+      unfinishedWords[0].wordTraditional
+    ) {
+      const speech = new SpeechSynthesisUtterance(
+        unfinishedWords[0].wordTraditional
+      )
 
       if (voice) {
-        speech.voice = voice;
+        speech.voice = voice
       } else {
-        console.log('Voice not found; make sure you are using Chrome.');
+        console.log('Voice not found; make sure you are using Chrome.')
       }
 
-      speechSynthesis.speak(speech);
-      setShow(true);
+      speechSynthesis.speak(speech)
+      setShow(true)
     } else {
-      console.log('Speech data is not available yet.');
+      console.log('Speech data is not available yet.')
     }
-  }, [unfinishedWords, voice]);
+  }, [unfinishedWords, voice])
 
   // General function to clear up ui after each card
   const completeCard = () => {
