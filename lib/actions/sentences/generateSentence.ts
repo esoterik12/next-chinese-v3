@@ -1,5 +1,6 @@
 'use server'
 import OpenAI from 'openai'
+import { AppError } from '@/lib/errors/AppError'
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAPI_KEY
@@ -7,7 +8,7 @@ const openai = new OpenAI({
 
 interface GenerateSentenceProps {
   word: string
-  level?: 1 | 2 | 3 | 4 | 5
+  level?: number
 }
 
 export default async function generateSentence({
@@ -42,16 +43,11 @@ export default async function generateSentence({
 
     // Error if the response does not return the correct format
     if (!response.choices[0].message.content) {
-      return {
-        message:
-          'Invalid response format from API; response returned unexpected format.',
-        code: 500
-      }
+      throw new AppError(
+        500,
+        'Invalid response format from sentence generation API; response returned unexpected format.'
+      )
     }
-    console.log(
-      'ChatGPT API response arrived.: ',
-      response.choices[0].message.content
-    )
 
     // Return success and content parsed to JSON
     const jsonContent = JSON.parse(response.choices[0].message.content)
@@ -69,10 +65,17 @@ export default async function generateSentence({
     }
   } catch (error) {
     console.error('Error generating sentence:', error)
+    if (error instanceof AppError) {
+      return {
+        code: error.code,
+        error: error.message
+      }
+    }
+
+    // Generic errors
     return {
-      message: 'Sentence generation failed.',
       code: 500,
-      originalError: error
+      error: `An unexpected error occurred while ending the session: ${error.message}`
     }
   }
 }

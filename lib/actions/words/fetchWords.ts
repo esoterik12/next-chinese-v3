@@ -3,29 +3,28 @@ import UserWord from '@/models/userword.model'
 import { fetchNewWords } from './fetchNewWords'
 import mongoose from 'mongoose'
 import { connectToDB } from '@/lib/mongoose'
-// import { startLearnSession } from '../session/startLearnSession'
+import { startLearnSession } from '../session/startLearnSession'
+import { AppError } from '@/lib/errors/AppError'
+const dynamic = 'force-dynamic'
 
-// This function fetches words due for review and then fills up the sessonWordGoal
-// with new words if necessary
 export async function fetchWords({
   userId,
   sessionWordGoal = 10
 }: {
-  userId: mongoose.Types.ObjectId
+  userId: mongoose.Types.ObjectId | string
   sessionWordGoal: number
 }) {
   try {
     await connectToDB()
 
-    // const learnSession = await startLearnSession(userId)
-    // if (learnSession.code === 409) {
-    //   return {
-    //     message: 'Failed to fetch words; session already active.',
-    //     code: learnSession.code,
-    //     originalError: learnSession.message
-    //   }
-    // }
-    // console.log('learnSession', learnSession)
+    const learnSession = await startLearnSession(userId)
+    if (learnSession.code === 409) {
+      console.log('Session in progress in fetchWord.ts: ', learnSession)
+      return {
+        message: learnSession.message,
+        code: learnSession.code
+      }
+    }
 
     // First: fetch due words
     const today = new Date()
@@ -41,8 +40,6 @@ export async function fetchWords({
         select: ''
       })
 
-    console.log('Tried fetching userWords - wordsDueResult: ', wordsDueResult)
-
     // Flattens the Word collection data into the wordsDue data
     const fetchWordsResult = wordsDueResult.map(userWord => {
       const { wordId, ...userWordWithoutWordId } = userWord.toObject()
@@ -56,10 +53,9 @@ export async function fetchWords({
         latestWordNumber: 5
       })
 
-      // Adds review session stats and default sm2 values
+      // Adds review session stats and default sm2 values used on the front-end
       const expandedArray = newWordsResult.map(word => ({
         ...word,
-        // TODO Possible Issue: Saving id as a duplicate - find alternative?
         wordId: word._id, // Added as duplicate for saving in UserWords after review
         userId: userId,
         repetitions: 0,
@@ -82,11 +78,17 @@ export async function fetchWords({
     }
   } catch (error) {
     console.error('Error Fetching words from MongoDB: ', error)
+    if (error instanceof AppError) {
+      return {
+        code: error.code,
+        error: error.message
+      }
+    }
 
-    throw {
-      message: 'Failed to fetch words',
+    // Generic errors
+    return {
       code: 500,
-      originalError: error
+      error: `An unexpected error occurred fetching words: ${error.message}`
     }
   }
 }

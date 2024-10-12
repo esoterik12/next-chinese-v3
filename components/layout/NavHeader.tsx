@@ -19,14 +19,20 @@ export default async function NavHeader() {
         <div className='mr-4 hidden flex-row justify-center sm:block md:flex'>
           <ul className='sm:text-md flex gap-x-5'>
             <li>
+              <NavLink href='/learn'>Learn</NavLink>
+            </li>
+            {/* <li>
               <NavLink href='/test'>Test</NavLink>
             </li>
             <li>
+              <NavLink href='/faq'>Test Client</NavLink>
+            </li> */}
+            <li>
               <NavLink href='/design/style'>Styles</NavLink>
             </li>
-            <li>
+            {/* <li>
               <NavLink href='/design/ui'>Cards</NavLink>
-            </li>
+            </li> */}
             {session && (
               <li>
                 <SignOut />

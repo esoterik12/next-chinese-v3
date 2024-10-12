@@ -2,7 +2,7 @@
 import React, { createContext, useContext, useReducer, ReactNode } from 'react'
 import sm2 from '../sm2/sm2Algo'
 import { ReviewResultDocument } from '@/types/review.types'
-import { GeneratedSentenceProps } from '@/components/cards/SentenceCard'
+import { SentenceProps } from '@/components/cards/SentenceCard'
 
 // Unfinished: temporary any state until word types defined
 interface AppContextTypes {
@@ -23,7 +23,7 @@ interface ReducerAction {
     | 'incorrectResult'
   firstResult?: number
   fetchedWords?: ReviewResultDocument[]
-  newSentence?: GeneratedSentenceProps
+  newSentence?: SentenceProps
 }
 
 interface ReducerState {
@@ -91,12 +91,6 @@ const reducer = (state: ReducerState, action: ReducerAction): ReducerState => {
         }
       ]
 
-      // First add outcome of this review session to reviewHistory
-      // word.reviewHistory.push({
-      //   date: Date.now(),
-      //   quality: action.firstResult
-      // })
-
       // Compute new sm2 values based on result and previous values
       const { n, ef, i } = sm2(
         action.firstResult,
@@ -105,22 +99,14 @@ const reducer = (state: ReducerState, action: ReducerAction): ReducerState => {
         word.interval
       )
 
-      // // Update new sm2 values
-      // word.repetitions = n
-      // word.easeFactor = ef
-      // word.interval = i
-      // // Add new property to signal the words has been seen
-      // word.seenToday = true
-
       // Update word properties immutably
-
       const updatedWordWithStats = {
         ...word,
         reviewHistory: updatedReviewHistory, // Use the new reviewHistory array
         repetitions: n,
         easeFactor: ef,
         interval: i,
-        seenToday: true
+        seenToday: true 
       }
 
       // If result >= 3 then add the word to finishedWords

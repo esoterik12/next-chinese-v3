@@ -68,15 +68,7 @@ const WordCard = ({ setShowSentence, fetching }: WordCardProps) => {
   }
 
   // Custom hook for keyboard input adapted from dev.to post
-  useKeyboard({ show, completeCard, handleShow, voice })
-
-  if (loading || !unfinishedWords) {
-    return <p>Loading...</p>
-  }
-
-  if (unfinishedWords.length === 0) {
-    return <p>Session complete.</p>
-  }
+  useKeyboard({ show, fetching, completeCard, handleShow, voice })
 
   return (
     <div className='custom-gradient-background custom-border h-[380px] w-[270px]'>

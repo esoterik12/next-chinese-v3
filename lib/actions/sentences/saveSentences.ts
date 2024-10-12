@@ -2,17 +2,12 @@
 import Sentence from '@/models/sentence.model'
 import mongoose from 'mongoose'
 import { connectToDB } from '@/lib/mongoose'
-import { GeneratedSentenceProps } from '@/components/cards/SentenceCard'
+import { SentenceProps } from '@/components/cards/SentenceCard'
 
 export interface SaveSentenceProps {
-  wordId: mongoose.Types.ObjectId
-  newSentences: GeneratedSentenceProps
+  wordId: mongoose.Types.ObjectId | string
+  newSentences: SentenceProps
 }
-
-// LEFT IT HERE - START HERE: this is mostly done
-// But the overall logic for ending a session / updating words / saving sentences
-// is beginning to come together.
-// The end of a session needs to do all three together
 
 export async function saveSentences({
   newSentences

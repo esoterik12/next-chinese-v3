@@ -26,16 +26,6 @@ const sentenceSchema = new mongoose.Schema(
       type: String,
       required: true
     },
-    upvotes: {
-      type: Number,
-      required: true,
-      default: 0
-    },
-    downvotes: {
-      type: Number,
-      required: true,
-      default: 0
-    }
   },
   { timestamps: true }
 )
@@ -45,6 +35,6 @@ export interface SentenceDocument
     mongoose.InferSchemaType<typeof sentenceSchema> {}
 
 const Sentence =
-  mongoose.models.Word || mongoose.model('Sentence', sentenceSchema)
+  mongoose.models.Sentence || mongoose.model('Sentence', sentenceSchema)
 
 export default Sentence

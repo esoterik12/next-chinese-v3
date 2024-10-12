@@ -133,10 +133,10 @@ export const dummyUserWords = [
   }
 ]
 
-export const dummyUserData = {
-  _id: new mongoose.Types.ObjectId('66fae9e84c2ae3ac289446cd'),
-  email: 'luke.hide@gmail.com',
-  username: 'Luke Hide',
-  createdAt: new Date('2024-10-02T10:41:27.501+00:00'),
-  latestWord: 5
-}
+// export const dummyUserData = {
+//   _id: new mongoose.Types.ObjectId('66fae9e84c2ae3ac289446cd'),
+//   email: 'luke.hide@gmail.com',
+//   username: 'Luke Hide',
+//   createdAt: new Date('2024-10-02T10:41:27.501+00:00'),
+//   latestWord: 5
+// }

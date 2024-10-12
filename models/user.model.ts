@@ -1,7 +1,3 @@
-// User model will be contained to login and basic statistics
-// It will have a one-to-many relationship with a separate userWords
-// model which contains all the words the user has learned
-
 import mongoose from 'mongoose'
 
 const userSchema = new mongoose.Schema({

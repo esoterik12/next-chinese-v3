@@ -1,16 +1,19 @@
 'use server'
 import mongoose from 'mongoose'
 import Session from '@/models/session.model'
+import { AppError } from '@/lib/errors/AppError'
+const dynamic = 'force-dynamic'
+const revalidate = 0
 
-export async function startLearnSession(userId: mongoose.Types.ObjectId) {
+export async function startLearnSession(userId: mongoose.Types.ObjectId | string) {
   try {
     const activeSession = await Session.findOne({ userId, isActive: true })
 
     if (activeSession) {
-      console.log('Error 409: Session active')
+      console.error('SESSION ACTIVE in startLearnSession.ts')
       return {
-        code: 409, // Conflict
-        error: 'A session is already active for this user.'
+        message: 'A session is already active for this user.',
+        code: 409
       }
     }
 
@@ -24,11 +27,9 @@ export async function startLearnSession(userId: mongoose.Types.ObjectId) {
     }
   } catch (error) {
     console.error('Error starting a session:', error)
-
-    return {
-      code: 500,
-      error: 'An error occurred while starting the session. Please try again.',
-      originalError: error
-    }
+    throw new AppError(
+      500,
+      'An error occurred while starting the session. Please try again.'
+    )
   }
 }

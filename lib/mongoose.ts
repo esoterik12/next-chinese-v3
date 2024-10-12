@@ -11,7 +11,6 @@ export const connectToDB = async () => {
   }
 
   if (isConnected) {
-    console.log('MongoDB already connected')
     return
   }
 
@@ -21,14 +20,8 @@ export const connectToDB = async () => {
       socketTimeoutMS: 45000
     })
     isConnected = true
-    console.log('MongoDB connected!')
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      console.error('Error connecting to MongoDB: ', error.message)
-      throw error.message
-    } else {
-      console.error('Unknown error connecting to MongoDB: ', error)
-      throw new Error('Unknown error occurred while connecting to MongoDB.')
-    }
+  } catch (error) {
+    console.error('Error connecting to MongoDB:', error.message || error)
+    throw new Error('Failed to connect to MongoDB')
   }
 }

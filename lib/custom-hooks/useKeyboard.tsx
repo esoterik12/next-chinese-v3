@@ -3,6 +3,7 @@ import { useAppContext } from '../context/ReviewSessionContext'
 
 interface useKeyboardProps {
   show: boolean
+  fetching: boolean
   completeCard: () => void
   handleShow: () => void
   voice: SpeechSynthesisVoice | undefined
@@ -10,6 +11,7 @@ interface useKeyboardProps {
 
 export function useKeyboard({
   show,
+  fetching,
   completeCard,
   handleShow,
   voice
@@ -19,7 +21,8 @@ export function useKeyboard({
 
   useEffect(() => {
     function keyDownHandler(e: globalThis.KeyboardEvent) {
-      if (unfinishedWords.length === 0) {
+      // Prevents key events if component is fetching
+      if (unfinishedWords.length === 0 || fetching) {
         return
       }
       if (!show && e.code === 'Space') {

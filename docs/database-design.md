@@ -13,7 +13,6 @@
 ## 3. Table Structure
 - Word-User relationship with user-specific learning data.
 
-
 ## 4. Relationship Diagram / ER Diagram
 
 ## 5. Key Business Rules
@@ -26,7 +25,6 @@
 
 ## 6. View Diagrams
 
-...
 
 
 

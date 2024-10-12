@@ -20,7 +20,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with
 
 # Taiwlind custom classes:
 
-- A few tailwind custom classes for text in /app/global.css
+- A few tailwind custom classes for text in `/app/global.css`
 
 # Theme support:
 
@@ -42,8 +42,13 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with
 - Create custom buttons using { signIn } from 'next-auth/react' (and signOut)
 - Client-side: <UseSession> provides name, email, and image
 - Server-side: <UseServerSession> provides the same, used in server actions
+- MongoDB integration requires adding callbacks to `authOptions`, type extension
+  of session in `next-auth.d.ts` (add
+  `"typeRoots": ["./types", "./node_modules/@types"]` to `tsconfig.json`). The
+  callbacks get a userId from mongo or make a new user entry with an id and
+  store the id in the session for access on client-side.
 
-## 2. MongoDB w/ Mongoose Implementation
+## 2. Backend & MongoDB w/ Mongoose Implementation
 
 # Connect to DB
 
@@ -51,8 +56,10 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with
 - set up .env.local with MONGODB_ULR
 - `/lib/mongoose.ts` contains connectToDB() to be used in server actions
 - `/lib/csvUpload.ts` contains a function to upload `/public/word-data.csv`
+  which forms the raw data for the application
 
 # Models
+
 - The NC application uses 5 models/collections with MongoDB:
   - Users
   - Words
@@ -61,14 +68,32 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with
   - Sessions
 
 # Actions
-- Two server actions form the core of the backend:
-  - `/lib/actions/words/fetchWords.ts` which gets all words with nextReviewDate before current time from UserWords collection and then adds new words depending on length of wordsDue from Words collection
-  - `/lib/actions/words/updateUserWords.ts` which takes React state from a review session and updates/adds UserWords with results from the session
+
+- These server actions form the core of the backend:
+  - `/lib/actions/session/startLearnSession.ts`: Starts a session stored in the
+    DB to prevent users opening multiple learning instances
+  - `/lib/actions/session/endLearnSession.ts`: XXX
+  - `/lib/actions/words/fetchWords.ts`: Gets all words with nextReviewDate
+    before current time from UserWords collection and then adds new words
+    depending on length of wordsDue from Words collection and sessionWordGoal.
+  - `/lib/actions/words/updateUserWords.ts`: Takes React context state from a
+    review session and updates/adds UserWords with results from the session
   - `/lib/actions/sentences/fetchSentences.ts`
   - `/lib/actions/sentences/saveSentences.ts`
   - `/lib/actions/sentences/generateSentence.ts`
 
-## 3. The Spaced-Repetition Algorith
+## 3. Front-end:
+
+# Error-Handling:
+
+For error handling on the front-end a mix of React Context and
+component-specific state is used:
+
+- React Context error handling is used to handle global errors and critical
+  processes, particularly server actions and database requests
+- XXXXXXXXXXXXX
+
+## 4. The Spaced-Repetition Algorith
 
 # Sources:
 

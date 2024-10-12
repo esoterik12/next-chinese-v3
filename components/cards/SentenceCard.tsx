@@ -4,9 +4,9 @@ import { SetStateAction, useState, useEffect, useCallback } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import AnimatedSection from './AnimatedSection'
 import { useAppContext } from '@/lib/context/ReviewSessionContext'
-import generateSentence from '@/lib/actions/generateSentence'
+import generateSentence from '@/lib/actions/sentences/generateSentence'
 
-export interface GeneratedSentenceProps {
+export interface SentenceProps {
   sentTraditional: string
   sentSimplified: string
   sentPinyin: string
@@ -28,24 +28,15 @@ const SentenceCard = ({
 }: SentenceCardProps) => {
   const { unfinishedWords, dispatch } = useAppContext()
   const [sentenceData, setSentenceData] =
-    useState<GeneratedSentenceProps | null>(null)
+    useState<SentenceProps | null>(null)
 
   // useCallback memoizes the handleSentence function, stops unnecessary re-renders
   // useEffect only triggers when showSentence or unfinishedWords change.
-
-  /* TODO:
-      1. handleSentence checks both existing sentence array AND new sentences (incase there is a newly generated sentence to use)
-      2. IF sentence in unfinishedWords array[0] then sinply setSentenceData to that
-      3. ELSE run generateSentence
-  */
-
   const handleSentence = useCallback(async () => {
-    // If there is an existing sentence from the DB
-    if (unfinishedWords[0].wordSentences.length > 0) {
-      setShowSentence(unfinishedWords[0].wordSentences[0])
-      // If there is a new sentence generated this session in state
-    } else if (unfinishedWords[0].newSentencesArray.length > 0) {
-      setShowSentence(unfinishedWords[0].newSentencesArray[0])
+    // TODO: If there is an existing sentence from the DB
+    // Add clause here to use existing sentence
+    if (unfinishedWords[0].newSentencesArray.length > 0) {
+      setSentenceData(unfinishedWords[0].newSentencesArray[0])
       // Else generate new sentence
     } else {
       setFetching(true)

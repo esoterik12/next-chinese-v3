@@ -1,12 +1,11 @@
-// how the algo works
-
-// what parts of speech abbreviations mean
+'use client'
 import React from 'react'
+import { useSession } from 'next-auth/react'
 
 const FaqPage = () => {
-  return (
-    <div>FaqPage</div>
-  )
+  const { data: session, status } = useSession()
+  console.log('session', session)
+  return <div>FaqPage</div>
 }
 
 export default FaqPage
