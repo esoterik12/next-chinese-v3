@@ -11,9 +11,10 @@ import { endLearnSession } from '@/lib/actions/session/endLearnSession'
 type WordCardProps = {
   userId: string
   goal: string
+  userLatestWord: number
 }
 
-const ReviewContainer = ({ userId, goal }: WordCardProps) => {
+const ReviewContainer = ({ userId, goal, userLatestWord }: WordCardProps) => {
   const { unfinishedWords, finishedWords, loadingState } = useAppContext()
   const [showSentence, setShowSentence] = useState(false)
   const [fetching, setFetching] = useState(false)
@@ -26,7 +27,7 @@ const ReviewContainer = ({ userId, goal }: WordCardProps) => {
       if (finishedWords.length === +goal) {
         // TODO: Improve error handling
         try {
-          await endLearnSession({ userId, finishedWords })
+          await endLearnSession({ userId, finishedWords,userLatestWord })
           router.push('/')
         } catch (error) {
           console.error('Error sending update:', error)

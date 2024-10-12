@@ -18,7 +18,10 @@ export async function fetchUserInfo({ userEmail }: { userEmail: string }) {
       nextReviewDate: { $lte: today }
     })
 
-    const activeSession = await Session.findOne({ userId: user._id, isActive: true })
+    const activeSession = await Session.findOne({
+      userId: user._id,
+      isActive: true
+    })
 
     if (activeSession) {
       return {
@@ -31,7 +34,7 @@ export async function fetchUserInfo({ userEmail }: { userEmail: string }) {
     return {
       message: 'Successfully fetched count of words due.',
       code: 200,
-      result: wordsDueCount
+      result: { wordsDueCount, user }
     }
   } catch (error) {
     console.error('Error context: Fetching new words from MongoDB', error)

@@ -40,14 +40,20 @@ export const authOptions: NextAuthOptions = {
       // Pass MongoDB user ID to the token if it's a new session
       if (user) {
         const existingUser = await User.findOne({ email: user.email })
-        token.id = existingUser?._id // Attach MongoDB user ID to the JWT token
+        if (existingUser) {
+          token.id = existingUser._id
+          token.latestWord = existingUser.latestWord
+        }
       }
       return token
     },
 
     async session({ session, token }) {
       // Add the MongoDB user ID to the session object
-      session.user.id = token.id
+      if (token) {
+        session.user.id = token.id
+        session.user.latestWord = token.latestWord as number // Add latestWord to the session
+      }
       return session
     }
   }

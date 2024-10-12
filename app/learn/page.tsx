@@ -27,8 +27,10 @@ const LearnPage = async () => {
   return (
     <main className='flex h-[calc(100vh-64px)] flex-col items-center justify-center'>
       <p>
-        You have <span className='text-rose-600'>{userInfo.result}</span>{' '}
-        {userInfo.result === 1 ? 'word' : 'words'} in need of review.
+        You have{' '}
+        <span className='text-rose-600'>{userInfo.result.wordsDueCount}</span>{' '}
+        {userInfo.result.wordsDueCount === 1 ? 'word' : 'words'} in need of
+        review.
       </p>
       <p>Select how many words you would like to learn today.</p>
       <div className='flex flex-row gap-x-2 p-2'>

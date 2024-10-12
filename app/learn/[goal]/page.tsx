@@ -22,6 +22,7 @@ const LearnGoalPage = ({ params }: { params: { goal: string } }) => {
         // This function gets words AND uses user id to start a review session in the DB
         const fetchedWords = await fetchWords({
           userId: session.user.id,
+          userLatestWord: session.user.latestWord,
           sessionWordGoal: +params.goal
         })
 
@@ -48,7 +49,7 @@ const LearnGoalPage = ({ params }: { params: { goal: string } }) => {
 
   return (
     <main className='flex h-[calc(100vh-64px)] flex-col items-center justify-center'>
-      <ReviewContainer userId={session.user.id} goal={params.goal} />
+      <ReviewContainer userLatestWord={session.user.latestWord} userId={session.user.id} goal={params.goal} />
     </main>
   )
 }

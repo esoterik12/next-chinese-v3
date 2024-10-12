@@ -9,9 +9,11 @@ const dynamic = 'force-dynamic'
 
 export async function fetchWords({
   userId,
+  userLatestWord,
   sessionWordGoal = 10
 }: {
   userId: mongoose.Types.ObjectId | string
+  userLatestWord: number
   sessionWordGoal: number
 }) {
   try {
@@ -50,7 +52,7 @@ export async function fetchWords({
     if (wordsDueResult.length < sessionWordGoal) {
       const newWordsResult = await fetchNewWords({
         newWordsDue: sessionWordGoal - wordsDueResult.length,
-        latestWordNumber: 5
+        latestWordNumber: userLatestWord
       })
 
       // Adds review session stats and default sm2 values used on the front-end
