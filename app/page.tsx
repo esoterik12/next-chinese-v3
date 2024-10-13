@@ -3,7 +3,7 @@ import PageContainer from '@/components/containers/PageContainer'
 
 export default function Home() {
   return (
-    <PageContainer>
+    <PageContainer customClasses='p-4 lg:p-12'>
       <div className='flex flex-col md:flex-row'>
         <section className='w-full md:w-3/5'>
           <h1 className='custom-header-large my-20'>

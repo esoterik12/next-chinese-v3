@@ -6,14 +6,29 @@ import { fetchWords } from '@/lib/actions/words/fetchWords'
 import { ReviewResultDocument } from '@/types/review.types'
 import { useAppContext } from '@/lib/context/ReviewSessionContext'
 import { useEffect } from 'react'
+import InlineError from '@/components/shared/InlineError'
+import PageContainer from '@/components/containers/PageContainer'
 
 const LearnGoalPage = ({ params }: { params: { goal: string } }) => {
   const { dispatch } = useAppContext()
   const { data: session, status } = useSession()
 
-  if (!params.goal || !session) return null // TODO add error handling for this
   if (!['5', '20', '50', '80', '100'].includes(params.goal))
-    return <p>Invalid goal selected.</p> // TODO add better handling
+    return (
+      <PageContainer>
+        <InlineError classes='p-2 h-full w-full flex flex-grow flex-col items-center justify-center'>
+          <p className='text-rose-500'>Invalid goal selected.</p>
+        </InlineError>
+      </PageContainer>
+    )
+  if (!params.goal || !session)
+    return (
+      <PageContainer>
+        <InlineError classes='p-2 h-full w-full flex flex-grow flex-col items-center justify-center'>
+          <p className='text-rose-500'>Invalid user session.</p>
+        </InlineError>
+      </PageContainer>
+    )
 
   // Uses goal from params and user.id from jwt session to fetch words and adds them to react context state
   useEffect(() => {
@@ -54,12 +69,9 @@ const LearnGoalPage = ({ params }: { params: { goal: string } }) => {
   }, [dispatch, session, params.goal])
 
   return (
-    <main className='flex h-[calc(100vh-64px)] flex-col items-center justify-center'>
-      <ReviewContainer
-        userId={session.user.id}
-        goal={params.goal}
-      />
-    </main>
+    <PageContainer>
+      <ReviewContainer userId={session.user.id} goal={params.goal} />
+    </PageContainer>
   )
 }
 

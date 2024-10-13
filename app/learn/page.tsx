@@ -4,9 +4,22 @@ import DefaultButton from '@/components/buttons/DefaultButton'
 import Link from 'next/link'
 import { getServerSession } from 'next-auth'
 import EndLearnSession from '@/components/buttons/EndLearnSession'
+import PageContainer from '@/components/containers/PageContainer'
+import InlineError from '@/components/shared/InlineError'
+import GoogleSignIn from '@/components/buttons/GoogleSignIn'
 
 const LearnPage = async () => {
   const serverSession = await getServerSession()
+
+  if (!serverSession)
+    return (
+      <PageContainer>
+        <InlineError classes='p-2 h-full w-full flex flex-grow flex-col items-center justify-center'>
+          <p className='text-rose-500'>You are not logged in.</p>
+          <GoogleSignIn />
+        </InlineError>
+      </PageContainer>
+    )
 
   // Checks active user session in DB
   // IF session: returns 409, message, + result: userId (for EndLearnSession)

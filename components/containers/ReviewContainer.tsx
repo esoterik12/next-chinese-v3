@@ -7,6 +7,7 @@ import IconSettings from '../icons/IconSettings'
 import { useRouter } from 'next/navigation'
 import EndLearnSession from '../buttons/EndLearnSession'
 import { endLearnSession } from '@/lib/actions/session/endLearnSession'
+import Loading from '../shared/Loading'
 
 type WordCardProps = {
   userId: string
@@ -14,13 +15,8 @@ type WordCardProps = {
 }
 
 const ReviewContainer = ({ userId, goal }: WordCardProps) => {
-  const {
-    unfinishedWords,
-    finishedWords,
-    loadingState,
-    userLatestWord,
-    dispatch
-  } = useAppContext()
+  const { finishedWords, loadingState, userLatestWord, dispatch } =
+    useAppContext()
   const [showSentence, setShowSentence] = useState(false)
   const [fetching, setFetching] = useState(false)
   const router = useRouter()
@@ -43,7 +39,12 @@ const ReviewContainer = ({ userId, goal }: WordCardProps) => {
   }, [finishedWords, goal])
 
   if (loadingState) {
-    return <p>Loading...</p>
+    return (
+      <section className='flex w-full h-full justify-center flex-grow flex-col items-center'>
+        <p>Loading...</p>
+        <Loading />
+      </section>
+    )
   }
 
   if (finishedWords.length === +goal) {

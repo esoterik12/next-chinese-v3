@@ -8,7 +8,7 @@ interface PageContainerProps {
 const PageContainer = ({ children, customClasses }: PageContainerProps) => {
   return (
     <main
-      className={`${customClasses} p-4 lg:p-12`}
+      className={`${customClasses} 'flex h-[calc(100vh-64px)] flex-col items-center justify-center`}
     >
       {children}
     </main>
