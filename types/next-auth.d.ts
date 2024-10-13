@@ -7,12 +7,10 @@ declare module 'next-auth' {
       name?: string
       email?: string
       image?: string
-      latestWord: number
     }
   }
 
   interface User {
     id: string | mongoose.Types.ObjectId
-    latestWord: number
   }
 }

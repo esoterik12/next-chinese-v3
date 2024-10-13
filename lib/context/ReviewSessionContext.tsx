@@ -9,6 +9,7 @@ interface AppContextTypes {
   unfinishedWords: ReviewResultDocument[]
   finishedWords: ReviewResultDocument[]
   loadingState: boolean
+  userLatestWord: number
   dispatch: React.Dispatch<ReducerAction>
 }
 
@@ -21,15 +22,18 @@ interface ReducerAction {
     | 'firstResult'
     | 'correctResult'
     | 'incorrectResult'
+    | 'resetState'
   firstResult?: number
   fetchedWords?: ReviewResultDocument[]
   newSentence?: SentenceProps
+  userLatestWord?: number
 }
 
 interface ReducerState {
   unfinishedWords: ReviewResultDocument[]
   finishedWords: ReviewResultDocument[]
   loadingState: boolean
+  userLatestWord: number
   error: string | null
 }
 
@@ -37,6 +41,7 @@ const initialContext = {
   unfinishedWords: [],
   finishedWords: [],
   loadingState: true,
+  userLatestWord: 0,
   error: null
 }
 
@@ -106,7 +111,7 @@ const reducer = (state: ReducerState, action: ReducerAction): ReducerState => {
         repetitions: n,
         easeFactor: ef,
         interval: i,
-        seenToday: true 
+        seenToday: true
       }
 
       // If result >= 3 then add the word to finishedWords
@@ -143,6 +148,10 @@ const reducer = (state: ReducerState, action: ReducerAction): ReducerState => {
         ...state,
         unfinishedWords: [...currentUnfinishedWords, word]
       }
+    case 'resetState':
+      return {
+        ...initialContext
+      }
     default:
       throw new Error('Unknown action')
   }
@@ -159,6 +168,7 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         unfinishedWords: state.unfinishedWords,
         finishedWords: state.finishedWords,
         loadingState: state.loadingState,
+        userLatestWord: state.userLatestWord,
         dispatch
       }}
     >

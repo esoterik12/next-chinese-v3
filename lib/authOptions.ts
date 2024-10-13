@@ -42,7 +42,6 @@ export const authOptions: NextAuthOptions = {
         const existingUser = await User.findOne({ email: user.email })
         if (existingUser) {
           token.id = existingUser._id
-          token.latestWord = existingUser.latestWord
         }
       }
       return token
@@ -52,7 +51,6 @@ export const authOptions: NextAuthOptions = {
       // Add the MongoDB user ID to the session object
       if (token) {
         session.user.id = token.id
-        session.user.latestWord = token.latestWord as number // Add latestWord to the session
       }
       return session
     }

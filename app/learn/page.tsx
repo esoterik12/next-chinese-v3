@@ -6,10 +6,9 @@ import { getServerSession } from 'next-auth'
 import EndLearnSession from '@/components/buttons/EndLearnSession'
 
 const LearnPage = async () => {
-  // Gets user email
   const serverSession = await getServerSession()
 
-  // Checks active session in DB for user
+  // Checks active user session in DB
   // IF session: returns 409, message, + result: userId (for EndLearnSession)
   // ELSE: returns 200, message, + result: wordsDueCount
   const userInfo = await fetchUserInfo({ userEmail: serverSession.user.email })

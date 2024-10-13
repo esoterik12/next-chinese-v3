@@ -5,20 +5,20 @@ import mongoose from 'mongoose'
 import { connectToDB } from '@/lib/mongoose'
 import { startLearnSession } from '../session/startLearnSession'
 import { AppError } from '@/lib/errors/AppError'
+import User from '@/models/user.model'
 const dynamic = 'force-dynamic'
 
 export async function fetchWords({
   userId,
-  userLatestWord,
   sessionWordGoal = 10
 }: {
   userId: mongoose.Types.ObjectId | string
-  userLatestWord: number
   sessionWordGoal: number
 }) {
   try {
     await connectToDB()
 
+    // 1st: start a learning session
     const learnSession = await startLearnSession(userId)
     if (learnSession.code === 409) {
       console.log('Session in progress in fetchWord.ts: ', learnSession)
@@ -28,7 +28,10 @@ export async function fetchWords({
       }
     }
 
-    // First: fetch due words
+    // 2nd: get the user latest word
+    const { latestWord } = await User.findById(userId)
+
+    // 3rd: fetch due words
     const today = new Date()
     const wordsDueResult = await UserWord.find({
       userId: userId,
@@ -41,6 +44,7 @@ export async function fetchWords({
         model: 'Word',
         select: ''
       })
+    console.log('wordDueResult in fetchWords.ts', wordsDueResult)
 
     // Flattens the Word collection data into the wordsDue data
     const fetchWordsResult = wordsDueResult.map(userWord => {
@@ -48,11 +52,11 @@ export async function fetchWords({
       return { ...userWordWithoutWordId, ...wordId }
     })
 
-    // Second: fetch new words if not enough for sessionWordGoal
+    // 4th: fetch new words if not enough for sessionWordGoal
     if (wordsDueResult.length < sessionWordGoal) {
       const newWordsResult = await fetchNewWords({
         newWordsDue: sessionWordGoal - wordsDueResult.length,
-        latestWordNumber: userLatestWord
+        latestWordNumber: latestWord
       })
 
       // Adds review session stats and default sm2 values used on the front-end
@@ -76,7 +80,7 @@ export async function fetchWords({
     return {
       message: 'Successfully fetched words for review session.',
       code: 200,
-      result: jsonResults
+      result: { words: jsonResults, userLatestWord: latestWord }
     }
   } catch (error) {
     console.error('Error Fetching words from MongoDB: ', error)

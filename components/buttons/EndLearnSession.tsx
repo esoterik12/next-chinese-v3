@@ -8,7 +8,6 @@ const EndLearnSession = ({ userId }: { userId: string }) => {
   const router = useRouter()
 
   const onClickEnd = async () => {
-    console.log('-------CLICKED END SESSION-------')
     await endLearnSession({ userId })
     router.push('/')
   }

@@ -11,31 +11,36 @@ import { endLearnSession } from '@/lib/actions/session/endLearnSession'
 type WordCardProps = {
   userId: string
   goal: string
-  userLatestWord: number
 }
 
-const ReviewContainer = ({ userId, goal, userLatestWord }: WordCardProps) => {
-  const { unfinishedWords, finishedWords, loadingState } = useAppContext()
+const ReviewContainer = ({ userId, goal }: WordCardProps) => {
+  const {
+    unfinishedWords,
+    finishedWords,
+    loadingState,
+    userLatestWord,
+    dispatch
+  } = useAppContext()
   const [showSentence, setShowSentence] = useState(false)
   const [fetching, setFetching] = useState(false)
   const router = useRouter()
 
   // Sends update when unfinishedWords.length === 0
   useEffect(() => {
-    // TODO Ensure loading Effect
+    if (finishedWords.length !== Number(goal)) return
+
     const sendUpdate = async () => {
-      if (finishedWords.length === +goal) {
-        // TODO: Improve error handling
-        try {
-          await endLearnSession({ userId, finishedWords,userLatestWord })
-          router.push('/')
-        } catch (error) {
-          console.error('Error sending update:', error)
-        }
+      try {
+        await endLearnSession({ userId, finishedWords, userLatestWord })
+        dispatch({ type: 'resetState' })
+        router.push('/')
+      } catch (error) {
+        console.error('Error sending update:', error)
       }
     }
+
     sendUpdate()
-  }, [unfinishedWords])
+  }, [finishedWords, goal])
 
   if (loadingState) {
     return <p>Loading...</p>

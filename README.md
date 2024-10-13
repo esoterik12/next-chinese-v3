@@ -1,35 +1,35 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with
 [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-### Contents
+# Contents
 
 1. Getting Started (setting up the NextJS project with Tailwind and NextAuth and
    Framer-Motion)
 2. MongoDB models, functions, and implementation
 3. The Spaced-Repetition Algorith (theory and practice)
 
-## Further Documentation
+# Further Documentation
 
 - [Database Design](./docs/database-design.md)
 
 ## 1. Getting Started
 
-# prettier and prettier plugin for tailwind
+### prettier and prettier plugin for tailwind
 
 - npm install -D prettier prettier-plugin-tailwindcss
 
-# Taiwlind custom classes:
+### Taiwlind custom classes:
 
 - A few tailwind custom classes for text in `/app/global.css`
 
-# Theme support:
+### Theme support:
 
 - Add darkMode: 'class' to tailwind.config.ts
 - npm i next-themes
 - wrap layout in <ThemeProvider>
 - Add attribute='class' defaultTheme='dark' props to ThemeProvider
 
-# NextAuth:
+### NextAuth:
 
 - Loosely follows the docs: https://next-auth.js.org/getting-started/example
 - install next-auth
@@ -50,7 +50,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with
 
 ## 2. Backend & MongoDB w/ Mongoose Implementation
 
-# Connect to DB
+### Connect to DB
 
 - npm i mongodb mongoose
 - set up .env.local with MONGODB_ULR
@@ -58,7 +58,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with
 - `/lib/csvUpload.ts` contains a function to upload `/public/word-data.csv`
   which forms the raw data for the application
 
-# Models
+### Models
 
 - The NC application uses 5 models/collections with MongoDB:
   - Users
@@ -67,7 +67,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with
   - Sentences
   - Sessions
 
-# Actions
+### Actions
 
 - These server actions form the core of the backend:
   - `/lib/actions/session/startLearnSession.ts`: Starts a session stored in the
@@ -84,6 +84,34 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with
 
 ## 3. Front-end:
 
+### React Context:
+
+- Core state management logic is handled using React Context with the useReducer
+  hook. The context manages the state of flashcards, handling the user's review
+  sessions, tracking finished and unfinished words, and integrating
+  spaced-repetition logic through an SM2 algorithm.
+- **App Context** central context to hold unfinishedWords, finishedWords,
+  loading, error, and user's latestWord
+- **Reducer** function for loading words, adding sentences, or updating state
+  based on different word review results (includes review history)
+- **ContextProvider** wraps the app to provide context
+
+### Loading Words
+
+When the application fetches a set of words from the database, they are loaded
+into the context by dispatching the `loadWords` action. Here’s how it works:
+
+- **Action**: The `loadWords` action is dispatched, and the fetched words are
+  passed to the reducer as the `fetchedWords` property in the action payload.
+- **Reducer Handling**: The reducer's `loadWords` case takes these fetched
+  words, updates the `unfinishedWords` state with them, and resets the
+  `finishedWords` array.
+- **Managing Words with SM2 Algorithm**: When a user reviews a word, the context
+  is updated based on the spaced-repetition SM2 algorithm. The reducer computes
+  new values for interval, easeFactor, and repetitions using the sm2 algorithm.
+  The word is either moved to the finishedWords or returned to the
+  unfinishedWords for further review, depending on the result.
+
 # Error-Handling:
 
 For error handling on the front-end a mix of React Context and
@@ -95,7 +123,7 @@ component-specific state is used:
 
 ## 4. The Spaced-Repetition Algorith
 
-# Sources:
+### Sources:
 
 - A Stochastic Shortest Path Algorithm for Optimizing Spaced Repetition
   Scheduling
@@ -103,39 +131,17 @@ component-specific state is used:
 - Reddit post by the author in /r/anki:
 - https://www.reddit.com/r/Anki/comments/17u01ge/spaced_repetition_algorithm_a_threeday_journey/
 
-# Key Points:
+### SM2 Algorithm Overview
 
-- A. During his experiments, he noticed that the subsequent optimal interval was
-  approximately twice as long as the preceding one. Finally, he formalized the
-  SM-0 algorithm on paper. I(1) = 1 day I(2) = 7 days I(3) = 16 days I(4) = 35
-  days for i>4: I(i) = I(i-1) \* 2 Words forgotten in the first four reviews
-  were moved to a new page and cycled back into repetition along with new
-  materials.
+The SM2 algorithm, used for spaced repetition, optimizes review intervals based
+on recall performance. It works by breaking information into question-answer
+pairs and scheduling reviews according to the following intervals:
 
-- B. Though the SM-0 algorithm proved to be beneficial to Wozniak's learning,
-  several issues prompted him to seek refinements:
+- **Initial intervals**: Day 1, Day 6
+- **Subsequent intervals**: Calculated as `I(n) = I(n-1) × EF`, where EF (Ease
+  Factor) starts at 2.5
 
-  - If a word is forgotten at the first review (after 1 day), it will be more
-    likely to be forgotten again during the subsequent reviews (after 7 and 16
-    days) compared to words that were not forgotten before.
-  - New note pages composed of forgotten words have a higher chance of being
-    forgotten even when the review schedule is the same.
-
-- C. Though the SM-0 algorithm proved to be beneficial to Wozniak's learning,
-  several issues prompted him to seek refinements:
-
-  - If a word is forgotten at the first review (after 1 day), it will be more
-    likely to be forgotten again during the subsequent reviews
-  - New note pages composed of forgotten words have a higher chance of being
-    forgotten even when the review schedule is the same.
-
-- D. The details about SM-2: Break down the information you want to remember
-  into small question-answer pairs. Use the following intervals (in days) to
-  review each question-answer pair: $I(1) = 1$ $I(2) = 6$ For $n > 2$,
-  $I(n) = I(n-1) \times EF$ - $EF$—the Ease Factor, with an initial value of
-  2.5 - After each review,
-  $\text{newEF} = EF + (0.1 - (5-q) \times (0.08 + (5-q) \times 0.02))$ - q is a
-  quality score, which the learner assigns after recalling the answer, usually
-  on a scale from 0 (completely forgotten) to 5 (perfect recall). If the learner
-  forgets, the interval for the question-answer pair will be reset to $I(1)$
-  with the same EF.
+After each review, the EF is adjusted based on recall quality (0-5 scale). If
+recall is perfect, the interval increases. If forgotten, the interval resets to
+Day 1, with EF unchanged. This adaptive approach helps prioritize difficult
+material for more frequent review, while easier material is reviewed less often.

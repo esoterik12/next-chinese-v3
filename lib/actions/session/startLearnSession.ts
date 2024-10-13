@@ -5,12 +5,13 @@ import { AppError } from '@/lib/errors/AppError'
 const dynamic = 'force-dynamic'
 const revalidate = 0
 
-export async function startLearnSession(userId: mongoose.Types.ObjectId | string) {
+export async function startLearnSession(
+  userId: mongoose.Types.ObjectId | string
+) {
   try {
     const activeSession = await Session.findOne({ userId, isActive: true })
 
     if (activeSession) {
-      console.error('SESSION ACTIVE in startLearnSession.ts')
       return {
         message: 'A session is already active for this user.',
         code: 409

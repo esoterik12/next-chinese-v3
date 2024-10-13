@@ -3,10 +3,9 @@ import mongoose from 'mongoose'
 import Session from '@/models/session.model'
 import { ReviewResultDocument } from '@/types/review.types'
 import { updateUserWords } from '../updateUserWords'
-import { SaveSentenceProps, saveSentences } from '../sentences/saveSentences'
+import { saveSentences } from '../sentences/saveSentences'
 import { AppError } from '@/lib/errors/AppError'
 import { revalidatePath } from 'next/cache'
-import { redirect } from 'next/navigation'
 import { updateLatestWord } from '../users/updateLatestWord'
 const revalidate = 0
 const dynamic = 'force-dynamic'
@@ -69,8 +68,7 @@ export async function endLearnSession({
       await Promise.all(promises)
     }
 
-    // Part 2: End the user's session
-    // Update all active sessions for the user
+    // Part 2: End the user's session - Update all active sessions for the user (in case there are more)
     const result = await Session.updateMany(
       { userId: userIdObj, isActive: true }, // Query to find all active sessions
       { $set: { isActive: false, endedAt: new Date() } } // Update fields
@@ -86,7 +84,6 @@ export async function endLearnSession({
     }
 
     // TODO: this needs to be changed to learn eventually
-    console.log('revalidating path')
     revalidatePath('/', 'page')
 
     return {
