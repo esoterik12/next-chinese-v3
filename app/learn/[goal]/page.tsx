@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { useState } from 'react'
 import { useSession } from 'next-auth/react'
 import ReviewContainer from '@/components/containers/ReviewContainer'
 import { fetchWords } from '@/lib/actions/words/fetchWords'
@@ -12,6 +12,7 @@ import PageContainer from '@/components/containers/PageContainer'
 const LearnGoalPage = ({ params }: { params: { goal: string } }) => {
   const { dispatch } = useAppContext()
   const { data: session, status } = useSession()
+  const [error, setError] = useState<string | null>(null)
 
   if (!['5', '20', '50', '80', '100'].includes(params.goal))
     return (
@@ -51,22 +52,29 @@ const LearnGoalPage = ({ params }: { params: { goal: string } }) => {
               newSentencesArray: []
             })
           )
+          // Add words and latestWord to app context
           dispatch({
             type: 'loadWords',
             fetchedWords: fetchedWordsSeenToday,
             userLatestWord: learnSessionData.result.userLatestWord
           })
         }
-
-        // Dispatch the fetched words to the context
       } catch (error) {
-        // TODO: Better error handling
-        console.error('Error fetching words:', error)
+        setError('Error loading the learning session.')
       }
     }
 
     getLearnWords()
   }, [dispatch, session, params.goal])
+
+  if (error)
+    return (
+      <PageContainer>
+        <InlineError classes='p-2 h-full w-full flex flex-grow flex-col items-center justify-center'>
+          <p className='text-rose-500'>{error}</p>
+        </InlineError>
+      </PageContainer>
+    )
 
   return (
     <PageContainer>

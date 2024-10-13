@@ -7,6 +7,11 @@ import EndLearnSession from '@/components/buttons/EndLearnSession'
 import PageContainer from '@/components/containers/PageContainer'
 import InlineError from '@/components/shared/InlineError'
 import GoogleSignIn from '@/components/buttons/GoogleSignIn'
+import IconCheckCircle from '@/components/icons/IconCheckCircle'
+import IconLevel from '@/components/icons/IconLevel'
+import IconRocket from '@/components/icons/IconRocket'
+import IconViews from '@/components/icons/IconViews'
+import StatsContainer from '@/components/containers/StatsContainer'
 
 const LearnPage = async () => {
   const serverSession = await getServerSession()
@@ -36,43 +41,70 @@ const LearnPage = async () => {
     )
   }
 
+  const dummyLast30 = [
+    55, 66, 0, 100, 40, 50, 80, 100, 0, 50, 50, 20, 0, 100, 55, 66, 0, 100, 40,
+    100, 80, 20, 50, 80, 100, 0, 0, 100, 55
+  ]
+
+  const learningOptions = [5, 20, 50, 80, 100]
+
   return (
-    <main className='flex h-[calc(100vh-64px)] flex-col items-center justify-center'>
-      <p>
-        You have{' '}
-        <span className='text-rose-600'>{userInfo.result.wordsDueCount}</span>{' '}
-        {userInfo.result.wordsDueCount === 1 ? 'word' : 'words'} in need of
-        review.
-      </p>
-      <p>Select how many words you would like to learn today.</p>
-      <div className='flex flex-row gap-x-2 p-2'>
-        <Link href='/learn/5'>
-          <DefaultButton customClasses='w-32 border-2 border-emerald-500 p-2'>
-            <p>5</p>
-          </DefaultButton>
-        </Link>
-        <Link href='/learn/20'>
-          <DefaultButton customClasses='w-32 border-2 border-sky-500 p-2'>
-            <p>20</p>
-          </DefaultButton>
-        </Link>
-        <Link href='/learn/50'>
-          <DefaultButton customClasses='w-32 border-2 border-sky-300 p-2'>
-            <p>50</p>
-          </DefaultButton>{' '}
-        </Link>
-        <Link href='/learn/80'>
-          <DefaultButton customClasses='w-32 border-2 border-rose-400 p-2'>
-            <p>80</p>
-          </DefaultButton>
-        </Link>
-        <Link href='/learn/100'>
-          <DefaultButton customClasses='w-32 border-2 border-rose-600 p-2'>
-            <p>100</p>
-          </DefaultButton>
-        </Link>
-      </div>
-    </main>
+    // TODO: Apply this reponsiveness to all pages
+    <PageContainer customClasses='p-0 md:p-4 lg:p-12 h-full'>
+      <section className='p-6'>
+        <h1 className='md:custom-header custom-subheader'>
+          Welcome back, {serverSession.user.name.split(' ')[0]}
+        </h1>
+        <p className='py-2'>
+          <span className=''>Your last learning session was</span> 5 days ago.
+        </p>
+        {/* Top level primary stats boxes */}
+        <div className='flex flex-row flex-wrap gap-4 md:gap-8'>
+          <StatsContainer
+            icon={<IconLevel classes='w-6 h-6' />}
+            titleText='Current level:'
+            valueText='3'
+          />
+          <StatsContainer
+            icon={<IconRocket classes='w-6 h-6' />}
+            titleText='Awaiting review:'
+            valueText={userInfo.result.wordsDueCount}
+          />
+          <StatsContainer
+            icon={<IconViews classes='w-6 h-6' />}
+            titleText='Lifetime views:'
+            valueText='4,782'
+          />
+        </div>
+
+        {/* Last 30 days section */}
+        <div className='mt-6'>
+          <p className='py-2'>Last 30 days:</p>
+          <div className='flex flex-row flex-wrap gap-1'>
+            {dummyLast30.map((item, idx) => (
+              <div
+                className={`flex h-[21px] w-[21px] items-center justify-center rounded-md border-white p-2 ${item >= 50 ? 'bg-emerald-500' : item > 0 ? 'bg-sky-500' : 'bg-rose-500'}`}
+                key={idx}
+              ></div>
+            ))}
+          </div>
+        </div>
+
+        {/* Select learning goals section */}
+        <p className='mt-6'>
+          Select how many words you would like to learn today.
+        </p>
+        <div className='flex flex-row flex-wrap gap-2 py-2'>
+          {learningOptions.map(item => (
+            <Link href={`/learn/${item}`}>
+              <DefaultButton customClasses='w-[138px] border-2 border-gray-500 p-2'>
+                <p>{item}</p>
+              </DefaultButton>
+            </Link>
+          ))}
+        </div>
+      </section>
+    </PageContainer>
   )
 }
 

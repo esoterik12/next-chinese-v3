@@ -8,7 +8,7 @@
   }
   /* Text Colors */
   .custom-gray-text {
-    @apply text-gray-400;
+    @apply text-gray-500;
   }
   .custom-primary-color {
     @apply text-blue-500;
