@@ -1,10 +1,12 @@
 'use client'
 import React from 'react'
-import { testDbFunction } from '@/lib/actions/testDbFunction'
+import deleteWordSentencesInWords from '@/lib/actions/deleteWordSentences'
+import deleteSentenceArray from '@/lib/actions/deleteSentenceArray'
 
 const TestButton = () => {
   const handleTestClick = async () => {
-    testDbFunction()
+    console.log('no function here')
+    // await deleteSentenceArray()
   }
 
   return (

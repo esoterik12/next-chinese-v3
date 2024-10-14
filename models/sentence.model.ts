@@ -1,6 +1,3 @@
-// Word has a one to many relationship with senteces
-// Each word can have multiple sentences
-// Sentence will have: sentTraditional, sentSimplified, sentPinyin, sentTranslation, upvotes, downvotes, views, dateGenerated,
 import mongoose from 'mongoose'
 
 const sentenceSchema = new mongoose.Schema(

@@ -7,7 +7,6 @@ import EndLearnSession from '@/components/buttons/EndLearnSession'
 import PageContainer from '@/components/containers/PageContainer'
 import InlineError from '@/components/shared/InlineError'
 import GoogleSignIn from '@/components/buttons/GoogleSignIn'
-import IconCheckCircle from '@/components/icons/IconCheckCircle'
 import IconLevel from '@/components/icons/IconLevel'
 import IconRocket from '@/components/icons/IconRocket'
 import IconViews from '@/components/icons/IconViews'
@@ -42,11 +41,17 @@ const LearnPage = async () => {
   }
 
   const dummyLast30 = [
-    55, 66, 0, 100, 40, 50, 80, 100, 0, 50, 50, 20, 0, 100, 55, 66, 0, 100, 40,
-    100, 80, 20, 50, 80, 100, 0, 0, 100, 55
+    0, 0, 0, 0, 40, 50, 80, 100, 0, 50, 50, 20, 0, 100, 55, 66, 0, 100, 40, 100,
+    80, 20, 50, 80, 100, 0, 0, 100, 55
   ]
 
-  const learningOptions = [5, 20, 50, 80, 100]
+  const learningOptionsObject = [
+    { value: 5, border: 'border-gray-500', textColor: '' },
+    { value: 20, border: 'border-gray-500', textColor: 'text-emerald-400' },
+    { value: 50, border: 'border-gray-500', textColor: 'text-sky-300' },
+    { value: 80, border: 'border-gray-500', textColor: 'text-sky-500' },
+    { value: 100, border: 'border-gray-500', textColor: 'text-rose-500' }
+  ]
 
   return (
     // TODO: Apply this reponsiveness to all pages
@@ -61,17 +66,17 @@ const LearnPage = async () => {
         {/* Top level primary stats boxes */}
         <div className='flex flex-row flex-wrap gap-4 md:gap-8'>
           <StatsContainer
-            icon={<IconLevel classes='w-6 h-6' />}
+            icon={<IconLevel classes='w-6 h-6 text-sky-500' />}
             titleText='Current level:'
             valueText='3'
           />
           <StatsContainer
-            icon={<IconRocket classes='w-6 h-6' />}
+            icon={<IconRocket classes='w-6 h-6 text-emerald-500' />}
             titleText='Awaiting review:'
             valueText={userInfo.result.wordsDueCount}
           />
           <StatsContainer
-            icon={<IconViews classes='w-6 h-6' />}
+            icon={<IconViews classes='w-6 h-6 text-rose-500' />}
             titleText='Lifetime views:'
             valueText='4,782'
           />
@@ -83,7 +88,7 @@ const LearnPage = async () => {
           <div className='flex flex-row flex-wrap gap-1'>
             {dummyLast30.map((item, idx) => (
               <div
-                className={`flex h-[21px] w-[21px] items-center justify-center rounded-md border-white p-2 ${item >= 50 ? 'bg-emerald-500' : item > 0 ? 'bg-sky-500' : 'bg-rose-500'}`}
+                className={`flex h-[21px] w-[21px] items-center justify-center rounded-md border-white p-2 ${item >= 50 ? 'bg-emerald-500' : item > 0 ? 'bg-sky-500' : 'bg-gray-500'}`}
                 key={idx}
               ></div>
             ))}
@@ -95,10 +100,14 @@ const LearnPage = async () => {
           Select how many words you would like to learn today.
         </p>
         <div className='flex flex-row flex-wrap gap-2 py-2'>
-          {learningOptions.map(item => (
-            <Link href={`/learn/${item}`}>
-              <DefaultButton customClasses='w-[138px] border-2 border-gray-500 p-2'>
-                <p>{item}</p>
+          {learningOptionsObject.map(item => (
+            <Link key={item.value} href={`/learn/${item.value}`}>
+              <DefaultButton
+                customClasses={`w-[138px] border-2 ${item.border} p-2`}
+              >
+                <p className={`font-semibold ${item.textColor}`}>
+                  {item.value}
+                </p>
               </DefaultButton>
             </Link>
           ))}

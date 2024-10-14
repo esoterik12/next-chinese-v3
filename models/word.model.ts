@@ -41,16 +41,9 @@ const wordSchema = new mongoose.Schema({
     required: true,
     default: 'N/A'
   },
-  wordSentences: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Sentence'
-    }
-  ]
 })
 
-// Manually defined schema - not extending mongoose types
-// TODO: find an alternative that doesn't require a rewriting of the types from the schema
+// Manually defined schema - not extending mongoose types (extending the mongoose type causes some issues one the front end)
 export interface Word {
   tocflLevel?: number
   wordNumber: number
@@ -59,12 +52,12 @@ export interface Word {
   wordPinyin: string
   wordTranslation: string
   partOfSpeech: string
-  wordSentences: mongoose.Types.ObjectId[]
 }
 
 // Extend the base Document type and add only the relevant properties
 export interface WordDocument extends Word, Document {}
 
-const Word = mongoose.models.Word || mongoose.model<WordDocument>('Word', wordSchema)
+const Word =
+  mongoose.models.Word || mongoose.model<WordDocument>('Word', wordSchema)
 
 export default Word

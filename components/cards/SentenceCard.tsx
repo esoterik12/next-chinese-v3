@@ -30,6 +30,8 @@ const SentenceCard = ({
   const [sentenceData, setSentenceData] =
     useState<SentenceProps | null>(null)
 
+    console.log('unfinishedWords in SentenceCard.tsx', unfinishedWords)
+
   // useCallback memoizes the handleSentence function, stops unnecessary re-renders
   // useEffect only triggers when showSentence or unfinishedWords change.
   const handleSentence = useCallback(async () => {

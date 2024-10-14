@@ -21,10 +21,10 @@ export default async function NavHeader() {
             <li>
               <NavLink href='/learn'>Learn</NavLink>
             </li>
-            {/* <li>
+            <li>
               <NavLink href='/test'>Test</NavLink>
             </li>
-            <li>
+            {/* <li>
               <NavLink href='/faq'>Test Client</NavLink>
             </li> */}
             <li>

@@ -25,6 +25,9 @@ export default function Home() {
         <section className='w-full flex flex-col items-center p-20 md:w-2/5'>
           <p>Demo Here</p>
         </section>
+        {/* Ideas for this page:
+            -Counting up number for stats: words, users, sentences, etc, views
+        */}
       </div>
     </PageContainer>
   )

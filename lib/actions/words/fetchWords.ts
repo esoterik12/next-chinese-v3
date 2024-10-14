@@ -6,6 +6,7 @@ import { connectToDB } from '@/lib/mongoose'
 import { startLearnSession } from '../session/startLearnSession'
 import { AppError } from '@/lib/errors/AppError'
 import User from '@/models/user.model'
+import Sentence from '@/models/sentence.model'
 const dynamic = 'force-dynamic'
 
 export async function fetchWords({
@@ -41,10 +42,8 @@ export async function fetchWords({
       .limit(sessionWordGoal)
       .populate({
         path: 'wordId',
-        model: 'Word',
-        select: ''
+        model: 'Word'
       })
-    console.log('wordDueResult in fetchWords.ts', wordsDueResult)
 
     // Flattens the Word collection data into the wordsDue data
     const fetchWordsResult = wordsDueResult.map(userWord => {
@@ -75,7 +74,19 @@ export async function fetchWords({
       expandedArray.forEach(newWordObj => fetchWordsResult.push(newWordObj))
     }
 
-    const jsonResults = JSON.parse(JSON.stringify(fetchWordsResult))
+    // 5th: fetch sentences for each word if they exist
+    const fetchSentencesResult = await Promise.all(
+      fetchWordsResult.map(async word => {
+        const sentence = await Sentence.findOne({ wordId: word._id }).exec()
+
+        return {
+          ...word,
+          sentence: sentence || null
+        }
+      })
+    )
+
+    const jsonResults = JSON.parse(JSON.stringify(fetchSentencesResult))
 
     return {
       message: 'Successfully fetched words for review session.',
