@@ -1,19 +1,13 @@
 'use server'
 import Sentence from '@/models/sentence.model'
-import mongoose from 'mongoose'
 import { connectToDB } from '@/lib/mongoose'
-import { SentenceProps } from '@/components/cards/SentenceCard'
+import { NewSentenceProps } from '@/types/review.types'
 import Word from '@/models/word.model'
-
-export interface SaveSentenceProps {
-  wordId: mongoose.Types.ObjectId | string
-  newSentences: SentenceProps
-}
 
 export async function saveSentences({
   newSentences
 }: {
-  newSentences: SaveSentenceProps[]
+  newSentences: NewSentenceProps[] // This type is just strings before wordId
 }) {
   try {
     await connectToDB()

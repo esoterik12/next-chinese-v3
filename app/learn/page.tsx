@@ -41,16 +41,16 @@ const LearnPage = async () => {
   }
 
   const dummyLast30 = [
-    0, 0, 0, 0, 40, 50, 80, 100, 0, 50, 50, 20, 0, 100, 55, 66, 0, 100, 40, 100,
-    80, 20, 50, 80, 100, 0, 0, 100, 55
+    0, 0, 0, 0, 40, 50, 80, 100, 0, 50, 50, 20, 0, 0, 55, 66, 0, 0, 40, 100, 80,
+    20, 50, 80, 100, 0, 0, 100, 55
   ]
 
   const learningOptionsObject = [
-    { value: 5, border: 'border-gray-500', textColor: '' },
-    { value: 20, border: 'border-gray-500', textColor: 'text-emerald-400' },
-    { value: 50, border: 'border-gray-500', textColor: 'text-sky-300' },
+    { value: 5, border: 'border-gray-500', textColor: 'text-sky-200' },
+    { value: 20, border: 'border-gray-500', textColor: 'text-sky-300' },
+    { value: 50, border: 'border-gray-500', textColor: 'text-sky-400' },
     { value: 80, border: 'border-gray-500', textColor: 'text-sky-500' },
-    { value: 100, border: 'border-gray-500', textColor: 'text-rose-500' }
+    { value: 100, border: 'border-gray-500', textColor: 'text-sky-600' }
   ]
 
   return (
@@ -60,9 +60,7 @@ const LearnPage = async () => {
         <h1 className='md:custom-header custom-subheader'>
           Welcome back, {serverSession.user.name.split(' ')[0]}
         </h1>
-        <p className='py-2'>
-          <span className=''>Your last learning session was</span> 5 days ago.
-        </p>
+        <p className='py-2'>Your last learning session was 5 days ago.</p>
         {/* Top level primary stats boxes */}
         <div className='flex flex-row flex-wrap gap-4 md:gap-8'>
           <StatsContainer
@@ -77,8 +75,8 @@ const LearnPage = async () => {
           />
           <StatsContainer
             icon={<IconViews classes='w-6 h-6 text-rose-500' />}
-            titleText='Lifetime views:'
-            valueText='4,782'
+            titleText='Words learned:'
+            valueText='782'
           />
         </div>
 
@@ -96,8 +94,8 @@ const LearnPage = async () => {
         </div>
 
         {/* Select learning goals section */}
-        <p className='mt-6'>
-          Select how many words you would like to learn today.
+        <p className='mt-8'>
+          Select how many words you would like to study today:
         </p>
         <div className='flex flex-row flex-wrap gap-2 py-2'>
           {learningOptionsObject.map(item => (

@@ -11,25 +11,8 @@ import PageContainer from '@/components/containers/PageContainer'
 
 const LearnGoalPage = ({ params }: { params: { goal: string } }) => {
   const { dispatch } = useAppContext()
-  const { data: session, status } = useSession()
+  const { data: session } = useSession()
   const [error, setError] = useState<string | null>(null)
-
-  if (!['5', '20', '50', '80', '100'].includes(params.goal))
-    return (
-      <PageContainer>
-        <InlineError classes='p-2 h-full w-full flex flex-grow flex-col items-center justify-center'>
-          <p className='text-rose-500'>Invalid goal selected.</p>
-        </InlineError>
-      </PageContainer>
-    )
-  if (!params.goal || !session)
-    return (
-      <PageContainer>
-        <InlineError classes='p-2 h-full w-full flex flex-grow flex-col items-center justify-center'>
-          <p className='text-rose-500'>Invalid user session.</p>
-        </InlineError>
-      </PageContainer>
-    )
 
   // Uses goal from params and user.id from jwt session to fetch words and adds them to react context state
   useEffect(() => {
@@ -66,6 +49,23 @@ const LearnGoalPage = ({ params }: { params: { goal: string } }) => {
 
     getLearnWords()
   }, [dispatch, session, params.goal])
+
+  if (!['5', '20', '50', '80', '100'].includes(params.goal))
+    return (
+      <PageContainer>
+        <InlineError classes='p-2 h-full w-full flex flex-grow flex-col items-center justify-center'>
+          <p className='text-rose-500'>Invalid goal selected.</p>
+        </InlineError>
+      </PageContainer>
+    )
+  if (!params.goal || !session)
+    return (
+      <PageContainer>
+        <InlineError classes='p-2 h-full w-full flex flex-grow flex-col items-center justify-center'>
+          <p className='text-rose-500'>Invalid user session.</p>
+        </InlineError>
+      </PageContainer>
+    )
 
   if (error)
     return (

@@ -7,7 +7,6 @@ import { startLearnSession } from '../session/startLearnSession'
 import { AppError } from '@/lib/errors/AppError'
 import User from '@/models/user.model'
 import Sentence from '@/models/sentence.model'
-const dynamic = 'force-dynamic'
 
 export async function fetchWords({
   userId,

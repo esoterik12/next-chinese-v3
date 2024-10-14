@@ -8,6 +8,7 @@ type AnimatedSectionProps = {
   exitY?: number
   classes?: string
   motionKey?: string // Unique keys necessary for multiple sections wrapped in AnimatePresence
+  exitDelay?: number
 }
 
 const AnimatedSection = ({
@@ -16,7 +17,8 @@ const AnimatedSection = ({
   initialY = -5, // default is to come from the top
   exitY = 10, // default is to exit to the bottom
   classes,
-  motionKey
+  motionKey,
+  exitDelay = 0
 }: AnimatedSectionProps) => {
   return (
     <motion.div
@@ -24,7 +26,11 @@ const AnimatedSection = ({
       initial={{ opacity: 0, y: initialY }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.2, delay: entryDelay }}
-      exit={{ opacity: 0, y: exitY, transition: { duration: 0.2 } }}
+      exit={{
+        opacity: 0,
+        y: exitY,
+        transition: { duration: 0.2, delay: exitDelay }
+      }}
       className={`flex gap-x-3 text-center ${classes}`}
     >
       {children}

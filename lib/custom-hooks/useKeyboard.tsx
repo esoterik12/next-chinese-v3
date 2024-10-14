@@ -54,6 +54,6 @@ export function useKeyboard({
     return () => {
       document.removeEventListener('keydown', keyDownHandler)
     }
-  }, [show, completeCard, word, dispatch, voice, handleShow, unfinishedWords.length])
+  }, [show, completeCard, word, dispatch, voice, handleShow, unfinishedWords.length, fetching])
   // voice included to ensure handleShow renders with voice on first page load
 }

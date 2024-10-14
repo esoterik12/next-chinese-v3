@@ -5,74 +5,69 @@ import { AnimatePresence } from 'framer-motion'
 import AnimatedSection from './AnimatedSection'
 import { useAppContext } from '@/lib/context/ReviewSessionContext'
 import generateSentence from '@/lib/actions/sentences/generateSentence'
-
-export interface SentenceProps {
-  sentTraditional: string
-  sentSimplified: string
-  sentPinyin: string
-  sentTranslation: string
-}
+import { SentenceProps } from '@/types/review.types'
+import { ShowSentenceOptions } from '../containers/ReviewContainer'
 
 interface SentenceCardProps {
-  showSentence: boolean
-  setShowSentence: React.Dispatch<SetStateAction<boolean>>
+  showSent: ShowSentenceOptions
+  setShowSent: React.Dispatch<SetStateAction<ShowSentenceOptions>>
   fetching: boolean
   setFetching: React.Dispatch<SetStateAction<boolean>>
 }
 
 const SentenceCard = ({
-  showSentence,
-  setShowSentence,
+  showSent,
+  setShowSent,
   fetching,
   setFetching
 }: SentenceCardProps) => {
   const { unfinishedWords, dispatch } = useAppContext()
-  const [sentenceData, setSentenceData] =
-    useState<SentenceProps | null>(null)
+  const [sentenceData, setSentenceData] = useState<SentenceProps | null>(null)
 
-    console.log('unfinishedWords in SentenceCard.tsx', unfinishedWords)
+  console.log('unfinishedWords in SentenceCard.tsx', unfinishedWords)
 
-  // useCallback memoizes the handleSentence function, stops unnecessary re-renders
-  // useEffect only triggers when showSentence or unfinishedWords change.
+  // Memoizes handleSentence function, stops unnecessary re-renders, triggers when showSentence/unfinishedWords change.
   const handleSentence = useCallback(async () => {
-    // TODO: If there is an existing sentence from the DB
-    // Add clause here to use existing sentence
-    if (unfinishedWords[0].newSentencesArray.length > 0) {
-      setSentenceData(unfinishedWords[0].newSentencesArray[0])
-      // Else generate new sentence
+    if (unfinishedWords[0].sentence) {
+      // If word has existing sentence, set as sentence data
+      setSentenceData(unfinishedWords[0].sentence)
     } else {
+      // Else generate new sentence with GPT API
       setFetching(true)
       const sentenceResult = await generateSentence({
         word: unfinishedWords[0].wordTraditional,
         level: unfinishedWords[0].tocflLevel
       })
+      // Adds the new sentence to context for saving to DB at end of session
       dispatch({ type: 'addSentence', newSentence: sentenceResult.result })
       setSentenceData(sentenceResult.result)
       setFetching(false)
     }
 
-    setShowSentence(true)
-  }, [unfinishedWords, dispatch, setFetching, setShowSentence])
+    setShowSent('showSentence')
+  }, [unfinishedWords, dispatch, setFetching, setShowSent])
 
   // Allows for c key to trigger sentence generation
   useEffect(() => {
     const keyDownHandler = async (e: globalThis.KeyboardEvent) => {
-      if (!showSentence && e.key === 'c') {
+      if (showSent === 'hidden' && e.key === 'c') {
         await handleSentence()
       }
+      if (showSent === 'showSentence' && e.key === 'c') {
+        setShowSent('showTranslation')
+      }
     }
-
     document.addEventListener('keydown', keyDownHandler)
 
     return () => {
       document.removeEventListener('keydown', keyDownHandler)
     }
-  }, [showSentence, handleSentence])
+  }, [showSent, handleSentence])
 
   return (
     <div className='mt-2 flex h-[120px] w-full flex-col items-center'>
       <AnimatePresence mode='wait'>
-        {!showSentence && (
+        {showSent === 'hidden' && (
           <AnimatedSection key='sentenceButton'>
             <DefaultButton
               handleClick={handleSentence}
@@ -81,30 +76,43 @@ const SentenceCard = ({
               {!fetching ? (
                 <p className='text-center'>Context</p>
               ) : (
-                <p className='text-center'>Loading</p>
+                <p className='text-center'>Generating</p>
               )}
             </DefaultButton>
           </AnimatedSection>
         )}
 
-        {showSentence && sentenceData && (
+        {(showSent === 'showSentence' || showSent === 'showTranslation') &&
+          sentenceData && (
+            <AnimatedSection
+              key='sentenceAnswer'
+              classes='flex flex-col gap-1 pt-4'
+            >
+              <>
+                {/* This ml is to offset the issue of the Chinese period taking up full character length and making it not seem centered. */}
+                <button onClick={() => setShowSent('showTranslation')}>
+                  <p
+                    className={`custom-large-text ml-2 ${showSent === 'showSentence' ? `transition-colors duration-300 hover:cursor-pointer hover:text-sky-500` : ``}`}
+                  >
+                    {sentenceData.sentTraditional}
+                  </p>
+                </button>
+              </>
+            </AnimatedSection>
+          )}
+      </AnimatePresence>
+
+      <AnimatePresence mode='wait'>
+        {showSent === 'showTranslation' && sentenceData && (
           <AnimatedSection
-            key='sentenceAnswer'
-            classes='flex flex-col gap-1 p-4'
+            key='sentenceTranslation'
+            classes='flex flex-col gap-1 pt-1'
           >
             <>
-              {/* This ml is to offset the issue of the Chinese period taking up full character length and making it not seem centered. */}
-              <p className='custom-large-text ml-2'>
-                {sentenceData.sentTraditional}
-              </p>
               <p className='custom-small-text'>{sentenceData.sentPinyin}</p>
               <p className='custom-small-text custom-gray-text'>
                 {sentenceData.sentTranslation}
               </p>
-              {/* <SentenceVote
-                sentenceUpvotes={dummySentenceData[0].upvotes}
-                sentenceDownvotes={dummySentenceData[0].downvotes}
-              /> */}
             </>
           </AnimatedSection>
         )}

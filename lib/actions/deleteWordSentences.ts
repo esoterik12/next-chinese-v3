@@ -14,7 +14,7 @@ export default async function deleteWordSentencesInWords() {
       { $set: { wordSentences: [] } } // Sets wordSentences array to an empty array
     )
 
-    const updateUser = await User.findByIdAndUpdate(
+    await User.findByIdAndUpdate(
       '670a6a17161d9454a1d19ddf',
       { $set: { latestWord: 0 } }
     )

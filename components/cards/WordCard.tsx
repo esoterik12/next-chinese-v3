@@ -5,23 +5,22 @@ import ResultButton from '../buttons/ResultButton'
 import IconDownChevron from '../icons/IconDownChevron'
 import AnimatedSection from './AnimatedSection'
 import { useAppContext } from '@/lib/context/ReviewSessionContext'
-import { SetStateAction, useState, useCallback, useEffect } from 'react'
+import { SetStateAction, useState, useCallback } from 'react'
 import CorrectButton from '../buttons/CorrectButton'
 import IconXCircle from '../icons/IconXCircle'
 import IconCheckCircle from '../icons/IconCheckCircle'
 import { useKeyboard } from '@/lib/custom-hooks/useKeyboard'
 import useVoices from '@/lib/custom-hooks/useVoice'
-import { useRouter } from 'next/navigation'
+import { ShowSentenceOptions } from '../containers/ReviewContainer'
 
 interface WordCardProps {
-  setShowSentence: React.Dispatch<SetStateAction<boolean>>
+  setShowSent: React.Dispatch<SetStateAction<ShowSentenceOptions>>
   fetching: boolean
 }
 
-const WordCard = ({ setShowSentence, fetching }: WordCardProps) => {
-  const router = useRouter()
+const WordCard = ({ fetching, setShowSent }: WordCardProps) => {
   const [show, setShow] = useState(false)
-  const { dispatch, unfinishedWords, finishedWords, loadingState } = useAppContext()
+  const { dispatch, unfinishedWords } = useAppContext()
   const voice = useVoices()
 
   const handleShow = useCallback(() => {
@@ -50,7 +49,7 @@ const WordCard = ({ setShowSentence, fetching }: WordCardProps) => {
   // General function to clear up ui after each card
   const completeCard = () => {
     setShow(false)
-    setShowSentence(false)
+    setShowSent('hidden')
   }
 
   const handleResult = (result: number) => {

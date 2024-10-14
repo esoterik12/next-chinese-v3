@@ -1,7 +1,5 @@
 'use client'
 import React from 'react'
-import deleteWordSentencesInWords from '@/lib/actions/deleteWordSentences'
-import deleteSentenceArray from '@/lib/actions/deleteSentenceArray'
 
 const TestButton = () => {
   const handleTestClick = async () => {

@@ -2,8 +2,6 @@
 import mongoose from 'mongoose'
 import Session from '@/models/session.model'
 import { AppError } from '@/lib/errors/AppError'
-const dynamic = 'force-dynamic'
-const revalidate = 0
 
 export async function startLearnSession(
   userId: mongoose.Types.ObjectId | string

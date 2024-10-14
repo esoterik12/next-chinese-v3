@@ -1,14 +1,12 @@
 'use server'
 import mongoose from 'mongoose'
 import Session from '@/models/session.model'
-import { ReviewResultDocument } from '@/types/review.types'
+import { NewSentenceProps, ReviewResultDocument } from '@/types/review.types'
 import { updateUserWords } from '../updateUserWords'
 import { saveSentences } from '../sentences/saveSentences'
 import { AppError } from '@/lib/errors/AppError'
 import { revalidatePath } from 'next/cache'
 import { updateLatestWord } from '../users/updateLatestWord'
-const revalidate = 0
-const dynamic = 'force-dynamic'
 
 interface EndLearnSessionProps {
   userId: string // coming from client-side component must be string
@@ -43,7 +41,7 @@ export async function endLearnSession({
       )
       const sentencesToSave = finishedWords.flatMap(
         word =>
-          word.newSentencesArray?.map(sentence => ({
+          word.newSentencesArray?.map((sentence: NewSentenceProps) => ({
             wordId: word.wordId,
             ...sentence
           })) || [] // empty array if no content in newSentencesArray
