@@ -82,7 +82,7 @@ export async function endLearnSession({
     }
 
     // TODO: this needs to be changed to learn eventually
-    revalidatePath('/', 'page')
+    revalidatePath('/learn', 'page')
 
     return {
       code: 200,

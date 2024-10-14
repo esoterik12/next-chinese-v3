@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation'
 import EndLearnSession from '../buttons/EndLearnSession'
 import { endLearnSession } from '@/lib/actions/session/endLearnSession'
 import Loading from '../shared/Loading'
+import PageContainer from './PageContainer'
 
 type WordCardProps = {
   userId: string
@@ -17,13 +18,18 @@ type WordCardProps = {
 export type ShowSentenceOptions = 'hidden' | 'showSentence' | 'showTranslation'
 
 const ReviewContainer = ({ userId, goal }: WordCardProps) => {
-  const { finishedWords, loadingState, userLatestWord, dispatch } =
-    useAppContext()
+  const {
+    finishedWords,
+    loadingState,
+    userLatestWord,
+    dispatch,
+    unfinishedWords
+  } = useAppContext()
   const [showSent, setShowSent] = useState<ShowSentenceOptions>('hidden')
   const [fetching, setFetching] = useState(false)
   const router = useRouter()
 
-  // Sends update when unfinishedWords.length === 0
+  // Sends update when finishedWords.length === the session goal
   useEffect(() => {
     if (finishedWords.length !== Number(goal)) return
 
@@ -31,8 +37,9 @@ const ReviewContainer = ({ userId, goal }: WordCardProps) => {
       try {
         await endLearnSession({ userId, finishedWords, userLatestWord })
         dispatch({ type: 'resetState' })
-        router.push('/')
+        router.push('/learn/complete')
       } catch (error) {
+        // TODO: add better error handling
         console.error('Error sending update:', error)
       }
     }
@@ -40,7 +47,7 @@ const ReviewContainer = ({ userId, goal }: WordCardProps) => {
     sendUpdate()
   }, [finishedWords, goal, dispatch, router, userId, userLatestWord])
 
-  if (loadingState) {
+  if (loadingState || finishedWords.length === +goal) {
     return (
       <section className='flex h-full w-full flex-grow flex-col items-center justify-center'>
         <p>Loading...</p>
@@ -48,13 +55,6 @@ const ReviewContainer = ({ userId, goal }: WordCardProps) => {
       </section>
     )
   }
-
-  if (finishedWords.length === +goal) {
-    return <p>Session complete.</p>
-  }
-
-  // console.log('unfinishedWords in ReviewContainer.tsx', unfinishedWords)
-  // console.log('finishedWords in ReviewContainer.tsx', finishedWords)
 
   const buttonStyles =
     'h-6 w-6 text-gray-400 rounded-full transition-colors duration-300 hover:text-gray-300 hover:cursor-pointer'
@@ -65,16 +65,17 @@ const ReviewContainer = ({ userId, goal }: WordCardProps) => {
         <IconSettings classes={buttonStyles} />
         <EndLearnSession userId={userId} />
       </div>
-      <WordCard
-        fetching={fetching}
-        setShowSent={setShowSent}
-      />
-      <SentenceCard
-        showSent={showSent}
-        setShowSent={setShowSent}
-        fetching={fetching}
-        setFetching={setFetching}
-      />
+      {unfinishedWords.length > 0 && (
+        <>
+          <WordCard fetching={fetching} setShowSent={setShowSent} />
+          <SentenceCard
+            showSent={showSent}
+            setShowSent={setShowSent}
+            fetching={fetching}
+            setFetching={setFetching}
+          />
+        </>
+      )}
     </section>
   )
 }

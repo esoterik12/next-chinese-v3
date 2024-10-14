@@ -5,7 +5,7 @@ import ResultButton from '@/components/buttons/ResultButton'
 
 export default function StyleDesignPage() {
   return (
-    <PageContainer customClasses='p-4 lg:p-12'>
+    <PageContainer customClasses='p-0 md:p-4 lg:p-12 h-full'>
       {/* Attention: gap affects Gspacing */}
       <div className='flex flex-row gap-20'>
         {/* Text Section */}

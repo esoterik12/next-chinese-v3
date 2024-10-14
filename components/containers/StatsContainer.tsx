@@ -3,7 +3,7 @@ import React from 'react'
 interface StatsContainerProps {
   icon: React.ReactNode
   titleText: string
-  valueText: string
+  valueText: string | number
 }
 
 const StatsContainer = ({

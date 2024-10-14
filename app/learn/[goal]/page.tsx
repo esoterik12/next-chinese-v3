@@ -10,7 +10,7 @@ import InlineError from '@/components/shared/InlineError'
 import PageContainer from '@/components/containers/PageContainer'
 
 const LearnGoalPage = ({ params }: { params: { goal: string } }) => {
-  const { dispatch } = useAppContext()
+  const { dispatch, finishedWords } = useAppContext()
   const { data: session } = useSession()
   const [error, setError] = useState<string | null>(null)
 
