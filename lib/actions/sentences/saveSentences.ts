@@ -12,8 +12,6 @@ export async function saveSentences({
   try {
     await connectToDB()
 
-    console.log('newSentences', newSentences)
-
     const savedSentences = await Sentence.insertMany(newSentences)
 
     // Object to group sentences by wordId - each property will be the word id with the values an array of sentenceIds

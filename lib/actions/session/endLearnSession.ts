@@ -20,6 +20,7 @@ export async function endLearnSession({
   finishedWords,
   userLatestWord
 }: EndLearnSessionProps) {
+
   try {
     let userIdObj: mongoose.Types.ObjectId
     // Check id and convert string to ObjectId
@@ -39,6 +40,8 @@ export async function endLearnSession({
           reviewResults: finishedWords
         })
       )
+      
+      // Prepare sentence save
       const sentencesToSave = finishedWords.flatMap(
         word =>
           word.newSentencesArray?.map((sentence: NewSentenceProps) => ({
@@ -81,7 +84,7 @@ export async function endLearnSession({
       }
     }
 
-    // TODO: this needs to be changed to learn eventually
+    // Required to update cache
     revalidatePath('/learn', 'page')
 
     return {

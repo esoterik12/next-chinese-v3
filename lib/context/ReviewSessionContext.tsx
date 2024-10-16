@@ -2,12 +2,13 @@
 import React, { createContext, useContext, useReducer, ReactNode } from 'react'
 import sm2 from '../sm2/sm2Algo'
 import { ReviewResultDocument } from '@/types/review.types'
-import { SentenceProps } from '@/components/cards/SentenceCard'
+import { BaseSentenceProps } from '@/types/review.types'
 
 // Unfinished: temporary any state until word types defined
 interface AppContextTypes {
   unfinishedWords: ReviewResultDocument[]
   finishedWords: ReviewResultDocument[]
+  progress: string
   loadingState: boolean
   userLatestWord: number
   dispatch: React.Dispatch<ReducerAction>
@@ -23,23 +24,27 @@ interface ReducerAction {
     | 'correctResult'
     | 'incorrectResult'
     | 'resetState'
+    | 'startLoading'
+    | 'endLoading'
   firstResult?: number
   fetchedWords?: ReviewResultDocument[]
-  newSentence?: SentenceProps
+  newSentence?: BaseSentenceProps
   userLatestWord?: number
 }
 
 interface ReducerState {
   unfinishedWords: ReviewResultDocument[]
   finishedWords: ReviewResultDocument[]
+  progress: string
   loadingState: boolean
   userLatestWord: number
   error: string | null
 }
 
-const initialContext = {
+const initialContext: ReducerState = {
   unfinishedWords: [],
   finishedWords: [],
+  progress: 'ready',
   loadingState: true,
   userLatestWord: 0,
   error: null
@@ -51,15 +56,35 @@ const reducer = (state: ReducerState, action: ReducerAction): ReducerState => {
   const currentFinishedWords = [...state.finishedWords]
   const word = currentUnfinishedWords.shift() // Get the first word
 
+  // Helper function to determine process state
+  // This only needs to be triggered when action.type can end the session
+  // That is: firstResult or correctResult
+  const getProgressState = (
+    unfinished: ReviewResultDocument[]
+  ): 'ready' | 'running' | 'completed' => {
+    if (unfinished.length === 0) {
+      return 'completed'
+    }
+    // This means it will remain running if not
+    return state.progress === 'running' ? 'running' : 'ready'
+  }
+
   // Loads fetchedWords into the context
   switch (action.type) {
     case 'loadWords':
-      if (action.fetchedWords) {
+      if (action.fetchedWords && action.fetchedWords.length > 0) {
         return {
           ...state,
+          progress: 'running',
           loadingState: false,
           unfinishedWords: action.fetchedWords,
           finishedWords: []
+        }
+      } else {
+        return {
+          ...state,
+          loadingState: false,
+          error: 'State error'
         }
       }
 
@@ -87,7 +112,7 @@ const reducer = (state: ReducerState, action: ReducerAction): ReducerState => {
         return { ...state }
       }
 
-      // First, create a copy of the word and reviewHistory array to avoid mutation
+      // Copy of the reviewHistory array to avoid mutation and add new current date
       const updatedReviewHistory = [
         ...word.reviewHistory,
         {
@@ -104,6 +129,10 @@ const reducer = (state: ReducerState, action: ReducerAction): ReducerState => {
         word.interval
       )
 
+      // Calculate the next review date based on the updated interval
+      const updatedNextReviewDate = new Date()
+      updatedNextReviewDate.setDate(updatedNextReviewDate.getDate() + i)
+
       // Update word properties immutably
       const updatedWordWithStats = {
         ...word,
@@ -111,6 +140,7 @@ const reducer = (state: ReducerState, action: ReducerAction): ReducerState => {
         repetitions: n,
         easeFactor: ef,
         interval: i,
+        nextReviewDate: updatedNextReviewDate,
         seenToday: true
       }
 
@@ -119,7 +149,8 @@ const reducer = (state: ReducerState, action: ReducerAction): ReducerState => {
         return {
           ...state,
           unfinishedWords: currentUnfinishedWords,
-          finishedWords: [...currentFinishedWords, updatedWordWithStats]
+          finishedWords: [...currentFinishedWords, updatedWordWithStats],
+          progress: getProgressState(currentUnfinishedWords)
         }
       } else {
         // Otherwise return it to the unfinished words to be seen once more until correct
@@ -137,8 +168,10 @@ const reducer = (state: ReducerState, action: ReducerAction): ReducerState => {
       return {
         ...state,
         unfinishedWords: currentUnfinishedWords,
-        finishedWords: [...state.finishedWords, word]
+        finishedWords: [...state.finishedWords, word],
+        progress: getProgressState(currentUnfinishedWords)
       }
+
     // Returns word to unfinished array
     case 'incorrectResult':
       if (!word) {
@@ -148,12 +181,22 @@ const reducer = (state: ReducerState, action: ReducerAction): ReducerState => {
         ...state,
         unfinishedWords: [...currentUnfinishedWords, word]
       }
+    case 'startLoading':
+      return {
+        ...state,
+        loadingState: true
+      }
+    case 'endLoading':
+      return {
+        ...state,
+        loadingState: false
+      }
     case 'resetState':
       return {
         ...initialContext
       }
     default:
-      throw new Error('Unknown action')
+      throw new Error(`Unknown action: ${action.type}`)
   }
 }
 
@@ -167,6 +210,7 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       value={{
         unfinishedWords: state.unfinishedWords,
         finishedWords: state.finishedWords,
+        progress: state.progress,
         loadingState: state.loadingState,
         userLatestWord: state.userLatestWord,
         dispatch

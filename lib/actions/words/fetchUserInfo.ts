@@ -5,6 +5,9 @@ import UserWord from '@/models/userword.model'
 import User from '@/models/user.model'
 import Session from '@/models/session.model'
 
+// This function returns checks for active sesison
+// Otherwise returns userId and wordsDueCount
+
 export async function fetchUserInfo({ userEmail }: { userEmail: string }) {
   try {
     await connectToDB()
@@ -12,11 +15,6 @@ export async function fetchUserInfo({ userEmail }: { userEmail: string }) {
     const user = await User.findOne({ email: userEmail })
 
     const today = new Date()
-
-    const wordsDueCount = await UserWord.countDocuments({
-      userId: user._id,
-      nextReviewDate: { $lte: today }
-    })
 
     const activeSession = await Session.findOne({
       userId: user._id,
@@ -30,6 +28,11 @@ export async function fetchUserInfo({ userEmail }: { userEmail: string }) {
         result: user._id
       }
     }
+
+    const wordsDueCount = await UserWord.countDocuments({
+      userId: user._id,
+      nextReviewDate: { $lte: today }
+    })
 
     return {
       message: 'Successfully fetched count of words due.',

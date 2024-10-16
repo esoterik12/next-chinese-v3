@@ -6,7 +6,7 @@ import AnimatedSection from './AnimatedSection'
 import { useAppContext } from '@/lib/context/ReviewSessionContext'
 import generateSentence from '@/lib/actions/sentences/generateSentence'
 import { SentenceProps } from '@/types/review.types'
-import { ShowSentenceOptions } from '../containers/ReviewContainer'
+import { ShowSentenceOptions } from '../learn/ActiveLearnSession'
 
 interface SentenceCardProps {
   showSent: ShowSentenceOptions
@@ -23,8 +23,6 @@ const SentenceCard = ({
 }: SentenceCardProps) => {
   const { unfinishedWords, dispatch } = useAppContext()
   const [sentenceData, setSentenceData] = useState<SentenceProps | null>(null)
-
-  console.log('unfinishedWords in SentenceCard.tsx', unfinishedWords)
 
   // Memoizes handleSentence function, stops unnecessary re-renders, triggers when showSentence/unfinishedWords change.
   const handleSentence = useCallback(async () => {
@@ -62,13 +60,13 @@ const SentenceCard = ({
     return () => {
       document.removeEventListener('keydown', keyDownHandler)
     }
-  }, [showSent, handleSentence])
+  }, [showSent, setShowSent, handleSentence])
 
   return (
     <div className='mt-2 flex h-[120px] w-full flex-col items-center'>
       <AnimatePresence mode='wait'>
         {showSent === 'hidden' && (
-          <AnimatedSection key='sentenceButton'>
+          <AnimatedSection classes='text-center' key='sentenceButton'>
             <DefaultButton
               handleClick={handleSentence}
               customClasses='custom-hover-effect bg-gray-900 p-2 w-[270px]'
@@ -86,13 +84,13 @@ const SentenceCard = ({
           sentenceData && (
             <AnimatedSection
               key='sentenceAnswer'
-              classes='flex flex-col gap-1 pt-4'
+              classes='flex flex-col gap-1 pt-4 text-center'
             >
               <>
                 {/* This ml is to offset the issue of the Chinese period taking up full character length and making it not seem centered. */}
                 <button onClick={() => setShowSent('showTranslation')}>
                   <p
-                    className={`custom-large-text ml-2 ${showSent === 'showSentence' ? `transition-colors duration-300 hover:cursor-pointer hover:text-sky-500` : ``}`}
+                    className={`custom-large-text ml-2 ${showSent === 'showSentence' ? `transition-colors duration-300 hover:cursor-pointer hover:text-sky-300` : ``}`}
                   >
                     {sentenceData.sentTraditional}
                   </p>
@@ -106,7 +104,7 @@ const SentenceCard = ({
         {showSent === 'showTranslation' && sentenceData && (
           <AnimatedSection
             key='sentenceTranslation'
-            classes='flex flex-col gap-1 pt-1'
+            classes='flex flex-col gap-1 pt-1 text-center'
           >
             <>
               <p className='custom-small-text'>{sentenceData.sentPinyin}</p>

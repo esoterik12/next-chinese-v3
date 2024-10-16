@@ -11,7 +11,7 @@ import IconXCircle from '../icons/IconXCircle'
 import IconCheckCircle from '../icons/IconCheckCircle'
 import { useKeyboard } from '@/lib/custom-hooks/useKeyboard'
 import useVoices from '@/lib/custom-hooks/useVoice'
-import { ShowSentenceOptions } from '../containers/ReviewContainer'
+import { ShowSentenceOptions } from '../learn/ActiveLearnSession'
 
 interface WordCardProps {
   setShowSent: React.Dispatch<SetStateAction<ShowSentenceOptions>>
@@ -81,7 +81,7 @@ const WordCard = ({ fetching, setShowSent }: WordCardProps) => {
     <div className='custom-gradient-background custom-border h-[380px] w-[270px]'>
       {/* Word section - fixed height */}
       <AnimatedSection
-        classes='flex h-[130px] flex-col items-center justify-end gap-y-4'
+        classes='flex h-[130px] flex-col items-center justify-end gap-y-4 text-center'
         motionKey='words'
       >
         <>
@@ -102,7 +102,7 @@ const WordCard = ({ fetching, setShowSent }: WordCardProps) => {
 
           {show && (
             <AnimatedSection
-              classes='h-full flex-col items-stretch mt-10 justify-between'
+              classes='h-full flex-col items-stretch mt-10 justify-between text-center'
               motionKey='answer'
             >
               <>

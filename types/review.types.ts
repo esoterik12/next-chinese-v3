@@ -33,4 +33,5 @@ export type ReviewResultDocument = UserWordDocument &
     seenToday: boolean
     newSentencesArray?: NewSentenceProps[] 
     sentence: SentenceProps
+    _id: mongoose.Types.ObjectId | string
   }

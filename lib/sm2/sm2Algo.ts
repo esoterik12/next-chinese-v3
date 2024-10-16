@@ -6,6 +6,7 @@ interval I
 */
 export default function sm2(q: number, n: number, ef: number, i: number) {
   if (q >= 3) {
+    n += 1
     if (n === 0) {
       i = 1
     } else if (n === 1) {

@@ -18,7 +18,7 @@ export async function updateUserWords({
     const bulkUserWordsUpdate = reviewResults.map(
       (word: ReviewResultDocument) => ({
         updateOne: {
-          filter: { _id: word.wordId, userId: userId }, // Multiple conditions
+          filter: { _id: word._id, userId: userId }, // Multiple conditions
           update: {
             $set: {
               wordId: word.wordId, // Sets the wordId to the correspond id of the word in Words collection

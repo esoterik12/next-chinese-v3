@@ -38,6 +38,8 @@ const LearnPage = async () => {
     )
   }
 
+  console.log('userInfo', userInfo)
+
   return (
     <PageContainer customClasses='h-full'>
       <ReviewCont
