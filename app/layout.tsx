@@ -15,12 +15,11 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
-  // Unfinished: Update URL and description
   title: 'Next Chinese',
-  description: 'Traditional Mandarin Flashcard App',
-  metadataBase: new URL('https://nextjs-i18n-enite-test.vercel.app/en'),
+  description: 'Simplified & Traditional Mandarin Chinese Learning Application',
+  metadataBase: new URL('https://nextchinese.vercel.app/'),
   openGraph: {
-    siteName: 'Luke Hide | Web Services',
+    siteName: 'Next Chinese | Your Path to Fluency',
     type: 'website',
     locale: 'en_US'
   },

@@ -7,6 +7,7 @@ import { startLearnSession } from '../session/startLearnSession'
 import { AppError } from '@/lib/errors/AppError'
 import User from '@/models/user.model'
 import Sentence from '@/models/sentence.model'
+import { ReviewResultDocument } from '@/types/review.types'
 
 export async function fetchWords({
   userId,
@@ -18,7 +19,7 @@ export async function fetchWords({
   try {
     await connectToDB()
 
-    // 1st: start a learning session
+    // 1: start a learning session
     const learnSession = await startLearnSession(userId)
     if (learnSession.code === 409) {
       console.log('Session in progress in fetchWord.ts: ', learnSession)
@@ -28,10 +29,11 @@ export async function fetchWords({
       }
     }
 
-    // 2nd: get the user latest word
+    // 2: get the user latest word
     const { latestWord } = await User.findById(userId)
 
-    // 3rd: fetch due words
+    // 3: fetch due words
+    // This fetches the due UserWords data and fills in the wordId field with data from the Words collection
     const today = new Date()
     const wordsDueResult = await UserWord.find({
       userId: userId,
@@ -44,48 +46,86 @@ export async function fetchWords({
         model: 'Word'
       })
 
-    // Flattens the Word collection data into the wordsDue data
-    const fetchWordsResult = wordsDueResult.map(userWord => {
-      const { wordId, ...userWordWithoutWordId } = userWord.toObject()
-      return { ...userWordWithoutWordId, ...wordId }
-    })
+    // 4: Create a new clean object without mongoose data
+    // Using .lean() in mongoose function may be a solution in the future but not working now - simple option to save time
+    const flattenedWordsDueResult: ReviewResultDocument[] = wordsDueResult.map(
+      userWord => {
+        return {
+          // This section represents UserWords collection data
+          _id: userWord._doc._id,
+          userId: userWord._doc.userId,
+          createdAt: userWord._doc.createdAt,
+          easeFactor: userWord._doc.easeFactor,
+          interval: userWord._doc.interval,
+          nextReviewDate: userWord._doc.nextReviewDate,
+          repetitions: userWord._doc.repetitions,
+          reviewHistory: userWord._doc.reviewHistory,
+          updatedAt: userWord._doc.updatedAt,
+          // This section represents Words collection data
+          wordId: userWord._doc.wordId._id,
+          tocflLevel: userWord._doc.wordId.tocflLevel,
+          wordNumber: userWord._doc.wordId.wordNumber,
+          wordTraditional: userWord._doc.wordId.wordTraditional,
+          wordSimplified: userWord._doc.wordId.wordSimplified,
+          wordPinyin: userWord._doc.wordId.wordPinyin,
+          wordTranslation: userWord._doc.wordId.wordTranslation,
+          partOfSpeech: userWord._doc.wordId.partOfSpeech
+        }
+      }
+    )
 
-    // 4th: fetch new words if not enough for sessionWordGoal
+    // 5: fetch new words if not enough for sessionWordGoal
     if (wordsDueResult.length < sessionWordGoal) {
       const newWordsResult = await fetchNewWords({
         newWordsDue: sessionWordGoal - wordsDueResult.length,
         latestWordNumber: latestWord
       })
 
+      // 6: Create a new clean object without mongoose data
       // Adds review session stats and default sm2 values used on the front-end
-      const expandedArray = newWordsResult.map(word => ({
-        ...word,
-        wordId: word._id, // Added as duplicate for saving in UserWords after review
-        userId: userId,
-        repetitions: 0,
-        interval: 0,
-        easeFactor: 2.5,
-        nextReviewDate: new Date(Date.now() + 24 * 60 * 60 * 1000), // First review after 1 day
-        reviewHistory: []
-      }))
+      const expandedNewWordsResult: ReviewResultDocument[] = newWordsResult.map(
+        word => ({
+          // Add existing Words collection data:
+          wordId: word._id, // This uses the _id from Word collection
+          tocflLevel: word.wordNumber,
+          wordNumber: word.wordNumber,
+          wordTraditional: word.wordTraditional,
+          wordSimplified: word.wordSimplified,
+          wordPinyin: word.wordPinyin,
+          wordTranslation: word.wordTraditional,
+          partOfSpeech: word.partOfSpeech,
+          // Add user id and s2 default values for future saving in UserWords colelction
+          _id: new mongoose.Types.ObjectId(), // Generate new ObjectId for new words
+          userId: userId,
+          repetitions: 0,
+          interval: 0,
+          easeFactor: 2.5,
+          nextReviewDate: new Date(Date.now() + 24 * 60 * 60 * 1000), // First review after 1 day
+          reviewHistory: []
+        })
+      )
 
-      // Combines results
-      expandedArray.forEach(newWordObj => fetchWordsResult.push(newWordObj))
+      // 7: Combines results of new Words collection data (expandedNewWordsResult) and UserWords data (flattenedWordsDueResult)
+      expandedNewWordsResult.forEach(newWordObj =>
+        flattenedWordsDueResult.push(newWordObj)
+      )
     }
 
-    // 5th: fetch sentences for each word if they exist
-    const fetchSentencesResult = await Promise.all(
-      fetchWordsResult.map(async word => {
-        const sentence = await Sentence.findOne({ wordId: word._id }).exec()
+    // 8: fetch sentences for each word if they exist
+    const wordIds = flattenedWordsDueResult.map(word => word.wordId)
+    const sentencesTest = await Sentence.find({ wordId: { $in: wordIds } })
+    const sentenceMap = sentencesTest.reduce((acc, sentence) => {
+      acc[sentence.wordId] = sentence
+      return acc
+    }, {})
 
-        return {
-          ...word,
-          sentence: sentence || null
-        }
-      })
-    )
+    // 9. Combine the data
+    const finalWordAndSentenceData = flattenedWordsDueResult.map(word => ({
+      ...word,
+      sentence: sentenceMap[word.wordId.toString()] || null
+    }))
 
-    const jsonResults = JSON.parse(JSON.stringify(fetchSentencesResult))
+    const jsonResults = JSON.parse(JSON.stringify(finalWordAndSentenceData))
 
     return {
       message: 'Successfully fetched words for review session.',

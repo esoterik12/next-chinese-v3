@@ -18,9 +18,7 @@ export const readCSV = async () => {
   const file = 'C:\\projects\\next-chinese-v3\\public\\word-data.csv'
 
   mongoose
-    .connect(
-      ''
-    )
+    .connect(process.env.MONGODB_URL)
     .then(() => {
       console.log('Mongo DB Connection Open')
     })

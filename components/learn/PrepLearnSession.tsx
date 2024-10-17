@@ -16,7 +16,7 @@ const dummyLast30 = [
 ]
 
 const learningOptionsObject = [
-  { value: 1, border: 'border-gray-500', textColor: 'text-gray-400' },
+  { value: 2, border: 'border-gray-500', textColor: 'text-gray-400' },
   { value: 20, border: 'border-gray-500', textColor: 'text-gray-400' },
   { value: 50, border: 'border-gray-500', textColor: 'text-gray-400' },
   { value: 80, border: 'border-gray-500', textColor: 'text-gray-400' },
@@ -40,11 +40,12 @@ const PrepLearnSession = ({
   wordsDueCount,
   latestWord
 }: PrepLearnSessionProps) => {
-  const { dispatch, error } = useAppContext()
+  const { dispatch } = useAppContext()
 
   const handleStart = async () => {
     try {
       // This function gets words AND uses user id to start a review session in the DB
+      // TODO: add error here if code 409 - that causes a display of EndLearnSession
       const learnSessionData = await fetchWords({
         userId: userId,
         sessionWordGoal: goal

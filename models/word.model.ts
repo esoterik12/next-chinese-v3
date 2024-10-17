@@ -12,8 +12,8 @@ import mongoose from 'mongoose'
 
 const wordSchema = new mongoose.Schema({
   tocflLevel: {
-    type: Number
-    // Not required since future sets may not fit the tocfl database
+    type: Number,
+    required: true
   },
   wordNumber: {
     type: Number,
@@ -40,24 +40,10 @@ const wordSchema = new mongoose.Schema({
     type: String,
     required: true,
     default: 'N/A'
-  },
+  }
 })
 
-// Manually defined schema - not extending mongoose types (extending the mongoose type causes some issues one the front end)
-export interface Word {
-  tocflLevel?: number
-  wordNumber: number
-  wordTraditional: string
-  wordSimplified: string
-  wordPinyin: string
-  wordTranslation: string
-  partOfSpeech: string
-}
-
-// Extend the base Document type and add only the relevant properties
-export interface WordDocument extends Word, Document {}
-
 const Word =
-  mongoose.models.Word || mongoose.model<WordDocument>('Word', wordSchema)
+  mongoose.models.Word || mongoose.model<Document>('Word', wordSchema)
 
 export default Word

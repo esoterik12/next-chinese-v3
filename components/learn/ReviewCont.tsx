@@ -23,7 +23,7 @@ const ReviewCont = ({
   const { progress } = useAppContext()
   const [goal, setGoal] = useState<number>(50)
 
-  if (!userId || !wordsDueCount || !latestWord) {
+  if (!userId) {
     return (
       <InlineError classes='p-2 h-full w-full flex flex-grow flex-col items-center justify-center'>
         <p>Error loading session.</p>

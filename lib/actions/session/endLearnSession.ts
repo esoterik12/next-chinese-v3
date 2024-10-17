@@ -40,6 +40,8 @@ export async function endLearnSession({
           reviewResults: finishedWords
         })
       )
+
+      console.log('finishedWords', finishedWords)
       
       // Prepare sentence save
       const sentencesToSave = finishedWords.flatMap(
@@ -49,6 +51,9 @@ export async function endLearnSession({
             ...sentence
           })) || [] // empty array if no content in newSentencesArray
       )
+
+      console.log('sentencesToSave', sentencesToSave)
+
       promises.push(
         saveSentences({
           newSentences: sentencesToSave
