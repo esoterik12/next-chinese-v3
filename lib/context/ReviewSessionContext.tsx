@@ -12,6 +12,7 @@ interface AppContextTypes {
   loadingState: boolean
   userLatestWord: number
   error: null | string
+  characterState: 'traditional' | 'simplified'
   dispatch: React.Dispatch<ReducerAction>
 }
 
@@ -26,6 +27,7 @@ interface ReducerAction {
     | 'correctResult'
     | 'incorrectResult'
     | 'resetState'
+    | 'toggleCharacterState'
     | 'startLoading'
     | 'endLoading'
   firstResult?: number
@@ -33,6 +35,7 @@ interface ReducerAction {
   newSentence?: BaseSentenceProps
   userLatestWord?: number
   error?: null | string
+  characterState?: 'traditional' | 'simplified'
 }
 
 interface ReducerState {
@@ -41,6 +44,7 @@ interface ReducerState {
   progress: string
   loadingState: boolean
   userLatestWord: number
+  characterState: 'traditional' | 'simplified'
   error: string | null
 }
 
@@ -50,6 +54,7 @@ const initialContext: ReducerState = {
   progress: 'ready',
   loadingState: true,
   userLatestWord: 0,
+  characterState: 'traditional',
   error: null
 }
 
@@ -80,6 +85,8 @@ const reducer = (state: ReducerState, action: ReducerAction): ReducerState => {
         error: action.error
       }
     case 'loadWords':
+      // TODO: Add a function that takes lastCharacterSetting from the User collection
+      // This will requires the setting to be updates on each round
       if (action.fetchedWords && action.fetchedWords.length > 0) {
         return {
           ...state,
@@ -189,6 +196,12 @@ const reducer = (state: ReducerState, action: ReducerAction): ReducerState => {
         ...state,
         unfinishedWords: [...currentUnfinishedWords, word]
       }
+    case 'toggleCharacterState':
+      return {
+        ...state,
+        characterState:
+          state.characterState === 'simplified' ? 'traditional' : 'simplified'
+      }
     case 'startLoading':
       return {
         ...state,
@@ -221,6 +234,7 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         progress: state.progress,
         loadingState: state.loadingState,
         userLatestWord: state.userLatestWord,
+        characterState: state.characterState,
         error: state.error,
         dispatch
       }}

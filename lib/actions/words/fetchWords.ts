@@ -92,7 +92,7 @@ export async function fetchWords({
           wordTraditional: word.wordTraditional,
           wordSimplified: word.wordSimplified,
           wordPinyin: word.wordPinyin,
-          wordTranslation: word.wordTraditional,
+          wordTranslation: word.wordTranslation,
           partOfSpeech: word.partOfSpeech,
           // Add user id and s2 default values for future saving in UserWords colelction
           _id: new mongoose.Types.ObjectId(), // Generate new ObjectId for new words

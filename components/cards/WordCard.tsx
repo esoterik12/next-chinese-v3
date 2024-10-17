@@ -12,6 +12,7 @@ import IconCheckCircle from '../icons/IconCheckCircle'
 import { useKeyboard } from '@/lib/custom-hooks/useKeyboard'
 import useVoices from '@/lib/custom-hooks/useVoice'
 import { ShowSentenceOptions } from '../learn/ActiveLearnSession'
+import AnimatedToggle from './AnimatedToggle'
 
 interface WordCardProps {
   setShowSent: React.Dispatch<SetStateAction<ShowSentenceOptions>>
@@ -20,7 +21,7 @@ interface WordCardProps {
 
 const WordCard = ({ fetching, setShowSent }: WordCardProps) => {
   const [show, setShow] = useState(false)
-  const { dispatch, unfinishedWords } = useAppContext()
+  const { dispatch, unfinishedWords, characterState } = useAppContext()
   const voice = useVoices()
 
   const handleShow = useCallback(() => {
@@ -85,8 +86,33 @@ const WordCard = ({ fetching, setShowSent }: WordCardProps) => {
         motionKey='words'
       >
         <>
-          <p className='custom-header'>{unfinishedWords[0].wordTraditional}</p>
-          <p>{unfinishedWords[0].wordSimplified}</p>
+          {characterState === 'traditional' ? (
+            <AnimatedToggle key='traditionalWordTop'>
+              <p className='custom-header'>
+                {unfinishedWords[0].wordTraditional}
+              </p>
+            </AnimatedToggle>
+          ) : (
+            <AnimatedToggle key='simplifiedWordTop'>
+              <p className='custom-header'>
+                {unfinishedWords[0].wordSimplified}
+              </p>
+            </AnimatedToggle>
+          )}
+          {/* <p className='custom-header'>
+            {characterState === 'traditional'
+              ? unfinishedWords[0].wordTraditional
+              : unfinishedWords[0].wordSimplified}
+          </p> */}
+          {characterState === 'traditional' ? (
+            <AnimatedToggle key='traditionalWordBot'>
+              <p>{unfinishedWords[0].wordSimplified}</p>
+            </AnimatedToggle>
+          ) : (
+            <AnimatedToggle key='simplifiedWordBot'>
+              <p>{unfinishedWords[0].wordTraditional}</p>
+            </AnimatedToggle>
+          )}
         </>
       </AnimatedSection>
 

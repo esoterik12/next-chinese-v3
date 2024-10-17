@@ -17,7 +17,7 @@ const EndLearnSession = ({ userId }: { userId: string }) => {
 
   return (
     <p
-      className='custom-tertiary-link h-6 w-6 rounded-full text-gray-400 transition-colors duration-300 hover:cursor-pointer hover:text-gray-300'
+      className='custom-tertiary-link mt-1 h-6 w-6 rounded-full text-gray-400 transition-colors duration-300 hover:cursor-pointer hover:text-gray-300'
       onClick={onClickEnd}
     >
       <IconPower classes='w-6 h-6' />

@@ -11,7 +11,7 @@ import { ReviewResultDocument } from '@/types/review.types'
 import { useAppContext } from '@/lib/context/ReviewSessionContext'
 
 const dummyLast30 = [
-  0, 0, 0, 0, 40, 50, 80, 100, 0, 50, 50, 20, 0, 0, 55, 66, 0, 0, 40, 100, 80,
+  0, 0, 0, 0, 40, 50, 80, 100, 0, 50, 50, 100, 20, 0, 0, 55, 66, 0, 0, 40, 100, 80,
   20, 50, 80, 100, 0, 0, 100, 55
 ]
 
@@ -108,12 +108,12 @@ const PrepLearnSession = ({
             />
           </div>
           {/* Last 30 days section */}
-          <div className='mt-4 mb-8'>
+          <div className='mb-8 mt-4'>
             <p className='py-2'>Last 30 days:</p>
             <div className='flex flex-row flex-wrap gap-1'>
               {dummyLast30.map((item, idx) => (
                 <div
-                  className={`flex h-[21px] w-[21px] items-center justify-center rounded-md border-white p-2 ${item >= 50 ? 'bg-emerald-500' : item > 0 ? 'bg-sky-500' : 'bg-gray-500'}`}
+                  className={`flex h-[16px] w-[16px] items-center justify-center rounded-sm border-white p-2 md:h-[20px] md:w-[20px] md:rounded-md ${item >= 50 ? 'bg-emerald-500' : item > 0 ? 'bg-sky-500' : 'bg-gray-500'}`}
                   key={idx}
                 ></div>
               ))}
@@ -123,14 +123,12 @@ const PrepLearnSession = ({
 
         {/* Select learning goals section */}
         <div className=''>
-          <p className='mt-6 mb-4 custom-subheader'>
-            Select your target:
-          </p>
+          <p className='custom-subheader mb-4 mt-6'>Select your target:</p>
           <div className='flex flex-row flex-wrap gap-2 py-2'>
             {learningOptionsObject.map(item => (
               <DefaultButton
                 key={item.value}
-                customClasses={`w-[138px] border-2  p-2 ${goal === item.value ? 'border-gray-400 bg-gray-900 font-semibold' : item.border}`}
+                customClasses={`md:w-[138px] w-[60px]  border-2  p-2 ${goal === item.value ? 'border-gray-400 bg-gray-900 font-semibold' : item.border}`}
                 handleClick={() => setGoal(item.value)}
               >
                 <p
@@ -143,7 +141,7 @@ const PrepLearnSession = ({
           </div>
           <DefaultButton
             handleClick={() => handleStart()}
-            customClasses='w-[138px] border-2 border-emerald-500 mt-6 p-2'
+            customClasses='md:w-[138px] w-[128px] border-2 border-emerald-500 mt-6 p-2'
           >
             <p className='font-semibold'>Start</p>
           </DefaultButton>
