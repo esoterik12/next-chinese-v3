@@ -4,6 +4,8 @@ import PrepLearnSession from './PrepLearnSession'
 import { useAppContext } from '@/lib/context/ReviewSessionContext'
 import ActiveLearnSession from './ActiveLearnSession'
 import CompletedLearnSession from './CompletedLearnSession'
+import InlineError from '../shared/InlineError'
+import EndLearnSession from '../buttons/EndLearnSession'
 
 interface ReviewContProps {
   userId: string // converted from ObjectId in page.tsx
@@ -20,6 +22,15 @@ const ReviewCont = ({
 }: ReviewContProps) => {
   const { progress } = useAppContext()
   const [goal, setGoal] = useState<number>(50)
+
+  if (!userId || !wordsDueCount || !latestWord) {
+    return (
+      <InlineError classes='p-2 h-full w-full flex flex-grow flex-col items-center justify-center'>
+        <p>Error loading session.</p>
+        <EndLearnSession userId={userId} />
+      </InlineError>
+    )
+  }
 
   return (
     <>

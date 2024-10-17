@@ -19,7 +19,7 @@ export const readCSV = async () => {
 
   mongoose
     .connect(
-      'mongodb+srv://esoterik12:mindblast1204ian@cluster0.6ap8sjr.mongodb.net/next-chinese-v3?retryWrites=true&w=majority'
+      ''
     )
     .then(() => {
       console.log('Mongo DB Connection Open')

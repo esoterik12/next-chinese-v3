@@ -40,7 +40,7 @@ const PrepLearnSession = ({
   wordsDueCount,
   latestWord
 }: PrepLearnSessionProps) => {
-  const { dispatch } = useAppContext()
+  const { dispatch, error } = useAppContext()
 
   const handleStart = async () => {
     try {

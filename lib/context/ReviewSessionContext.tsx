@@ -11,6 +11,7 @@ interface AppContextTypes {
   progress: string
   loadingState: boolean
   userLatestWord: number
+  error: null | string
   dispatch: React.Dispatch<ReducerAction>
 }
 
@@ -18,6 +19,7 @@ interface AppContextTypes {
 // correct and incorrect are subsequent views, incorrect returns the word to the unfinished queue
 interface ReducerAction {
   type:
+    | 'setError'
     | 'loadWords'
     | 'addSentence'
     | 'firstResult'
@@ -30,6 +32,7 @@ interface ReducerAction {
   fetchedWords?: ReviewResultDocument[]
   newSentence?: BaseSentenceProps
   userLatestWord?: number
+  error?: null | string
 }
 
 interface ReducerState {
@@ -71,6 +74,11 @@ const reducer = (state: ReducerState, action: ReducerAction): ReducerState => {
 
   // Loads fetchedWords into the context
   switch (action.type) {
+    case 'setError':
+      return {
+        ...state,
+        error: action.error
+      }
     case 'loadWords':
       if (action.fetchedWords && action.fetchedWords.length > 0) {
         return {
@@ -84,7 +92,7 @@ const reducer = (state: ReducerState, action: ReducerAction): ReducerState => {
         return {
           ...state,
           loadingState: false,
-          error: 'State error'
+          error: 'Unexpected error loading words in your review session.'
         }
       }
 
@@ -213,6 +221,7 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         progress: state.progress,
         loadingState: state.loadingState,
         userLatestWord: state.userLatestWord,
+        error: state.error,
         dispatch
       }}
     >
