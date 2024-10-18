@@ -19,7 +19,8 @@ export default function sm2(q: number, n: number, ef: number, i: number) {
     i = 1
   }
 
-  ef = ef + (0.1 - (5 - 5) * (0.08 + (5 - q) * 0.02))
+  ef = ef + (0.1 - (5 - q) * (0.08 + (5 - q) * 0.02))
+  ef = Number(ef.toFixed(1))
   if (ef < 1.3) {
     ef = 1.3
   }

@@ -79,8 +79,8 @@ const WordCard = ({ fetching, setShowSent }: WordCardProps) => {
   useKeyboard({ show, fetching, completeCard, handleShow, voice })
 
   return (
-    <div className='custom-gradient-background custom-border h-[380px] w-[270px]'>
-      {/* Word section - fixed height */}
+    <div className='custom-gradient-background custom-border h-[400px] w-[290px]'>
+      {/* Top Word section - fixed height */}
       <AnimatedSection
         classes='flex h-[130px] flex-col items-center justify-end gap-y-4 text-center'
         motionKey='words'
@@ -106,17 +106,19 @@ const WordCard = ({ fetching, setShowSent }: WordCardProps) => {
           </p> */}
           {characterState === 'traditional' ? (
             <AnimatedToggle motionKey='traditionalWordBot'>
-              <p>{unfinishedWords[0].wordSimplified}</p>
+              <p className='custom-large-text'>{unfinishedWords[0].wordSimplified}</p>
             </AnimatedToggle>
           ) : (
             <AnimatedToggle motionKey='simplifiedWordBot'>
-              <p>{unfinishedWords[0].wordTraditional}</p>
+              <p className='custom-large-text'>{unfinishedWords[0].wordTraditional}</p>
             </AnimatedToggle>
           )}
         </>
       </AnimatedSection>
 
-      <div className='flex h-[250px] flex-col items-center justify-center'>
+
+      {/* Bottom Section */}
+      <div className='flex h-[270px] flex-col items-center justify-center'>
         <AnimatePresence mode='wait'>
           {!show && (
             <AnimatedSection motionKey='button'>
@@ -132,12 +134,12 @@ const WordCard = ({ fetching, setShowSent }: WordCardProps) => {
               motionKey='answer'
             >
               <>
-                <h1 className='font-bold text-sky-400'>
+                <h1 className='font-bold custom-large-text text-sky-400'>
                   {unfinishedWords[0].partOfSpeech}
                 </h1>
                 <div>
-                  <p>{show && unfinishedWords[0].wordPinyin}</p>
-                  <p className='custom-gray-text'>
+                  <p className='custom-large-text'>{show && unfinishedWords[0].wordPinyin}</p>
+                  <p className='custom-large-text custom-gray-text'>
                     {show && unfinishedWords[0].wordTranslation}
                   </p>
                 </div>

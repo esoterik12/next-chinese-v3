@@ -16,7 +16,7 @@ const dummyLast30 = [
 ]
 
 const learningOptionsObject = [
-  { value: 2, border: 'border-gray-500', textColor: 'text-gray-300' },
+  // { value: 2, border: 'border-gray-500', textColor: 'text-gray-300' },
   { value: 5, border: 'border-gray-500', textColor: 'text-gray-300' },
   { value: 20, border: 'border-gray-500', textColor: 'text-gray-300' },
   { value: 50, border: 'border-gray-500', textColor: 'text-gray-300' },

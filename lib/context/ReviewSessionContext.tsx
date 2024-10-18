@@ -148,6 +148,10 @@ const reducer = (state: ReducerState, action: ReducerAction): ReducerState => {
         word.interval
       )
 
+      console.log('n', n)
+      console.log('ef', ef)
+      console.log('i', i)
+
       // Calculate the next review date based on the updated interval
       const updatedNextReviewDate = new Date()
       updatedNextReviewDate.setDate(updatedNextReviewDate.getDate() + i)

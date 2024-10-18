@@ -23,7 +23,7 @@ const ActiveLearnSession = ({ userId }: ActiveLearnSessionProps) => {
 
   return (
     <div className='flex w-full flex-grow flex-col items-center'>
-      <div className='mr-1 flex h-16 w-full justify-end gap-2 p-2'>
+      <div className='mr-1 flex h-14 w-full justify-end gap-2 p-2'>
         <ToggleCharacters />
         <IconSettings classes={buttonStyles} />
         <EndLearnSession userId={userId} />

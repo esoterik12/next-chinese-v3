@@ -69,7 +69,7 @@ const SentenceCard = ({
           <AnimatedSection classes='text-center' key='sentenceButton'>
             <DefaultButton
               handleClick={handleSentence}
-              customClasses='custom-hover-effect bg-gray-900 p-2 w-[270px]'
+              customClasses='custom-hover-effect bg-gray-900 p-2 w-[290px]'
             >
               {!fetching ? (
                 <p className='text-center'>Context</p>
@@ -84,7 +84,7 @@ const SentenceCard = ({
           sentenceData && (
             <AnimatedSection
               key='sentenceAnswer'
-              classes='flex flex-col gap-1 pt-4 text-center'
+              classes='flex flex-col gap-1 pt-2 text-center'
             >
               <>
                 {/* This ml is to offset the issue of the Chinese period taking up full character length and making it not seem centered. */}
@@ -107,8 +107,8 @@ const SentenceCard = ({
             classes='flex flex-col gap-1 pt-1 text-center'
           >
             <>
-              <p className='custom-small-text'>{sentenceData.sentPinyin}</p>
-              <p className='custom-small-text custom-gray-text'>
+              <p className=''>{sentenceData.sentPinyin}</p>
+              <p className=' custom-gray-text'>
                 {sentenceData.sentTranslation}
               </p>
             </>

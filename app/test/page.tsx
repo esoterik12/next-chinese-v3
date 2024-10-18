@@ -5,6 +5,13 @@ import PageContainer from '@/components/containers/PageContainer'
 import IconSettings from '@/components/icons/IconSettings'
 import EndLearnSession from '@/components/buttons/EndLearnSession'
 import ToggleCharacters from '@/components/buttons/ToggleCharacters'
+import IconLevel from '@/components/icons/IconLevel'
+import { formatTimeSince } from '@/lib/utils/formatTimeSince'
+import IconStars from '@/components/icons/IconStars'
+import IconTime from '@/components/icons/IconTime'
+import IconEaseFactor from '@/components/icons/IconEaseFactor'
+import IconRepetitions from '@/components/icons/IconRepetitions'
+import IconNextReviewDate from '@/components/icons/IconNextReviewDate'
 
 const ServerActionTestPage = async () => {
   const serverSession = await getServerSession()
@@ -22,6 +29,7 @@ const ServerActionTestPage = async () => {
     seenToday: true,
     sentence: null,
     tocflLevel: 1,
+    reviewHistory: [{ date: new Date(), quality: 4 }],
     userId: '670a6a17161d9454a1d19ddf',
     wordId: '670106fac77bd23776833269',
     wordNumber: 383,
@@ -43,19 +51,67 @@ const ServerActionTestPage = async () => {
         <TestButton />
 
         <div className='p-7'>
-          <div className='mt-6 flex h-[160px] w-[200px] flex-row rounded-xl border-2 border-gray-500 bg-gray-900 p-2 md:flex-col'>
+          <div className='mt-6 flex w-[260px] flex-row rounded-xl border-2 border-gray-500 bg-gray-900 p-2 md:flex-col'>
             <div className='flex flex-col gap-y-2 px-4'>
-              <p className='custom-small-text'>
-                {dummyWordLearned.wordTraditional}
-              </p>
-              <p className='custom-small-text'>{dummyWordLearned.wordPinyin}</p>
-              <p className='custom-small-text'>
-                {dummyWordLearned.wordTranslation}
-              </p>
-              <div className='flex flex-row justify-between'>
-                <p className='custom-small-text'>Views:</p>
+              <div className='mt-2 flex flex-row justify-between border-gray-500'>
+                <p className='custom-large-text mb-2'>
+                  {dummyWordLearned.wordTraditional}
+                </p>
+                <div className='custom-large-text flex flex-row gap-x-1'>
+                  <IconLevel classes='h-4 w-4 mt-2 text-gray-500' />
+                  <p>{dummyWordLearned.tocflLevel}</p>
+                </div>
+              </div>
+              <div className='border-b border-gray-500'>
+                <p className=''>{dummyWordLearned.wordPinyin}</p>
+                <p className='mb-4'>{dummyWordLearned.wordTranslation}</p>
+              </div>
+              <div className='flex flex-row justify-between mt-2'>
+                <p className='custom-small-text flex flex-row gap-x-1 text-gray-400'>
+                  <IconRepetitions classes='h-4 w-4 mt-0.5' /> Repetitions:
+                </p>
                 <p className='custom-small-text'>
                   {dummyWordLearned.repetitions}
+                </p>
+              </div>
+              <div className='flex flex-row justify-between'>
+                <p className='custom-small-text flex flex-row gap-x-1 text-gray-400'>
+                  <IconStars classes='h-4 w-4 mt-0.5' />
+                  Latest score:
+                </p>
+                <p className='custom-small-text'>
+                  {
+                    dummyWordLearned.reviewHistory[
+                      dummyWordLearned.reviewHistory.length - 1
+                    ].quality
+                  }
+                </p>
+              </div>
+              <div className='flex flex-row justify-between'>
+                <p className='custom-small-text flex flex-row gap-x-1 text-gray-400'>
+                  <IconEaseFactor classes='h-4 w-4 mt-0.5' />
+                  Ease factor:
+                </p>
+                <p className='custom-small-text'>
+                  {dummyWordLearned.easeFactor}
+                </p>
+              </div>
+              <div className='flex flex-row justify-between'>
+                <p className='custom-small-text flex flex-row gap-x-1 text-gray-400'>
+                  <IconTime classes='h-4 w-4 mt-0.5' />
+                  First seen:
+                </p>
+                <p className='custom-small-text'>
+                  {formatTimeSince(dummyWordLearned.reviewHistory[0].date)}
+                </p>
+              </div>
+              <div className='mb-3 flex flex-row justify-between'>
+                <p className='custom-small-text flex flex-row gap-x-1 text-gray-400'>
+                  <IconNextReviewDate classes='h-4 w-4 mt-0.5' />
+                  Next review:
+                </p>
+                <p className='custom-small-text'>
+                  {formatTimeSince(dummyWordLearned.reviewHistory[0].date)}
                 </p>
               </div>
             </div>

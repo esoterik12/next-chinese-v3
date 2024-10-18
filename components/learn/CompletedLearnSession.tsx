@@ -12,6 +12,8 @@ import { endLearnSession } from '@/lib/actions/session/endLearnSession'
 import DefaultButton from '../buttons/DefaultButton'
 import sortByDate from '@/lib/utils/sortByDate'
 import { formatDuration } from '@/lib/utils/formatDuration'
+import WordResultCard from '../cards/WordResultCard'
+import IconResults from '../icons/IconResults'
 
 interface CompletedLearnSession {
   userId: string
@@ -69,11 +71,7 @@ const CompletedLearnSession = ({ userId }: CompletedLearnSession) => {
   }
 
   const handleMouseEnter = (word: ReviewResultDocument) => {
-    console.log('id in handleMouseEnter', word._id)
     setHoveredWordStats(word)
-  }
-  const handleMouseLeave = (word: ReviewResultDocument) => {
-    console.log('id in handleMouseLeave', word._id)
   }
 
   return (
@@ -91,18 +89,21 @@ const CompletedLearnSession = ({ userId }: CompletedLearnSession) => {
           </h1>
 
           {/* Main stats boxes */}
-          <div className='flex flex-row flex-wrap gap-4 md:gap-8'>
+          <div className='flex flex-col flex-wrap gap-4 md:flex-row'>
             <StatsContainer
+              width='w-[260px]'
               icon={<IconViews classes='w-6 h-6 text-sky-500' />}
               titleText='Words seen:'
               valueText={completedState.length}
             />
             <StatsContainer
+              width='w-[260px]'
               icon={<IconStars classes='w-6 h-6 text-emerald-500' />}
               titleText='New words:'
               valueText='12'
             />
             <StatsContainer
+              width='w-[260px]'
               icon={<IconTime classes='w-6 h-6 text-rose-500' />}
               titleText='Time:'
               valueText={completedTime}
@@ -110,46 +111,50 @@ const CompletedLearnSession = ({ userId }: CompletedLearnSession) => {
           </div>
 
           {/* Session result visual */}
-          <div className='mt-6 max-w-[730px]'>
-            <p className='py-2'>Your session results:</p>
-            <div className='flex flex-row flex-wrap gap-1'>
-              {finishedWords.map((item, idx) => (
-                <div
-                  onMouseEnter={() => handleMouseEnter(item)}
-                  onMouseLeave={() => handleMouseLeave(item)}
-                  className={`flex h-[21px] w-[21px] items-center justify-center rounded-md p-2 ${hoveredWordState && item._id === hoveredWordState._id ? 'border border-gray-200' : ''} ${
-                    item.reviewHistory[item.reviewHistory.length - 1].quality >=
-                    4
-                      ? 'bg-emerald-500'
-                      : item.reviewHistory[item.reviewHistory.length - 1]
-                            .quality === 3
-                        ? 'bg-sky-500'
-                        : 'bg-rose-500'
-                  }`}
-                  key={idx}
-                ></div>
-              ))}
+
+          <div className='mb-4 mt-4 flex flex-col-reverse gap-4 md:flex-row'>
+            {hoveredWordState !== null && (
+              <WordResultCard word={hoveredWordState} />
+            )}
+            <div className='flex w-[260px] flex-col justify-between rounded-xl border-gray-500 bg-gray-900 p-2 md:w-[535px]'>
+              <div>
+                <p className='flex flex-row gap-x-2 pb-2'>
+                  <IconResults classes='h-6 w-6 text-gray-500' />
+                  Session results:
+                </p>
+                <div className='flex min-w-[245px] flex-row flex-wrap gap-1'>
+                  {finishedWords.map((item, idx) => (
+                    <div
+                      onMouseEnter={() => handleMouseEnter(item)}
+                      className={`flex h-[16px] w-[16px] items-center justify-center rounded-md p-2 md:h-[26px] md:w-[26px] ${hoveredWordState && item._id === hoveredWordState._id ? 'border border-gray-200' : ''} ${
+                        item.reviewHistory[item.reviewHistory.length - 1]
+                          .quality >= 4
+                          ? 'bg-emerald-500'
+                          : item.reviewHistory[item.reviewHistory.length - 1]
+                                .quality === 3
+                            ? 'bg-sky-500'
+                            : 'bg-rose-500'
+                      }`}
+                      key={idx}
+                    ></div>
+                  ))}
+                </div>
+              </div>
+
+              <div className='flex flex-row gap-x-6'>
+                <p>
+                  <span className='text-gray-500'>Correct:</span> 33
+                </p>
+                <p>
+                  <span className='text-gray-500'>Incorrect:</span> 17
+                </p>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Word Data Section */}
-        {/* <div className='mt-6 flex h-[200px] w-[220px] flex-row rounded-xl border-2 border-gray-500 bg-gray-900 p-2 md:flex-col'>
-          {hoveredWordState !== null && (
-            <div>
-              <div className='flex flex-row gap-2'>
-                <IconStars classes='h-5 w-5 text-gray-500 mt-1' />
-                <p className=''>{hoveredWordState.wordTraditional}</p>
-              </div>
-              <div>
-                <p className=''>Views: {hoveredWordState.repetitions}</p>
-              </div>
-            </div>
-          )}
-        </div> */}
-
         {/* Bottom Close section */}
-        <div className='mt-8'>
+        <div className=''>
           <DefaultButton
             handleClick={() => handleReset()}
             customClasses='w-[138px] border-2 border-gray-400 p-2'
