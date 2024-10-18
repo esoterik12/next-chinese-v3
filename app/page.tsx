@@ -3,10 +3,10 @@ import PageContainer from '@/components/containers/PageContainer'
 
 export default function Home() {
   return (
-    <PageContainer customClasses='p-4 lg:p-12'>
+    <PageContainer customClasses='p-4 lg:px-12'>
       <div className='flex flex-col md:flex-row'>
         <section className='w-full md:w-3/5'>
-          <h1 className='custom-header-large my-20'>
+          <h1 className='custom-header-large my-6 md:my-20'>
             Start Your Journey to <span className='text-blue-500'>Fluency</span>
           </h1>
           <p className='custom-header'>
@@ -22,9 +22,9 @@ export default function Home() {
             for everyday language learners
           </p>
         </section>
-        <section className='w-full flex flex-col items-center p-20 md:w-2/5'>
+        {/* <section className='w-full flex flex-col items-center p-20 md:w-2/5'>
           <p>Demo Here</p>
-        </section>
+        </section> */}
         {/* Ideas for this page:
             -Counting up number for stats: words, users, sentences, etc, views
         */}

@@ -2,7 +2,7 @@
 import mongoose from 'mongoose'
 import Session from '@/models/session.model'
 import { NewSentenceProps, ReviewResultDocument } from '@/types/review.types'
-import { updateUserWords } from '../updateUserWords'
+import { updateUserWords } from '../words/updateUserWords'
 import { saveSentences } from '../sentences/saveSentences'
 import { AppError } from '@/lib/errors/AppError'
 import { revalidatePath } from 'next/cache'
@@ -40,9 +40,7 @@ export async function endLearnSession({
           reviewResults: finishedWords
         })
       )
-
-      console.log('finishedWords', finishedWords)
-      
+     
       // Prepare sentence save
       const sentencesToSave = finishedWords.flatMap(
         word =>
@@ -51,8 +49,6 @@ export async function endLearnSession({
             ...sentence
           })) || [] // empty array if no content in newSentencesArray
       )
-
-      console.log('sentencesToSave', sentencesToSave)
 
       promises.push(
         saveSentences({

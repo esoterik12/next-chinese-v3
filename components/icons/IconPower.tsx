@@ -1,4 +1,10 @@
-export default function IconPower({ classes }: { classes: string }) {
+export default function IconPower({
+  classes,
+  onClick
+}: {
+  classes: string
+  onClick: () => void
+}) {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -7,6 +13,7 @@ export default function IconPower({ classes }: { classes: string }) {
       strokeWidth={1.5}
       stroke='currentColor'
       className={classes}
+      onClick={onClick}
     >
       <path
         strokeLinecap='round'

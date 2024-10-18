@@ -12,14 +12,16 @@ import IconCheckCircle from '../icons/IconCheckCircle'
 import { useKeyboard } from '@/lib/custom-hooks/useKeyboard'
 import useVoices from '@/lib/custom-hooks/useVoice'
 import { ShowSentenceOptions } from '../learn/ActiveLearnSession'
-import AnimatedToggle from './AnimatedToggle'
+import EndLearnSession from '../buttons/EndLearnSession'
+import ToggleCharacters from '../buttons/ToggleCharacters'
 
 interface WordCardProps {
   setShowSent: React.Dispatch<SetStateAction<ShowSentenceOptions>>
   fetching: boolean
+  userId: string
 }
 
-const WordCard = ({ fetching, setShowSent }: WordCardProps) => {
+const WordCard = ({ fetching, setShowSent, userId }: WordCardProps) => {
   const [show, setShow] = useState(false)
   const { dispatch, unfinishedWords, characterState } = useAppContext()
   const voice = useVoices()
@@ -79,25 +81,23 @@ const WordCard = ({ fetching, setShowSent }: WordCardProps) => {
   useKeyboard({ show, fetching, completeCard, handleShow, voice })
 
   return (
-    <div className='custom-gradient-background custom-border h-[400px] w-[290px]'>
+    <div className='custom-gradient-background custom-border mt-14 h-[400px] w-[290px]'>
       {/* Top Word section - fixed height */}
-      <AnimatedSection
-        classes='flex h-[130px] flex-col items-center justify-end gap-y-4 text-center'
-        motionKey='words'
-      >
+      <div className='mx-1 flex h-[60px] justify-between p-2'>
+        <ToggleCharacters />
+        <EndLearnSession userId={userId} />
+      </div>
+
+      <div className='flex h-[100px] flex-col items-center justify-end gap-y-4 text-center'>
         <>
           {characterState === 'traditional' ? (
-            <AnimatedToggle motionKey='traditionalWordTop'>
-              <p className='custom-header'>
-                {unfinishedWords[0].wordTraditional}
-              </p>
-            </AnimatedToggle>
+            <p className='custom-header-large'>
+              {unfinishedWords[0].wordTraditional}
+            </p>
           ) : (
-            <AnimatedToggle motionKey='simplifiedWordTop'>
-              <p className='custom-header'>
-                {unfinishedWords[0].wordSimplified}
-              </p>
-            </AnimatedToggle>
+            <p className='custom-header-large'>
+              {unfinishedWords[0].wordSimplified}
+            </p>
           )}
           {/* <p className='custom-header'>
             {characterState === 'traditional'
@@ -105,20 +105,19 @@ const WordCard = ({ fetching, setShowSent }: WordCardProps) => {
               : unfinishedWords[0].wordSimplified}
           </p> */}
           {characterState === 'traditional' ? (
-            <AnimatedToggle motionKey='traditionalWordBot'>
-              <p className='custom-large-text'>{unfinishedWords[0].wordSimplified}</p>
-            </AnimatedToggle>
+            <p className='custom-large-text'>
+              {unfinishedWords[0].wordSimplified}
+            </p>
           ) : (
-            <AnimatedToggle motionKey='simplifiedWordBot'>
-              <p className='custom-large-text'>{unfinishedWords[0].wordTraditional}</p>
-            </AnimatedToggle>
+            <p className='custom-large-text'>
+              {unfinishedWords[0].wordTraditional}
+            </p>
           )}
         </>
-      </AnimatedSection>
-
+      </div>
 
       {/* Bottom Section */}
-      <div className='flex h-[270px] flex-col items-center justify-center'>
+      <div className='flex h-[240px] flex-col items-center justify-center'>
         <AnimatePresence mode='wait'>
           {!show && (
             <AnimatedSection motionKey='button'>
@@ -130,15 +129,18 @@ const WordCard = ({ fetching, setShowSent }: WordCardProps) => {
 
           {show && (
             <AnimatedSection
-              classes='h-full flex-col items-stretch mt-10 justify-between text-center'
+              classes='h-full flex-col mt-14 justify-between text-center'
               motionKey='answer'
             >
               <>
-                <h1 className='font-bold custom-large-text text-sky-400'>
-                  {unfinishedWords[0].partOfSpeech}
-                </h1>
                 <div>
-                  <p className='custom-large-text'>{show && unfinishedWords[0].wordPinyin}</p>
+                  <h1 className='custom-large-text font-bold'>
+                    {unfinishedWords[0].partOfSpeech}
+                  </h1>
+
+                  <p className='custom-large-text'>
+                    {show && unfinishedWords[0].wordPinyin}
+                  </p>
                   <p className='custom-large-text custom-gray-text'>
                     {show && unfinishedWords[0].wordTranslation}
                   </p>

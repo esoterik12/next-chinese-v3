@@ -16,33 +16,19 @@ export default async function NavHeader() {
         </div>
 
         {/* NavLinks */}
-        <div className='mr-4 flex flex-row justify-center sm:block'>
-          <ul className='sm:text-md flex gap-x-2'>
-            {/* <NavLink href='/test'>
-              <li className='custom-hover-effect w-[60px] rounded-lg border-2 border-gray-500 p-1 text-center md:w-[90px]'>
-                Test
-              </li>
-            </NavLink> */}
-            {/* 
-            <li className='p-1'>
-              <NavLink href='/design/style'>Styles</NavLink>
-            </li> */}
-            <NavLink href='/learn'>
-              <li className='custom-hover-effect w-[60px] rounded-lg border-2 border-gray-500 p-1 text-center md:w-[90px]'>
-                Learn
-              </li>
-            </NavLink>
-            {session && (
-              <li>
-                <SignOut />
-              </li>
-            )}
-            {!session && (
-              <li>
-                <GoogleSignIn />
-              </li>
-            )}
-          </ul>
+        <div className='mr-4 flex flex-row justify-center gap-x-2'>
+          {/* <NavLink href='/test'>
+            <p className='custom-hover-effect w-[60px] rounded-lg p-1 text-center md:w-[90px]'>
+              Test
+            </p>
+          </NavLink> */}
+          <NavLink href='/learn'>
+            <p className='custom-hover-effect w-[60px] rounded-lg border-2 border-gray-500 p-1 text-center md:w-[90px]'>
+              Learn
+            </p>
+          </NavLink>
+          {session && <SignOut />}
+          {!session && <GoogleSignIn />}
         </div>
       </nav>
     </header>

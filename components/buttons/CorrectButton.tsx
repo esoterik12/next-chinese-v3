@@ -15,7 +15,7 @@ const CorrectButton = ({
     <button
       disabled={disabled}
       onClick={handleClick}
-      className='custom-hover-effect flex h-[45px] w-[120px] flex-col items-center justify-center rounded-lg bg-gray-900'
+      className='custom-hover-effect flex h-[45px] w-[130px] flex-col items-center justify-center rounded-lg bg-gray-900'
     >
       <p className={`font-semibold ${textColor}`}>{icon}</p>
     </button>

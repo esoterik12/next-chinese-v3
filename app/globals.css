@@ -18,10 +18,10 @@
   }
   /* Text Sizing */
   .custom-header-large {
-    @apply text-6xl font-bold;
+    @apply text-5xl font-bold;
   }
   .custom-header {
-    @apply text-4xl font-semibold leading-relaxed;
+    @apply text-3xl font-semibold leading-relaxed;
   }
   .custom-subheader {
     @apply text-2xl font-semibold;

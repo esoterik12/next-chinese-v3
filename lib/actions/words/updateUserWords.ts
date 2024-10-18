@@ -1,9 +1,9 @@
 'use server'
 import UserWord from '@/models/userword.model'
-import { connectToDB } from '../mongoose'
+import { connectToDB } from '@/lib/mongoose'
 import mongoose from 'mongoose'
 import { ReviewResultDocument } from '@/types/review.types'
-import { AppError } from '../errors/AppError'
+import { AppError } from '@/lib/errors/AppError'
 
 export async function updateUserWords({
   reviewResults,

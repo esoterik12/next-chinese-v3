@@ -29,8 +29,6 @@ const CompletedLearnSession = ({ userId }: CompletedLearnSession) => {
     []
   )
 
-  console.log('completedState in CompletedLearnSession.tsx', completedState)
-
   // Updates local completedState with results
   // Sends endLearnSession to update DB
   useEffect(() => {
