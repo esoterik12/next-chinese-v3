@@ -13,6 +13,7 @@ interface AppContextTypes {
   userLatestWord: number
   error: null | string
   characterState: 'traditional' | 'simplified'
+  startTime: number
   dispatch: React.Dispatch<ReducerAction>
 }
 
@@ -45,6 +46,7 @@ interface ReducerState {
   loadingState: boolean
   userLatestWord: number
   characterState: 'traditional' | 'simplified'
+  startTime: number
   error: string | null
 }
 
@@ -55,6 +57,7 @@ const initialContext: ReducerState = {
   loadingState: true,
   userLatestWord: 0,
   characterState: 'traditional',
+  startTime: 0,
   error: null
 }
 
@@ -90,6 +93,7 @@ const reducer = (state: ReducerState, action: ReducerAction): ReducerState => {
       if (action.fetchedWords && action.fetchedWords.length > 0) {
         return {
           ...state,
+          startTime: Date.now(),
           progress: 'running',
           loadingState: false,
           unfinishedWords: action.fetchedWords,
@@ -236,6 +240,7 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         userLatestWord: state.userLatestWord,
         characterState: state.characterState,
         error: state.error,
+        startTime: state.startTime,
         dispatch
       }}
     >

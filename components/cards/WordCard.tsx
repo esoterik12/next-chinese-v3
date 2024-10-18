@@ -87,13 +87,13 @@ const WordCard = ({ fetching, setShowSent }: WordCardProps) => {
       >
         <>
           {characterState === 'traditional' ? (
-            <AnimatedToggle key='traditionalWordTop'>
+            <AnimatedToggle motionKey='traditionalWordTop'>
               <p className='custom-header'>
                 {unfinishedWords[0].wordTraditional}
               </p>
             </AnimatedToggle>
           ) : (
-            <AnimatedToggle key='simplifiedWordTop'>
+            <AnimatedToggle motionKey='simplifiedWordTop'>
               <p className='custom-header'>
                 {unfinishedWords[0].wordSimplified}
               </p>
@@ -105,11 +105,11 @@ const WordCard = ({ fetching, setShowSent }: WordCardProps) => {
               : unfinishedWords[0].wordSimplified}
           </p> */}
           {characterState === 'traditional' ? (
-            <AnimatedToggle key='traditionalWordBot'>
+            <AnimatedToggle motionKey='traditionalWordBot'>
               <p>{unfinishedWords[0].wordSimplified}</p>
             </AnimatedToggle>
           ) : (
-            <AnimatedToggle key='simplifiedWordBot'>
+            <AnimatedToggle motionKey='simplifiedWordBot'>
               <p>{unfinishedWords[0].wordTraditional}</p>
             </AnimatedToggle>
           )}

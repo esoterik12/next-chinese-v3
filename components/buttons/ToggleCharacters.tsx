@@ -18,11 +18,11 @@ const ToggleCharacters = () => {
   return (
     <button className='m-0 h-7 p-0' onClick={() => toggleCharacterState()}>
       {characterState === 'simplified' ? (
-        <AnimatedToggle key='simplified'>
+        <AnimatedToggle motionKey='simplified'>
           <IconSimplified classes={toggleClasses} />
         </AnimatedToggle>
       ) : (
-        <AnimatedToggle key='traditional'>
+        <AnimatedToggle motionKey='traditional'>
           <IconTraditional classes={toggleClasses} />
         </AnimatedToggle>
       )}

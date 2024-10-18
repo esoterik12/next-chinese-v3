@@ -17,6 +17,7 @@ const dummyLast30 = [
 
 const learningOptionsObject = [
   { value: 2, border: 'border-gray-500', textColor: 'text-gray-300' },
+  { value: 5, border: 'border-gray-500', textColor: 'text-gray-300' },
   { value: 20, border: 'border-gray-500', textColor: 'text-gray-300' },
   { value: 50, border: 'border-gray-500', textColor: 'text-gray-300' },
   { value: 80, border: 'border-gray-500', textColor: 'text-gray-300' },
@@ -81,8 +82,9 @@ const PrepLearnSession = ({
       initialY={-20}
       easeType={[0.22, 0, 0.42, 1]}
       exitY={20}
+      classes='h-full flex flex-col p-6'
     >
-      <div className='flex flex-col p-6'>
+      <div>
         {/* Top section */}
         <div className='border-b border-gray-700'>
           <h1 className='md:custom-header custom-subheader'>

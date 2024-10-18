@@ -87,7 +87,7 @@ export async function fetchWords({
         word => ({
           // Add existing Words collection data:
           wordId: word._id, // This uses the _id from Word collection
-          tocflLevel: word.wordNumber,
+          tocflLevel: word.tocflLevel,
           wordNumber: word.wordNumber,
           wordTraditional: word.wordTraditional,
           wordSimplified: word.wordSimplified,

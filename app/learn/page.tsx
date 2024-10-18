@@ -39,7 +39,7 @@ const LearnPage = async () => {
   }
 
   return (
-    <PageContainer customClasses='h-full'>
+    <PageContainer>
       <ReviewCont
         userId={userInfo.result.user._id.toString()}
         wordsDueCount={userInfo.result.wordsDueCount}

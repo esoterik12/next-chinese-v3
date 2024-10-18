@@ -18,16 +18,20 @@ export default async function NavHeader() {
         {/* NavLinks */}
         <div className='mr-4 flex flex-row justify-center sm:block'>
           <ul className='sm:text-md flex gap-x-2'>
-            {/* <li className='p-1'>
-              <NavLink href='/test'>Test</NavLink>
-            </li> */}
+            {/* <NavLink href='/test'>
+              <li className='custom-hover-effect w-[60px] rounded-lg border-2 border-gray-500 p-1 text-center md:w-[90px]'>
+                Test
+              </li>
+            </NavLink> */}
             {/* 
             <li className='p-1'>
               <NavLink href='/design/style'>Styles</NavLink>
             </li> */}
-            <li className='custom-hover-effect w-[60px] md:w-[90px] rounded-lg border-2 border-gray-500 p-1 text-center'>
-              <NavLink href='/learn'>Learn</NavLink>
-            </li>
+            <NavLink href='/learn'>
+              <li className='custom-hover-effect w-[60px] rounded-lg border-2 border-gray-500 p-1 text-center md:w-[90px]'>
+                Learn
+              </li>
+            </NavLink>
             {session && (
               <li>
                 <SignOut />

@@ -2,14 +2,14 @@
 import { motion } from 'framer-motion'
 
 interface AnimatedToggleProps {
-  key: string
+  motionKey: string
   children: React.ReactNode
 }
 
-const AnimatedToggle = ({ key, children }: AnimatedToggleProps) => {
+const AnimatedToggle = ({ motionKey, children }: AnimatedToggleProps) => {
   return (
     <motion.div
-      key={key}
+      key={motionKey}
       initial={{ scale: 0.8, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
       exit={{ scale: 0.8, opacity: 0 }}

@@ -5,7 +5,7 @@ const sessionSchema = new mongoose.Schema({
   isActive: { type: Boolean, default: true },
   createdAt: { type: Date, default: Date.now },
   endedAt: { type: Date, default: null },
-  expireAt: { type: Date, expires: 604800, default: Date.now } // TTL Index, auto-delete after 7 days
+  expireAt: { type: Date, expires: 604800 } // TTL Index, auto-delete after 7 days
 })
 
 const Session =
