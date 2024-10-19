@@ -21,7 +21,7 @@ const ReviewCont = ({
   latestWord
 }: ReviewContProps) => {
   const { progress } = useAppContext()
-  const [goal, setGoal] = useState<number>(50)
+  const [goal, setGoal] = useState<number>(60)
 
   if (!userId) {
     return (
@@ -50,7 +50,7 @@ const ReviewCont = ({
       {progress === 'running' && <ActiveLearnSession userId={userId} />}
 
       {/* If 'completed' show the CompletedLearnSession */}
-      {progress === 'completed' && <CompletedLearnSession userId={userId} />}
+      {progress === 'completed' && <CompletedLearnSession userId={userId} latestWord={latestWord} />}
     </>
   )
 }

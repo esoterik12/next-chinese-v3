@@ -10,7 +10,6 @@ interface AppContextTypes {
   finishedWords: ReviewResultDocument[]
   progress: string
   loadingState: boolean
-  userLatestWord: number
   error: null | string
   characterState: 'traditional' | 'simplified'
   startTime: number
@@ -34,7 +33,6 @@ interface ReducerAction {
   firstResult?: number
   fetchedWords?: ReviewResultDocument[]
   newSentence?: BaseSentenceProps
-  userLatestWord?: number
   error?: null | string
   characterState?: 'traditional' | 'simplified'
 }
@@ -44,7 +42,6 @@ interface ReducerState {
   finishedWords: ReviewResultDocument[]
   progress: string
   loadingState: boolean
-  userLatestWord: number
   characterState: 'traditional' | 'simplified'
   startTime: number
   error: string | null
@@ -55,7 +52,6 @@ const initialContext: ReducerState = {
   finishedWords: [],
   progress: 'ready',
   loadingState: true,
-  userLatestWord: 0,
   characterState: 'traditional',
   startTime: 0,
   error: null
@@ -148,10 +144,6 @@ const reducer = (state: ReducerState, action: ReducerAction): ReducerState => {
         word.interval
       )
 
-      console.log('n', n)
-      console.log('ef', ef)
-      console.log('i', i)
-
       // Calculate the next review date based on the updated interval
       const updatedNextReviewDate = new Date()
       updatedNextReviewDate.setDate(updatedNextReviewDate.getDate() + i)
@@ -220,6 +212,11 @@ const reducer = (state: ReducerState, action: ReducerAction): ReducerState => {
         ...state,
         loadingState: false
       }
+    case 'setError' :
+      return {
+        ...state,
+        error: action.error
+      }
     case 'resetState':
       return {
         ...initialContext
@@ -241,7 +238,6 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         finishedWords: state.finishedWords,
         progress: state.progress,
         loadingState: state.loadingState,
-        userLatestWord: state.userLatestWord,
         characterState: state.characterState,
         error: state.error,
         startTime: state.startTime,

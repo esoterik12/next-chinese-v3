@@ -91,19 +91,14 @@ const WordCard = ({ fetching, setShowSent, userId }: WordCardProps) => {
       <div className='flex h-[100px] flex-col items-center justify-end gap-y-4 text-center'>
         <>
           {characterState === 'traditional' ? (
-            <p className='custom-header-large'>
+            <p className='text-[42px] font-bold'>
               {unfinishedWords[0].wordTraditional}
             </p>
           ) : (
-            <p className='custom-header-large'>
+            <p className='text-[42px] font-bold'>
               {unfinishedWords[0].wordSimplified}
             </p>
           )}
-          {/* <p className='custom-header'>
-            {characterState === 'traditional'
-              ? unfinishedWords[0].wordTraditional
-              : unfinishedWords[0].wordSimplified}
-          </p> */}
           {characterState === 'traditional' ? (
             <p className='custom-large-text'>
               {unfinishedWords[0].wordSimplified}

@@ -25,7 +25,7 @@ const AnimatedSection = ({
   easeType = 'easeInOut' // Default easing type
 }: AnimatedSectionProps) => {
   return (
-    <motion.div
+    <motion.section
       key={motionKey}
       initial={{ opacity: 0, y: initialY }}
       animate={{ opacity: 1, y: 0 }}
@@ -42,7 +42,7 @@ const AnimatedSection = ({
       className={`flex gap-x-3 ${classes}`}
     >
       {children}
-    </motion.div>
+    </motion.section>
   )
 }
 

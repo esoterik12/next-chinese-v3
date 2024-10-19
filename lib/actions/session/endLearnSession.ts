@@ -11,16 +11,15 @@ import { updateLatestWord } from '../users/updateLatestWord'
 interface EndLearnSessionProps {
   userId: string // coming from client-side component must be string
   finishedWords?: ReviewResultDocument[]
-  userLatestWord?: number
+  latestWord?: number
 }
 
 // This function is used to end the learning session and also to update UserWords / Sentences
 export async function endLearnSession({
   userId,
   finishedWords,
-  userLatestWord
+  latestWord
 }: EndLearnSessionProps) {
-
   try {
     let userIdObj: mongoose.Types.ObjectId
     // Check id and convert string to ObjectId
@@ -40,7 +39,7 @@ export async function endLearnSession({
           reviewResults: finishedWords
         })
       )
-     
+
       // Prepare sentence save
       const sentencesToSave = finishedWords.flatMap(
         word =>
@@ -60,13 +59,18 @@ export async function endLearnSession({
       const highestWordNumber = finishedWords.reduce((max, word) => {
         return word.wordNumber > max ? word.wordNumber : max
       }, 0)
-      // newLatestWord updates from the max of finishedWords array or the previous latestWord from state
-      promises.push(
-        updateLatestWord({
-          newLatestWord: Math.max(highestWordNumber, userLatestWord),
-          userId: userIdObj
-        })
-      )
+
+      // If the input come with finishedWords and latestWord, and highestWordNumber of finishedWords is > latestWord
+      // Updates the latestWord in the user collection
+      if (latestWord && finishedWords && highestWordNumber > latestWord) {
+        promises.push(
+          updateLatestWord({
+            newLatestWord: Math.max(highestWordNumber, latestWord),
+            userId: userIdObj
+          })
+        )
+      }
+
       await Promise.all(promises)
     }
 

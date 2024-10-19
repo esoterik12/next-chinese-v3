@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import IconViews from '@/components/icons/IconViews'
 import StatsContainer from '@/components/containers/StatsContainer'
 import IconStars from '../icons/IconStars'
@@ -14,15 +14,20 @@ import sortByDate from '@/lib/utils/sortByDate'
 import { formatDuration } from '@/lib/utils/formatDuration'
 import WordResultCard from '../cards/WordResultCard'
 import IconResults from '../icons/IconResults'
+import InlineError from '../shared/InlineError'
 
 interface CompletedLearnSession {
   userId: string
+  latestWord: number
 }
 
-const CompletedLearnSession = ({ userId }: CompletedLearnSession) => {
-  const { finishedWords, userLatestWord, dispatch, startTime } = useAppContext()
+const CompletedLearnSession = ({
+  userId,
+  latestWord
+}: CompletedLearnSession) => {
+  const { finishedWords, dispatch, startTime, error, characterState } =
+    useAppContext()
   const [completedTime, setCompletedTime] = useState('')
-  // TODO: Create a specific type for this once design is complete
   const [hoveredWordState, setHoveredWordStats] =
     useState<ReviewResultDocument>(null)
   const [completedState, setCompletedState] = useState<ReviewResultDocument[]>(
@@ -40,15 +45,18 @@ const CompletedLearnSession = ({ userId }: CompletedLearnSession) => {
 
     const sendUpdate = async () => {
       try {
-        await endLearnSession({ userId, finishedWords, userLatestWord })
+        await endLearnSession({ userId, finishedWords, latestWord })
       } catch (error) {
-        // TODO: add better error handling
+        dispatch({
+          type: 'setError',
+          error: 'Error ending session. Data may have been lost.'
+        })
         console.error('Error sending update:', error)
       }
     }
 
     sendUpdate()
-  }, [finishedWords, dispatch, userId, userLatestWord, startTime])
+  }, [finishedWords, dispatch, userId, latestWord, startTime])
 
   // useEffect to trigger when page unloads
   useEffect(() => {
@@ -70,6 +78,44 @@ const CompletedLearnSession = ({ userId }: CompletedLearnSession) => {
 
   const handleMouseEnter = (word: ReviewResultDocument) => {
     setHoveredWordStats(word)
+  }
+
+  const newWordsCount = useMemo(() => {
+    return completedState.filter(word => word.reviewHistory.length === 1).length
+  }, [completedState])
+
+  const correctWordsCount = useMemo(() => {
+    return completedState.filter(
+      word => word.reviewHistory[word.reviewHistory.length - 1].quality >= 3
+    ).length
+  }, [completedState])
+
+  const incorrectCount = useMemo(() => {
+    return completedState.filter(
+      word => word.reviewHistory[word.reviewHistory.length - 1].quality <= 2
+    ).length
+  }, [completedState])
+
+  if (error) {
+    return (
+      <section className='flex flex-col p-6'>
+        <h1 className='md:custom-header custom-subheader py-2'>
+          {characterState === 'traditional' ? '對不起' : '对不起'}&nbsp;-
+          Something went wrong.
+        </h1>
+        <div className='flex flex-row'>
+          <DefaultButton
+            handleClick={() => handleReset()}
+            customClasses='md:w-[138px] w-[128px] border-2 border-sky-500 p-2'
+          >
+            <p className='font-semibold'>Reset</p>
+          </DefaultButton>
+          <InlineError initialX={-10} initialY={0} classes='p-2 text-rose-500'>
+            {error}
+          </InlineError>
+        </div>
+      </section>
+    )
   }
 
   return (
@@ -98,7 +144,7 @@ const CompletedLearnSession = ({ userId }: CompletedLearnSession) => {
               width='w-[260px]'
               icon={<IconStars classes='w-6 h-6 text-emerald-500' />}
               titleText='New words:'
-              valueText='12'
+              valueText={newWordsCount}
             />
             <StatsContainer
               width='w-[260px]'
@@ -141,10 +187,14 @@ const CompletedLearnSession = ({ userId }: CompletedLearnSession) => {
 
               <div className='flex flex-row gap-x-6'>
                 <p>
-                  <span className='text-gray-500'>Correct:</span> 33
+                  <span className='text-gray-500'>Correct:</span>
+                  <span className='text-emerald-500 font-semibold'>
+                    &nbsp;{correctWordsCount}
+                  </span>
                 </p>
                 <p>
-                  <span className='text-gray-500'>Incorrect:</span> 17
+                  <span className='text-gray-500'>Incorrect:</span>
+                  <span className='text-rose-500 font-semibold'>&nbsp;{incorrectCount}</span>
                 </p>
               </div>
             </div>

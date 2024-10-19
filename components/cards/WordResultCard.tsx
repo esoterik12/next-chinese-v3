@@ -6,10 +6,11 @@ import IconTime from '@/components/icons/IconTime'
 import IconEaseFactor from '@/components/icons/IconEaseFactor'
 import IconNextReviewDate from '@/components/icons/IconNextReviewDate'
 import IconViews from '../icons/IconViews'
+import formatCalendarDate from '@/lib/utils/formatCalendarDate'
 
 const WordResultCard = ({ word }: { word: ReviewResultDocument }) => {
   return (
-    <section className='hidden md:flex w-[260px] flex-row rounded-xl border-gray-500 bg-gray-900 p-2 md:flex-col'>
+    <section className='hidden w-[260px] flex-row rounded-xl border-gray-500 bg-gray-900 p-2 md:flex md:flex-col'>
       <div className='flex flex-col gap-y-2 px-4'>
         <div className='mt-2 flex flex-row justify-between border-gray-500'>
           <p className='custom-large-text mb-2'>{word.wordTraditional}</p>
@@ -50,7 +51,7 @@ const WordResultCard = ({ word }: { word: ReviewResultDocument }) => {
             First seen:
           </p>
           <p className='custom-small-text'>
-            {formatTimeSince(word.reviewHistory[0].date)}
+            {formatTimeSince(new Date(word.reviewHistory[0].date))}
           </p>
         </div>
         <div className='mb-3 flex flex-row justify-between'>
@@ -59,7 +60,7 @@ const WordResultCard = ({ word }: { word: ReviewResultDocument }) => {
             Next review:
           </p>
           <p className='custom-small-text'>
-            {formatTimeSince(word.reviewHistory[0].date)}
+            {formatCalendarDate(new Date(word.nextReviewDate))}
           </p>
         </div>
       </div>

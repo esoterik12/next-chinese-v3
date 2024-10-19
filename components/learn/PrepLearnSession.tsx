@@ -9,17 +9,20 @@ import AnimatedSection from '../cards/AnimatedSection'
 import { fetchWords } from '@/lib/actions/words/fetchWords'
 import { ReviewResultDocument } from '@/types/review.types'
 import { useAppContext } from '@/lib/context/ReviewSessionContext'
+import InlineError from '../shared/InlineError'
+import calcLevel from '@/lib/utils/calcLevel'
 
 const dummyLast30 = [
-  0, 0, 0, 0, 40, 50, 80, 100, 0, 50, 50, 100, 20, 0, 0, 55, 66, 0, 0, 40, 100, 80,
-  20, 50, 80, 100, 0, 0, 100, 55
+  0, 0, 0, 0, 40, 50, 80, 100, 0, 50, 50, 100, 20, 0, 0, 55, 66, 0, 0, 40, 100,
+  80, 20, 50, 80, 100, 0, 0, 100, 55
 ]
 
 const learningOptionsObject = [
   // { value: 2, border: 'border-gray-500', textColor: 'text-gray-300' },
-  { value: 5, border: 'border-gray-500', textColor: 'text-gray-300' },
+  // { value: 5, border: 'border-gray-500', textColor: 'text-gray-300' },
   { value: 20, border: 'border-gray-500', textColor: 'text-gray-300' },
-  { value: 50, border: 'border-gray-500', textColor: 'text-gray-300' },
+  { value: 40, border: 'border-gray-500', textColor: 'text-gray-300' },
+  { value: 60, border: 'border-gray-500', textColor: 'text-gray-300' },
   { value: 80, border: 'border-gray-500', textColor: 'text-gray-300' },
   { value: 100, border: 'border-gray-500', textColor: 'text-gray-300' }
 ]
@@ -41,12 +44,11 @@ const PrepLearnSession = ({
   wordsDueCount,
   latestWord
 }: PrepLearnSessionProps) => {
-  const { dispatch } = useAppContext()
+  const { dispatch, error } = useAppContext()
 
   const handleStart = async () => {
     try {
       // This function gets words AND uses user id to start a review session in the DB
-      // TODO: add error here if code 409 - that causes a display of EndLearnSession
       const learnSessionData = await fetchWords({
         userId: userId,
         sessionWordGoal: goal
@@ -65,14 +67,16 @@ const PrepLearnSession = ({
         // Add words and latestWord to app context
         dispatch({
           type: 'loadWords',
-          fetchedWords: fetchedWordsSeenToday,
-          userLatestWord: learnSessionData.result.userLatestWord
+          fetchedWords: fetchedWordsSeenToday
         })
       }
     } catch (error) {
-      // setError('Error loading the learning session.')
-      console.log('error in handleStart in PrepLearnSession.tsx', error)
+      dispatch({ type: 'setError', error: 'Error loading session.' })
     }
+  }
+
+  const handleRetry = () => {
+    dispatch({ type: 'resetState' })
   }
 
   return (
@@ -96,7 +100,7 @@ const PrepLearnSession = ({
             <StatsContainer
               icon={<IconLevel classes='w-6 h-6 text-sky-500' />}
               titleText='Current level:'
-              valueText='3'
+              valueText={calcLevel(latestWord)}
             />
             <StatsContainer
               icon={<IconRocket classes='w-6 h-6 text-emerald-500' />}
@@ -106,7 +110,7 @@ const PrepLearnSession = ({
             <StatsContainer
               icon={<IconViews classes='w-6 h-6 text-rose-500' />}
               titleText='Words learned:'
-              valueText='782'
+              valueText={latestWord}
             />
           </div>
           {/* Last 30 days section */}
@@ -130,7 +134,7 @@ const PrepLearnSession = ({
             {learningOptionsObject.map(item => (
               <DefaultButton
                 key={item.value}
-                customClasses={`md:w-[138px] w-[60px]  border-2  p-2 ${goal === item.value ? 'border-gray-400 bg-gray-900 font-semibold' : item.border}`}
+                customClasses={`md:w-[138px] w-[60px] bg-gray-900 p-2 ${goal === item.value ? 'border-2 border-gray-400 bg-gray-900 font-semibold' : item.border}`}
                 handleClick={() => setGoal(item.value)}
               >
                 <p
@@ -141,12 +145,36 @@ const PrepLearnSession = ({
               </DefaultButton>
             ))}
           </div>
-          <DefaultButton
-            handleClick={() => handleStart()}
-            customClasses='md:w-[138px] w-[128px] border-2 border-emerald-500 mt-6 p-2'
-          >
-            <p className='font-semibold'>Start</p>
-          </DefaultButton>
+
+          {/* Start Button and Error Display: */}
+          <div className='mt-6 flex flex-row gap-2'>
+            {!error ? (
+              <DefaultButton
+                handleClick={() => handleStart()}
+                customClasses='md:w-[138px] w-[128px] border-2 border-emerald-500 p-2'
+              >
+                <p className='font-semibold'>Start</p>
+              </DefaultButton>
+            ) : (
+              <DefaultButton
+                handleClick={() => handleRetry()}
+                customClasses='md:w-[138px] w-[128px] border-2 border-sky-500 p-2'
+              >
+                <p className='font-semibold'>Retry</p>
+              </DefaultButton>
+            )}
+            {error && (
+              <div className=''>
+                <InlineError
+                  initialX={-10}
+                  initialY={0}
+                  classes='p-2 text-rose-500'
+                >
+                  {error}
+                </InlineError>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </AnimatedSection>
