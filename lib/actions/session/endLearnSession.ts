@@ -20,6 +20,7 @@ export async function endLearnSession({
   finishedWords,
   latestWord
 }: EndLearnSessionProps) {
+
   try {
     let userIdObj: mongoose.Types.ObjectId
     // Check id and convert string to ObjectId

@@ -1,11 +1,12 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PrepLearnSession from './PrepLearnSession'
 import { useAppContext } from '@/lib/context/ReviewSessionContext'
 import ActiveLearnSession from './ActiveLearnSession'
 import CompletedLearnSession from './CompletedLearnSession'
 import InlineError from '../shared/InlineError'
 import EndLearnSession from '../buttons/EndLearnSession'
+import { endLearnSession } from '@/lib/actions/session/endLearnSession'
 
 interface ReviewContProps {
   userId: string // converted from ObjectId in page.tsx
@@ -20,8 +21,30 @@ const ReviewCont = ({
   wordsDueCount,
   latestWord
 }: ReviewContProps) => {
-  const { progress } = useAppContext()
+  const { progress, dispatch, finishedWords } = useAppContext()
   const [goal, setGoal] = useState<number>(60)
+
+  // useEffect to trigger when page unloads
+  // This will still update the db with whatever words have been finished
+  useEffect(() => {
+    const handleBeforeUnload = async event => {
+      event.returnValue = ''
+
+      try {
+        await endLearnSession({ userId, latestWord, finishedWords })
+      } catch (error) {
+        console.error('Error ending session:', error)
+      } finally {
+        dispatch({ type: 'resetState' })
+      }
+    }
+
+    window.addEventListener('beforeunload', handleBeforeUnload)
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload)
+    }
+  }, [userId, latestWord, finishedWords, dispatch])
 
   if (!userId) {
     return (
@@ -50,7 +73,9 @@ const ReviewCont = ({
       {progress === 'running' && <ActiveLearnSession userId={userId} />}
 
       {/* If 'completed' show the CompletedLearnSession */}
-      {progress === 'completed' && <CompletedLearnSession userId={userId} latestWord={latestWord} />}
+      {progress === 'completed' && (
+        <CompletedLearnSession userId={userId} latestWord={latestWord} />
+      )}
     </>
   )
 }

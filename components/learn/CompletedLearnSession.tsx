@@ -58,20 +58,6 @@ const CompletedLearnSession = ({
     sendUpdate()
   }, [finishedWords, dispatch, userId, latestWord, startTime])
 
-  // useEffect to trigger when page unloads
-  useEffect(() => {
-    const handleBeforeUnload = event => {
-      dispatch({ type: 'resetState' })
-      event.returnValue = ''
-    }
-
-    window.addEventListener('beforeunload', handleBeforeUnload)
-
-    return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload)
-    }
-  }, [dispatch])
-
   const handleReset = () => {
     dispatch({ type: 'resetState' })
   }
