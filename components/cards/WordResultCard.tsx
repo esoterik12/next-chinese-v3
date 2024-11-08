@@ -57,10 +57,10 @@ const WordResultCard = ({ word }: { word: ReviewResultDocument }) => {
         <div className='mb-3 flex flex-row justify-between'>
           <p className='custom-small-text flex flex-row gap-x-1 text-gray-400'>
             <IconNextReviewDate classes='h-4 w-4 mt-0.5' />
-            Next review:
+            Next view:
           </p>
           <p className='custom-small-text'>
-            {formatCalendarDate(new Date(word.nextReviewDate))}
+            {formatTimeSince(new Date(word.nextReviewDate))}
           </p>
         </div>
       </div>
