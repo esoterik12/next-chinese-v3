@@ -39,7 +39,7 @@ export function formatTimeSince(date: Date) {
 
     return seconds === 1 ? '1 second ago' : seconds + ' seconds ago'
   } else if (seconds < 1) {
-    let interval = Math.abs(Math.floor(seconds / 60 / 60 / 24))
+    const interval = Math.abs(Math.floor(seconds / 60 / 60 / 24))
 
     return `in ${interval} days`
   }

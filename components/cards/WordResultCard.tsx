@@ -6,7 +6,6 @@ import IconTime from '@/components/icons/IconTime'
 import IconEaseFactor from '@/components/icons/IconEaseFactor'
 import IconNextReviewDate from '@/components/icons/IconNextReviewDate'
 import IconViews from '../icons/IconViews'
-import formatCalendarDate from '@/lib/utils/formatCalendarDate'
 
 const WordResultCard = ({ word }: { word: ReviewResultDocument }) => {
   return (
