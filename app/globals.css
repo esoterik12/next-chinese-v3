@@ -30,7 +30,7 @@
     @apply text-lg;
   }
   .custom-text {
-    @apply font-normal;
+    @apply text-base font-normal;
   }
   .custom-small-text {
     @apply text-sm;

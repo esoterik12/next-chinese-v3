@@ -17,11 +17,12 @@ export default async function NavHeader() {
 
         {/* NavLinks */}
         <div className='mr-4 flex flex-row justify-center gap-x-2'>
-          {/* <NavLink href='/test'>
-            <p className='custom-hover-effect w-[60px] rounded-lg p-1 text-center md:w-[90px]'>
-              Test
+          <NavLink href='/grammar'>
+            <p className='custom-hover-effect w-[60px] rounded-lg border-2 border-gray-500 p-1 text-center md:w-[90px]'>
+              {' '}
+              Grammar
             </p>
-          </NavLink> */}
+          </NavLink>
           <NavLink href='/learn'>
             <p className='custom-hover-effect w-[60px] rounded-lg border-2 border-gray-500 p-1 text-center md:w-[90px]'>
               Learn

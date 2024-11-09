@@ -3,6 +3,49 @@ import DefaultButton from '@/components/buttons/DefaultButton'
 import PageContainer from '@/components/containers/PageContainer'
 import ResultButton from '@/components/buttons/ResultButton'
 
+const colors = [
+  {
+    number: 500,
+    background: 'bg-sky-500',
+    hex: '#0ea5e9' // Tailwind sky-500
+  },
+  {
+    number: 400,
+    background: 'bg-sky-400',
+    hex: '#38bdf8' // Tailwind sky-400
+  },
+  {
+    number: 300,
+    background: 'bg-sky-300',
+    hex: '#7dd3fc' // Tailwind sky-300
+  },
+  {
+    number: 600,
+    background: 'bg-rose-600',
+    hex: '#e11d48' // Tailwind rose-600
+  },
+  {
+    number: 400,
+    background: 'bg-rose-400',
+    hex: '#fb7185' // Tailwind rose-400
+  },
+  {
+    number: 900,
+    background: 'bg-gray-900',
+    hex: '#111827' // Tailwind gray-900
+  },
+  {
+    number: 400,
+    background: 'bg-gray-400',
+    hex: '#9ca3af' // Tailwind gray-400
+  },
+  {
+    number: 100,
+    background: 'bg-gray-100',
+    hex: '#f3f4f6' // Tailwind gray-100
+  }
+]
+
 export default function StyleDesignPage() {
   return (
     <PageContainer customClasses='p-0 md:p-4 lg:p-12 h-full'>
@@ -30,30 +73,17 @@ export default function StyleDesignPage() {
         </section>
 
         {/* Colors Section */}
-        <section className='flex flex-col gap-10 py-4'>
+        <section className='flex flex-col gap-4 py-4'>
           <p className='custom-large-text'>Colors</p>
-          <div className='flex flex-row gap-x-2'>
-            <p>500</p>
-            <div className='h-6 w-6 rounded-lg border border-gray-100 bg-sky-500'></div>
-            <p>400</p>
-            <div className='h-6 w-6 rounded-lg border border-gray-100 bg-sky-400'></div>
-            <p>300</p>
-            <div className='h-6 w-6 rounded-lg border border-gray-100 bg-sky-300'></div>
-          </div>
-          <div className='flex flex-row gap-x-2'>
-            <p>600</p>
-            <div className='h-6 w-6 rounded-lg border border-gray-100 bg-rose-600'></div>
-            <p>400</p>
-            <div className='h-6 w-6 rounded-lg border border-gray-100 bg-rose-400'></div>
-          </div>
-          <div className='flex flex-row gap-x-2'>
-            <p>900</p>
-            <div className='h-6 w-6 rounded-lg border border-gray-100 bg-gray-900'></div>
-            <p>400</p>
-            <div className='h-6 w-6 rounded-lg border border-gray-100 bg-gray-400'></div>
-            <p>100</p>
-            <div className='h-6 w-6 rounded-lg bg-gray-100'></div>{' '}
-          </div>
+          {colors.map(item => (
+            <div key={item.hex} className='flex flex-row gap-x-4'>
+              <div
+                className={`h-6 w-6 rounded-lg border border-gray-100 ${item.background}`}
+              ></div>
+              <p className='w-8'>{item.number}</p>
+              <p className='w-16'>{item.hex}</p>
+            </div>
+          ))}
         </section>
 
         {/* Links */}
