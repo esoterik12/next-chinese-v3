@@ -4,21 +4,9 @@ import sm2 from '../sm2/sm2Algo'
 import { ReviewResultDocument } from '@/types/review.types'
 import { BaseSentenceProps } from '@/types/review.types'
 
-// Unfinished: temporary any state until word types defined
-interface AppContextTypes {
-  unfinishedWords: ReviewResultDocument[]
-  finishedWords: ReviewResultDocument[]
-  progress: string
-  loadingState: boolean
-  error: null | string
-  characterState: 'traditional' | 'simplified'
-  startTime: number
-  dispatch: React.Dispatch<ReducerAction>
-}
-
 // firstResult are the first 1-5 easeFactor outcome that the user inputs
 // correct and incorrect are subsequent views, incorrect returns the word to the unfinished queue
-interface ReducerAction {
+interface ReviewReducerAction {
   type:
     | 'setError'
     | 'loadWords'
@@ -37,7 +25,7 @@ interface ReducerAction {
   characterState?: 'traditional' | 'simplified'
 }
 
-interface ReducerState {
+interface ReviewReducerState {
   unfinishedWords: ReviewResultDocument[]
   finishedWords: ReviewResultDocument[]
   progress: string
@@ -47,7 +35,11 @@ interface ReducerState {
   error: string | null
 }
 
-const initialContext: ReducerState = {
+interface AppContextTypes extends ReviewReducerState {
+  dispatch: React.Dispatch<ReviewReducerAction>
+}
+
+const initialContext: ReviewReducerState = {
   unfinishedWords: [],
   finishedWords: [],
   progress: 'ready',
@@ -57,7 +49,7 @@ const initialContext: ReducerState = {
   error: null
 }
 
-const reducer = (state: ReducerState, action: ReducerAction): ReducerState => {
+const reducer = (state: ReviewReducerState, action: ReviewReducerAction): ReviewReducerState => {
   // Get the current word - should always be at the start of the unfinished array
   const currentUnfinishedWords = [...state.unfinishedWords]
   const currentFinishedWords = [...state.finishedWords]
@@ -226,13 +218,13 @@ const reducer = (state: ReducerState, action: ReducerAction): ReducerState => {
   }
 }
 
-const AppContext = createContext<AppContextTypes | null>(null)
+const ReviewContext = createContext<AppContextTypes | null>(null)
 
-const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+const ReviewContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialContext)
 
   return (
-    <AppContext.Provider
+    <ReviewContext.Provider
       value={{
         unfinishedWords: state.unfinishedWords,
         finishedWords: state.finishedWords,
@@ -245,16 +237,16 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       }}
     >
       {children}
-    </AppContext.Provider>
+    </ReviewContext.Provider>
   )
 }
 
-const useAppContext = () => {
-  const context = useContext(AppContext)
+const useReviewContext = () => {
+  const context = useContext(ReviewContext)
   if (!context) {
-    throw new Error('useAppContext must be used within an AppProvider')
+    throw new Error('useReviewContext must be used within an AppProvider')
   }
   return context
 }
 
-export { ContextProvider, useAppContext }
+export { ReviewContextProvider, useReviewContext }

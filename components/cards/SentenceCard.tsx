@@ -3,7 +3,7 @@ import DefaultButton from '../buttons/DefaultButton'
 import { SetStateAction, useState, useEffect, useCallback } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import AnimatedSection from './AnimatedSection'
-import { useAppContext } from '@/lib/context/ReviewSessionContext'
+import { useReviewContext } from '@/lib/context/ReviewSessionContext'
 import generateSentence from '@/lib/actions/sentences/generateSentence'
 import { SentenceProps } from '@/types/review.types'
 import { ShowSentenceOptions } from '../learn/ActiveLearnSession'
@@ -21,7 +21,7 @@ const SentenceCard = ({
   fetching,
   setFetching
 }: SentenceCardProps) => {
-  const { unfinishedWords, dispatch } = useAppContext()
+  const { unfinishedWords, dispatch } = useReviewContext()
   const [sentenceData, setSentenceData] = useState<SentenceProps | null>(null)
 
   // Memoizes handleSentence function, stops unnecessary re-renders, triggers when showSentence/unfinishedWords change.

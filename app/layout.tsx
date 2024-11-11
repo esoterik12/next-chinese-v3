@@ -1,17 +1,14 @@
 import type { Metadata, Viewport } from 'next'
 import './globals.css'
-import { ThemeProvider } from 'next-themes'
-import NextAuthProvider from '@/components/layout/NextAuthProvider'
 import { Inter } from 'next/font/google'
 import NavHeader from '@/components/layout/NavHeader'
-import { ContextProvider } from '@/lib/context/ReviewSessionContext'
+import Providers from '@/components/shared/Providers'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1
-  // themeColor: '#ffffff'
 }
 
 export const metadata: Metadata = {
@@ -49,14 +46,10 @@ export default function RootLayout({
       <body
         className={`${inter.className} min-h-screen w-full bg-[radial-gradient(circle,_#020617,_#01030d)] text-gray-100 antialiased`}
       >
-        <ThemeProvider attribute='class' defaultTheme='dark'>
-          <NextAuthProvider>
-            <ContextProvider>
-              <NavHeader />
-              {children}
-            </ContextProvider>
-          </NextAuthProvider>
-        </ThemeProvider>
+        <Providers>
+          <NavHeader />
+          {children}
+        </Providers>
       </body>
     </html>
   )

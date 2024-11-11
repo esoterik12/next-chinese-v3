@@ -1,7 +1,7 @@
 'use client'
 import WordCard from '../cards/WordCard'
 import SentenceCard from '../cards/SentenceCard'
-import { useAppContext } from '@/lib/context/ReviewSessionContext'
+import { useReviewContext } from '@/lib/context/ReviewSessionContext'
 import { useState } from 'react'
 
 interface ActiveLearnSessionProps {
@@ -11,7 +11,7 @@ interface ActiveLearnSessionProps {
 export type ShowSentenceOptions = 'hidden' | 'showSentence' | 'showTranslation'
 
 const ActiveLearnSession = ({ userId }: ActiveLearnSessionProps) => {
-  const { unfinishedWords } = useAppContext()
+  const { unfinishedWords } = useReviewContext()
   const [showSent, setShowSent] = useState<ShowSentenceOptions>('hidden')
   const [fetching, setFetching] = useState(false)
 

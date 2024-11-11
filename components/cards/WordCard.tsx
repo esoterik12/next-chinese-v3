@@ -4,7 +4,7 @@ import { AnimatePresence } from 'framer-motion'
 import ResultButton from '../buttons/ResultButton'
 import IconDownChevron from '../icons/IconDownChevron'
 import AnimatedSection from './AnimatedSection'
-import { useAppContext } from '@/lib/context/ReviewSessionContext'
+import { useReviewContext } from '@/lib/context/ReviewSessionContext'
 import { SetStateAction, useState, useCallback } from 'react'
 import CorrectButton from '../buttons/CorrectButton'
 import IconXCircle from '../icons/IconXCircle'
@@ -23,7 +23,7 @@ interface WordCardProps {
 
 const WordCard = ({ fetching, setShowSent, userId }: WordCardProps) => {
   const [show, setShow] = useState(false)
-  const { dispatch, unfinishedWords, characterState } = useAppContext()
+  const { dispatch, unfinishedWords, characterState } = useReviewContext()
   const voice = useVoices()
 
   const handleShow = useCallback(() => {

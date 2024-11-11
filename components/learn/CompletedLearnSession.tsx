@@ -6,7 +6,7 @@ import IconStars from '../icons/IconStars'
 import IconTime from '../icons/IconTime'
 import AnimatedSection from '../cards/AnimatedSection'
 import { useEffect } from 'react'
-import { useAppContext } from '@/lib/context/ReviewSessionContext'
+import { useReviewContext } from '@/lib/context/ReviewSessionContext'
 import { ReviewResultDocument } from '@/types/review.types'
 import { endLearnSession } from '@/lib/actions/session/endLearnSession'
 import DefaultButton from '../buttons/DefaultButton'
@@ -26,7 +26,7 @@ const CompletedLearnSession = ({
   latestWord
 }: CompletedLearnSession) => {
   const { finishedWords, dispatch, startTime, error, characterState } =
-    useAppContext()
+    useReviewContext()
   const [completedTime, setCompletedTime] = useState('')
   const [hoveredWordState, setHoveredWordStats] =
     useState<ReviewResultDocument>(null)

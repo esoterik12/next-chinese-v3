@@ -2,10 +2,10 @@
 import React from 'react'
 import IconTraditional from '../icons/IconTraditional'
 import IconSimplified from '../icons/IconSimplified'
-import { useAppContext } from '@/lib/context/ReviewSessionContext'
+import { useReviewContext } from '@/lib/context/ReviewSessionContext'
 
 const ToggleCharacters = () => {
-  const { dispatch, characterState } = useAppContext()
+  const { dispatch, characterState } = useReviewContext()
 
   const toggleCharacterState = (e: React.MouseEvent<HTMLButtonElement>) => {
     dispatch({ type: 'toggleCharacterState' })

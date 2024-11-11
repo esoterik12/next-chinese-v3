@@ -8,7 +8,7 @@ import StatsContainer from '@/components/containers/StatsContainer'
 import AnimatedSection from '../cards/AnimatedSection'
 import { fetchWords } from '@/lib/actions/words/fetchWords'
 import { ReviewResultDocument } from '@/types/review.types'
-import { useAppContext } from '@/lib/context/ReviewSessionContext'
+import { useReviewContext } from '@/lib/context/ReviewSessionContext'
 import InlineError from '../shared/InlineError'
 import calcLevel from '@/lib/utils/calcLevel'
 
@@ -44,7 +44,7 @@ const PrepLearnSession = ({
   wordsDueCount,
   latestWord
 }: PrepLearnSessionProps) => {
-  const { dispatch, error } = useAppContext()
+  const { dispatch, error } = useReviewContext()
 
   const handleStart = async () => {
     try {
@@ -94,6 +94,7 @@ const PrepLearnSession = ({
           <h1 className='md:custom-header custom-subheader'>
             Welcome{latestWord > 0 ? ' back' : ''}, {name}
           </h1>
+          {/* TODO - UserStats: fix this to reflect data */}
           <p className='py-2'>Your last learning session was 5 days ago.</p>
           {/* Top level primary stats boxes */}
           <div className='mt-2 flex flex-row flex-wrap gap-4 md:gap-8'>
@@ -114,6 +115,7 @@ const PrepLearnSession = ({
             />
           </div>
           {/* Last 30 days section */}
+          {/* TODO - UserStats: fix this to reflect stats from UserStats */}
           <div className='mb-8 mt-4'>
             <p className='py-2'>Last 30 days:</p>
             <div className='flex flex-row flex-wrap gap-1'>

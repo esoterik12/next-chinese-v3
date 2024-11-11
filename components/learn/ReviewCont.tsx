@@ -1,7 +1,7 @@
 'use client'
 import React, { useState, useEffect } from 'react'
 import PrepLearnSession from './PrepLearnSession'
-import { useAppContext } from '@/lib/context/ReviewSessionContext'
+import { useReviewContext } from '@/lib/context/ReviewSessionContext'
 import ActiveLearnSession from './ActiveLearnSession'
 import CompletedLearnSession from './CompletedLearnSession'
 import InlineError from '../shared/InlineError'
@@ -21,7 +21,7 @@ const ReviewCont = ({
   wordsDueCount,
   latestWord
 }: ReviewContProps) => {
-  const { progress, dispatch, finishedWords } = useAppContext()
+  const { progress, dispatch, finishedWords } = useReviewContext()
   const [goal, setGoal] = useState<number>(60)
 
   // useEffect to trigger when page unloads

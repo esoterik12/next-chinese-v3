@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useAppContext } from '../context/ReviewSessionContext'
+import { useReviewContext } from '../context/ReviewSessionContext'
 
 interface useKeyboardProps {
   show: boolean
@@ -16,7 +16,7 @@ export function useKeyboard({
   handleShow,
   voice
 }: useKeyboardProps) {
-  const { dispatch, unfinishedWords } = useAppContext()
+  const { dispatch, unfinishedWords } = useReviewContext()
   const word = unfinishedWords[0]
 
   useEffect(() => {

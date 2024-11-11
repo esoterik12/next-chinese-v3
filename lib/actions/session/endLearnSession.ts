@@ -7,6 +7,7 @@ import { saveSentences } from '../sentences/saveSentences'
 import { AppError } from '@/lib/errors/AppError'
 import { revalidatePath } from 'next/cache'
 import { updateLatestWord } from '../users/updateLatestWord'
+import { updateUserStats } from '../stats/updateUserStats'
 
 interface EndLearnSessionProps {
   userId: string // coming from client-side component must be string
@@ -14,24 +15,30 @@ interface EndLearnSessionProps {
   latestWord?: number
 }
 
-// This function is used to end the learning session and also to update UserWords / Sentences
+/* 
+This function is used to end the learning session and also to update UserWords / Sentences
+It performs a number of updates in part 1:
+  A. updateUserWords with results of the review session
+  B. saveSentences to add any newly generated sentences to the db
+  C. updates UserStats collection with daily view count
+  D. updates the user's latestWord if necessary
+It also ends a user's session in the dB in part 2
+*/
 export async function endLearnSession({
   userId,
   finishedWords,
   latestWord
 }: EndLearnSessionProps) {
-
   try {
-    let userIdObj: mongoose.Types.ObjectId
     // Check id and convert string to ObjectId
+    let userIdObj: mongoose.Types.ObjectId
     if (userId) {
       userIdObj = new mongoose.Types.ObjectId(userId)
     } else {
       throw new AppError(400, 'Invalid user Id.')
     }
 
-    // Part 1: If endLearnSession includes finishedWords from state, update DB with UserWords and new sentences,
-    // and new latest word value to the users collection
+    // A: If endLearnSession includes finishedWords from state
     if (finishedWords && finishedWords.length > 0) {
       const promises = []
       promises.push(
@@ -41,7 +48,7 @@ export async function endLearnSession({
         })
       )
 
-      // Prepare sentence save
+      // B: Prepare sentences to save
       const sentencesToSave = finishedWords.flatMap(
         word =>
           word.newSentencesArray?.map((sentence: NewSentenceProps) => ({
@@ -49,20 +56,26 @@ export async function endLearnSession({
             ...sentence
           })) || [] // empty array if no content in newSentencesArray
       )
-
       promises.push(
         saveSentences({
           newSentences: sentencesToSave
         })
       )
 
-      // Get the highest word number in the finishedWords array
+      // C: Update UserStats collection:
+      promises.push(
+        updateUserStats({
+          userId: userIdObj,
+          sessionViewCount: finishedWords.length
+        })
+      )
+
+      // D: Get the highest word number in the finishedWords array
       const highestWordNumber = finishedWords.reduce((max, word) => {
         return word.wordNumber > max ? word.wordNumber : max
       }, 0)
-
-      // If the input come with finishedWords and latestWord, and highestWordNumber of finishedWords is > latestWord
-      // Updates the latestWord in the user collection
+      // If the input comes with finishedWords and latestWord, and highestWordNumber of finishedWords is > latestWord
+      // Updates the latestWord in the user collection (this is used to determine )
       if (latestWord && finishedWords && highestWordNumber > latestWord) {
         promises.push(
           updateLatestWord({

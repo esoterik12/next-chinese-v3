@@ -3,10 +3,10 @@ import React from 'react'
 import { useRouter } from 'next/navigation'
 import { endLearnSession } from '@/lib/actions/session/endLearnSession'
 import IconPower from '../icons/IconPower'
-import { useAppContext } from '@/lib/context/ReviewSessionContext'
+import { useReviewContext } from '@/lib/context/ReviewSessionContext'
 
 const EndLearnSession = ({ userId }: { userId: string }) => {
-  const { dispatch } = useAppContext()
+  const { dispatch } = useReviewContext()
   const router = useRouter()
 
   const onClickEnd = async () => {

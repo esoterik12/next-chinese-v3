@@ -3,10 +3,11 @@ import * as React from 'react'
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { SubSectionConcept } from '@/types/grammar.types'
+import DefaultButton from '../buttons/DefaultButton'
 
 interface AccordionProps {
   i: number
-  content: SubSectionConcept
+  conceptContent: SubSectionConcept
   conceptNumber: number
   expanded: boolean | number
   setExpanded: React.Dispatch<React.SetStateAction<false | number>>
@@ -14,7 +15,7 @@ interface AccordionProps {
 
 const Accordion = ({
   i,
-  content,
+  conceptContent,
   conceptNumber,
   expanded,
   setExpanded
@@ -34,7 +35,10 @@ const Accordion = ({
         onClick={() => setExpanded(isOpen ? false : i)}
       >
         <p className='custom-small-text md:custom-text ml-4'>
-          <span className={`font-semibold ${isOpen ? 'text-rose-600' : ''}`}>{conceptNumber}.{content.subSection}</span> - {content.title}
+          <span className={`font-semibold ${isOpen ? 'text-rose-600' : ''}`}>
+            {conceptNumber}.{conceptContent.subSection}
+          </span>{' '}
+          - {conceptContent.title}
         </p>
       </motion.header>
       <AnimatePresence initial={false}>
@@ -56,10 +60,21 @@ const Accordion = ({
               transition={{ duration: 0.3 }}
             >
               <div className='p-4'>
-                <p className='mb-2'>{content.explanation}</p>
-                {content.examples.map(example => (
+                <p className='mb-2'>{conceptContent.explanation}</p>
+                <DefaultButton
+                  customClasses='w-32 border-2 border-sky-500 p-2'
+                >
+                  <p>Highlight</p>
+                </DefaultButton>
+                {conceptContent.examples.map(example => (
                   <div key={example.exNumber} className='py-2'>
-                    <p className='font-semibold'><span className='text-rose-500'>{conceptNumber}.{content.subSection}.{example.exNumber}</span>: {example.exExplanation}</p>
+                    <p className='font-semibold'>
+                      <span className='text-rose-500'>
+                        {conceptNumber}.{conceptContent.subSection}.
+                        {example.exNumber}
+                      </span>
+                      : {example.exExplanation}
+                    </p>
                     <p className='mb-2 text-gray-500'>{example.exStructure}</p>
                     <div className='px-4 py-2'>
                       <p>{example.exSimplified}</p>
@@ -95,7 +110,7 @@ export const AccordionStack = ({
       {accordionContent.map((section, idx) => (
         <Accordion
           key={section.subSection}
-          content={section}
+          conceptContent={section}
           conceptNumber={conceptNumber}
           i={idx}
           expanded={expanded}
