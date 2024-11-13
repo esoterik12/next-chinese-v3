@@ -14,11 +14,6 @@ import calcLevel from '@/lib/utils/calcLevel'
 import { BasicUserStatsData } from '@/types/user.types'
 import { formatLastSession } from '@/lib/utils/formatLastSession'
 
-const dummyLast30 = [
-  0, 0, 0, 0, 40, 50, 80, 100, 0, 50, 50, 100, 20, 0, 0, 55, 66, 0, 0, 40, 100,
-  80, 20, 50, 80, 100, 0, 0, 100, 55
-]
-
 const learningOptionsObject = [
   { value: 2, border: 'border-gray-500', textColor: 'text-gray-300' },
   { value: 20, border: 'border-gray-500', textColor: 'text-gray-300' },

@@ -62,7 +62,7 @@ const CompletedLearnSession = ({
       sendUpdate()
       sendUpdateCalled.current = true
     }
-  }, [finishedWords, dispatch, userId, latestWord, startTime])
+  }, [finishedWords, dispatch, userId, latestWord, startTime, sortedDateWords])
 
   const handleReset = () => {
     dispatch({ type: 'resetState' })

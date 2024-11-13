@@ -6,7 +6,7 @@ import PageContainer from '@/components/containers/PageContainer'
 import InlineError from '@/components/shared/InlineError'
 import GoogleSignIn from '@/components/buttons/GoogleSignIn'
 import ReviewCont from '@/components/learn/ReviewCont'
-import { UserInfo, UserInfoRequest } from '@/types/user.types'
+import { UserInfoRequest } from '@/types/user.types'
 
 const LearnPage = async () => {
   const serverSession = await getServerSession()
