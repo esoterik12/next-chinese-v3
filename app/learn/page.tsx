@@ -6,6 +6,7 @@ import PageContainer from '@/components/containers/PageContainer'
 import InlineError from '@/components/shared/InlineError'
 import GoogleSignIn from '@/components/buttons/GoogleSignIn'
 import ReviewCont from '@/components/learn/ReviewCont'
+import { UserInfo, UserInfoRequest } from '@/types/user.types'
 
 const LearnPage = async () => {
   const serverSession = await getServerSession()
@@ -21,10 +22,10 @@ const LearnPage = async () => {
       </PageContainer>
     )
 
-  // Checks active user session in DB
-  // IF session: returns 409, message, + result: userId (for EndLearnSession)
-  // ELSE: returns 200, message, + result: wordsDueCount
-  const userInfo = await fetchUserInfo({ userEmail: serverSession.user.email })
+  // Checks active user session in DB + gets key user info (latestWord, wordsDueCount, userStats)
+  const userInfo: UserInfoRequest = await fetchUserInfo({
+    userEmail: serverSession.user.email
+  })
 
   // If active session in DB:
   if (userInfo.code === 409) {
@@ -41,6 +42,7 @@ const LearnPage = async () => {
   return (
     <PageContainer>
       <ReviewCont
+        userStats={userInfo.result.userStats.result}
         userId={userInfo.result.user._id.toString()}
         wordsDueCount={userInfo.result.wordsDueCount}
         name={serverSession.user.name.split(' ')[0]}

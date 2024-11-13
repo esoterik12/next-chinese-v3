@@ -1,5 +1,5 @@
 'use client'
-import React, { useMemo, useState } from 'react'
+import React, { useMemo, useState, useRef } from 'react'
 import IconViews from '@/components/icons/IconViews'
 import StatsContainer from '@/components/containers/StatsContainer'
 import IconStars from '../icons/IconStars'
@@ -34,15 +34,18 @@ const CompletedLearnSession = ({
     []
   )
 
-  // Updates local completedState with results
-  // Sends endLearnSession to update DB
+  // Create a new sorted array and set the state with sortByDate util fn
+  const sortedDateWords = finishedWords.sort(sortByDate)
+
+  // Used to track if sendUpdate has been called (Janky fix for now)
+  const sendUpdateCalled = useRef(false)
+
   useEffect(() => {
-    // Create a new sorted array and set the state with sortByDate util fn
-    const sortedDateWords = finishedWords.sort(sortByDate)
     setCompletedState(sortedDateWords)
     setHoveredWordStats(sortedDateWords[0])
     setCompletedTime(formatDuration(new Date(startTime)))
 
+    // Major Issue: TODO - This is running twice
     const sendUpdate = async () => {
       try {
         await endLearnSession({ userId, finishedWords, latestWord })
@@ -55,7 +58,10 @@ const CompletedLearnSession = ({
       }
     }
 
-    sendUpdate()
+    if (!sendUpdateCalled.current) {
+      sendUpdate()
+      sendUpdateCalled.current = true
+    }
   }, [finishedWords, dispatch, userId, latestWord, startTime])
 
   const handleReset = () => {
@@ -174,13 +180,15 @@ const CompletedLearnSession = ({
               <div className='flex flex-row gap-x-6'>
                 <p>
                   <span className='text-gray-500'>Correct:</span>
-                  <span className='text-emerald-500 font-semibold'>
+                  <span className='font-semibold text-emerald-500'>
                     &nbsp;{correctWordsCount}
                   </span>
                 </p>
                 <p>
                   <span className='text-gray-500'>Incorrect:</span>
-                  <span className='text-rose-500 font-semibold'>&nbsp;{incorrectCount}</span>
+                  <span className='font-semibold text-rose-500'>
+                    &nbsp;{incorrectCount}
+                  </span>
                 </p>
               </div>
             </div>

@@ -133,7 +133,7 @@ export async function fetchWords({
       result: { words: jsonResults, userLatestWord: latestWord }
     }
   } catch (error) {
-    console.error('Error Fetching words from MongoDB: ', error)
+    console.error('Error fetching words from MongoDB: ', error)
     if (error instanceof AppError) {
       return {
         code: error.code,

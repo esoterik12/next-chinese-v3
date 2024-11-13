@@ -11,6 +11,8 @@ import { ReviewResultDocument } from '@/types/review.types'
 import { useReviewContext } from '@/lib/context/ReviewSessionContext'
 import InlineError from '../shared/InlineError'
 import calcLevel from '@/lib/utils/calcLevel'
+import { BasicUserStatsData } from '@/types/user.types'
+import { formatLastSession } from '@/lib/utils/formatLastSession'
 
 const dummyLast30 = [
   0, 0, 0, 0, 40, 50, 80, 100, 0, 50, 50, 100, 20, 0, 0, 55, 66, 0, 0, 40, 100,
@@ -18,8 +20,7 @@ const dummyLast30 = [
 ]
 
 const learningOptionsObject = [
-  // { value: 2, border: 'border-gray-500', textColor: 'text-gray-300' },
-  // { value: 5, border: 'border-gray-500', textColor: 'text-gray-300' },
+  { value: 2, border: 'border-gray-500', textColor: 'text-gray-300' },
   { value: 20, border: 'border-gray-500', textColor: 'text-gray-300' },
   { value: 40, border: 'border-gray-500', textColor: 'text-gray-300' },
   { value: 60, border: 'border-gray-500', textColor: 'text-gray-300' },
@@ -34,6 +35,7 @@ interface PrepLearnSessionProps {
   name: string
   wordsDueCount: number
   latestWord: number
+  userStats: BasicUserStatsData[]
 }
 
 const PrepLearnSession = ({
@@ -42,7 +44,8 @@ const PrepLearnSession = ({
   setGoal,
   name,
   wordsDueCount,
-  latestWord
+  latestWord,
+  userStats
 }: PrepLearnSessionProps) => {
   const { dispatch, error } = useReviewContext()
 
@@ -91,11 +94,24 @@ const PrepLearnSession = ({
       <div>
         {/* Top section */}
         <div className='border-b border-gray-700'>
+          {/* Conditional formating depending on userStats & latestWord */}
           <h1 className='md:custom-header custom-subheader'>
             Welcome{latestWord > 0 ? ' back' : ''}, {name}
           </h1>
-          {/* TODO - UserStats: fix this to reflect data */}
-          <p className='py-2'>Your last learning session was 5 days ago.</p>
+
+          {userStats && latestWord > 0 && (
+            <p className='py-2'>
+              Your last session was {formatLastSession(userStats[0].date)}.
+            </p>
+          )}
+
+          {!userStats && latestWord === 0 && (
+            <p className='py-2'>
+              Begin your first learning session by choosing how many words you
+              would like to learn today.
+            </p>
+          )}
+
           {/* Top level primary stats boxes */}
           <div className='mt-2 flex flex-row flex-wrap gap-4 md:gap-8'>
             <StatsContainer
@@ -116,12 +132,13 @@ const PrepLearnSession = ({
           </div>
           {/* Last 30 days section */}
           {/* TODO - UserStats: fix this to reflect stats from UserStats */}
+
           <div className='mb-8 mt-4'>
             <p className='py-2'>Last 30 days:</p>
             <div className='flex flex-row flex-wrap gap-1'>
-              {dummyLast30.map((item, idx) => (
+              {userStats.map((item, idx) => (
                 <div
-                  className={`flex h-[16px] w-[16px] items-center justify-center rounded-sm border-white p-2 md:h-[20px] md:w-[20px] md:rounded-md ${item >= 50 ? 'bg-emerald-500' : item > 0 ? 'bg-sky-500' : 'bg-gray-500'}`}
+                  className={`flex h-[16px] w-[16px] items-center justify-center rounded-sm border-white p-2 md:h-[20px] md:w-[20px] md:rounded-md ${item.viewCount >= 50 ? 'bg-emerald-500' : item.viewCount > 0 ? 'bg-sky-500' : 'bg-gray-500'}`}
                   key={idx}
                 ></div>
               ))}

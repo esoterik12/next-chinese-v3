@@ -4,6 +4,7 @@ import { AppError } from '@/lib/errors/AppError'
 import UserWord from '@/models/userword.model'
 import User from '@/models/user.model'
 import Session from '@/models/session.model'
+import { fetchUserStats } from '../stats/fetchUserStats'
 
 // This function returns checks for active sesison
 // Otherwise returns userId and wordsDueCount
@@ -34,10 +35,12 @@ export async function fetchUserInfo({ userEmail }: { userEmail: string }) {
       nextReviewDate: { $lte: today }
     })
 
+    const userStats = await fetchUserStats(user._id);
+
     return {
       message: 'Successfully fetched count of words due.',
       code: 200,
-      result: { wordsDueCount, user }
+      result: { wordsDueCount, user, userStats: userStats }
     }
   } catch (error) {
     console.error('Error context: Fetching new words from MongoDB', error)

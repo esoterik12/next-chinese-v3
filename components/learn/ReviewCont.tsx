@@ -7,19 +7,22 @@ import CompletedLearnSession from './CompletedLearnSession'
 import InlineError from '../shared/InlineError'
 import EndLearnSession from '../buttons/EndLearnSession'
 import { endLearnSession } from '@/lib/actions/session/endLearnSession'
+import { BasicUserStatsData } from '@/types/user.types'
 
 interface ReviewContProps {
   userId: string // converted from ObjectId in page.tsx
   name: string // from NextAuth session
   wordsDueCount: number
   latestWord: number
+  userStats: BasicUserStatsData[]
 }
 
 const ReviewCont = ({
   userId,
   name,
   wordsDueCount,
-  latestWord
+  latestWord,
+  userStats
 }: ReviewContProps) => {
   const { progress, dispatch, finishedWords } = useReviewContext()
   const [goal, setGoal] = useState<number>(60)
@@ -60,6 +63,7 @@ const ReviewCont = ({
       {/* IF ready show this - set ready to 'running' in handleStart in PrepLearnSession */}
       {progress === 'ready' && (
         <PrepLearnSession
+          userStats={userStats}
           userId={userId}
           goal={goal}
           setGoal={setGoal}
