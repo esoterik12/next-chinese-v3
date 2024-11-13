@@ -28,20 +28,20 @@ export function useKeyboard({
       if (!show && e.code === 'Space') {
         handleShow()
       }
-      if (show && /^[1-5]$/.test(e.key) && !word.seenToday) {
+      if (/^[1-5]$/.test(e.key) && !word.seenToday) {
         completeCard()
         dispatch({
           type: 'firstResult',
           firstResult: Number(e.key)
         })
       }
-      if (show && e.key === '2' && word.seenToday) {
+      if (e.key === '2' && word.seenToday) {
         completeCard()
         dispatch({
           type: 'incorrectResult'
         })
       }
-      if (show && e.key === '4' && word.seenToday) {
+      if (e.key === '4' && word.seenToday) {
         completeCard()
         dispatch({
           type: 'correctResult'

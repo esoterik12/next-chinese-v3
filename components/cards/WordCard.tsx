@@ -55,26 +55,32 @@ const WordCard = ({ fetching, setShowSent, userId }: WordCardProps) => {
     setShowSent('hidden')
   }
 
-  const handleResult = (result: number) => {
+  const handleResult = (
+    result: number,
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => {
     completeCard()
     dispatch({
       type: 'firstResult',
       firstResult: result
     })
+    e.currentTarget.blur()
   }
 
-  const handleCorrect = () => {
+  const handleCorrect = (e: React.MouseEvent<HTMLButtonElement>) => {
     completeCard()
     dispatch({
       type: 'correctResult'
     })
+    e.currentTarget.blur()
   }
 
-  const handleIncorrect = () => {
+  const handleIncorrect = (e: React.MouseEvent<HTMLButtonElement>) => {
     completeCard()
     dispatch({
       type: 'incorrectResult'
     })
+    e.currentTarget.blur()
   }
 
   // Custom hook for keyboard input adapted from dev.to post
@@ -88,7 +94,7 @@ const WordCard = ({ fetching, setShowSent, userId }: WordCardProps) => {
         <EndLearnSession userId={userId} />
       </div>
 
-      <div className='flex h-[100px] flex-col items-center justify-end gap-y-4 text-center'>
+      <div className='flex h-[100px] flex-col items-center text-center'>
         <>
           {characterState === 'traditional' ? (
             <p className='text-[42px] font-bold'>
@@ -100,11 +106,11 @@ const WordCard = ({ fetching, setShowSent, userId }: WordCardProps) => {
             </p>
           )}
           {characterState === 'traditional' ? (
-            <p className='custom-large-text'>
+            <p className='custom-large-text text-gray-500'>
               {unfinishedWords[0].wordSimplified}
             </p>
           ) : (
-            <p className='custom-large-text'>
+            <p className='custom-large-text text-gray-500'>
               {unfinishedWords[0].wordTraditional}
             </p>
           )}
@@ -112,11 +118,11 @@ const WordCard = ({ fetching, setShowSent, userId }: WordCardProps) => {
       </div>
 
       {/* Bottom Section */}
-      <div className='flex h-[240px] flex-col items-center justify-center'>
+      <div className='flex h-[183px] flex-col items-center justify-center'>
         <AnimatePresence mode='wait'>
           {!show && (
-            <AnimatedSection motionKey='button'>
-              <DefaultButton handleClick={handleShow} customClasses='mb-14 p-2'>
+            <AnimatedSection classes='mb-8' motionKey='button'>
+              <DefaultButton handleClick={handleShow} customClasses='p-2'>
                 <IconDownChevron classes='h-6 w-6 text-gray-400' />
               </DefaultButton>
             </AnimatedSection>
@@ -124,77 +130,76 @@ const WordCard = ({ fetching, setShowSent, userId }: WordCardProps) => {
 
           {show && (
             <AnimatedSection
-              classes='h-full flex-col mt-14 justify-between text-center'
+              classes='h-full flex-col mt-8 justify-between text-center'
               motionKey='answer'
             >
-              <>
-                <div>
-                  <h1 className='custom-large-text font-bold'>
-                    {unfinishedWords[0].partOfSpeech}
-                  </h1>
+              <div>
+                <h1 className='custom-large-text font-bold'>
+                  {unfinishedWords[0].partOfSpeech}
+                </h1>
 
-                  <p className='custom-large-text'>
-                    {show && unfinishedWords[0].wordPinyin}
-                  </p>
-                  <p className='custom-large-text custom-gray-text'>
-                    {show && unfinishedWords[0].wordTranslation}
-                  </p>
-                </div>
-
-                {!unfinishedWords[0].seenToday && (
-                  <div className='mb-3 flex w-full flex-row items-center justify-between gap-x-1'>
-                    <ResultButton
-                      disabled={fetching}
-                      handleClick={() => handleResult(1)}
-                      text='1'
-                      textColor='text-rose-600'
-                    />
-                    <ResultButton
-                      disabled={fetching}
-                      handleClick={() => handleResult(2)}
-                      text='2'
-                      textColor='text-rose-400'
-                    />
-                    <ResultButton
-                      disabled={fetching}
-                      handleClick={() => handleResult(3)}
-                      text='3'
-                      textColor='text-sky-300'
-                    />
-                    <ResultButton
-                      disabled={fetching}
-                      handleClick={() => handleResult(4)}
-                      text='4'
-                      textColor='text-sky-400'
-                    />
-                    <ResultButton
-                      disabled={fetching}
-                      handleClick={() => handleResult(5)}
-                      text='5'
-                      textColor='text-sky-500'
-                    />
-                  </div>
-                )}
-                {unfinishedWords[0].seenToday && (
-                  <div className='mb-3 flex w-full flex-row items-center justify-between gap-x-2'>
-                    <CorrectButton
-                      disabled={fetching}
-                      handleClick={() => handleIncorrect()}
-                      icon={<IconXCircle classes='h-6 w-6' />}
-                      textColor='text-rose-500'
-                    />
-                    <CorrectButton
-                      disabled={fetching}
-                      handleClick={() => handleCorrect()}
-                      icon={<IconCheckCircle classes='h-6 w-6' />}
-                      textColor='text-emerald-500'
-                    />
-                  </div>
-                )}
-              </>
+                <p className='custom-large-text'>
+                  {show && unfinishedWords[0].wordPinyin}
+                </p>
+                <p className='custom-large-text custom-gray-text'>
+                  {show && unfinishedWords[0].wordTranslation}
+                </p>
+              </div>
             </AnimatedSection>
           )}
         </AnimatePresence>
+      </div>
+      <div className='mx-2 flex h-[57px] flex-col items-center justify-center'>
+        {!unfinishedWords[0].seenToday && (
+          <div className='mb-3 flex w-full flex-row items-center justify-between gap-x-1'>
+            <ResultButton
+              disabled={fetching}
+              handleClick={e => handleResult(1, e)}
+              text='1'
+              textColor='text-rose-600'
+            />
+            <ResultButton
+              disabled={fetching}
+              handleClick={e => handleResult(2, e)}
+              text='2'
+              textColor='text-rose-400'
+            />
+            <ResultButton
+              disabled={fetching}
+              handleClick={e => handleResult(3, e)}
+              text='3'
+              textColor='text-sky-300'
+            />
+            <ResultButton
+              disabled={fetching}
+              handleClick={e => handleResult(4, e)}
+              text='4'
+              textColor='text-sky-400'
+            />
+            <ResultButton
+              disabled={fetching}
+              handleClick={e => handleResult(5, e)}
+              text='5'
+              textColor='text-sky-500'
+            />
+          </div>
+        )}
+        {unfinishedWords[0].seenToday && (
+          <div className='mb-3 flex w-full flex-row items-center justify-between'>
+            <CorrectButton
+              disabled={fetching}
+              handleClick={e => handleIncorrect(e)}
+              icon={<IconXCircle classes='h-6 w-6' />}
+              textColor='text-rose-500'
+            />
+            <CorrectButton
+              disabled={fetching}
+              handleClick={e => handleCorrect(e)}
+              icon={<IconCheckCircle classes='h-6 w-6' />}
+              textColor='text-emerald-500'
+            />
+          </div>
+        )}
       </div>
     </div>
   )

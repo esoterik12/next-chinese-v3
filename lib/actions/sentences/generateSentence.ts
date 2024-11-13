@@ -11,6 +11,11 @@ interface GenerateSentenceProps {
   level?: number
 }
 
+/*
+Please use the following grammar concept in the generated sentence: ${JSON.stringify(dummyGrammar[0].sectionConcepts[2])}.
+The most important part is that you use the target word: ${word}.
+*/
+
 export default async function generateSentence({
   word,
   level

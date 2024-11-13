@@ -1,7 +1,7 @@
 type ResultButtonProps = {
   text: '1' | '2' | '3' | '4' | '5'
   textColor: string
-  handleClick: () => void
+  handleClick: (e?: React.MouseEvent<HTMLButtonElement>) => void
   disabled: boolean
 }
 
