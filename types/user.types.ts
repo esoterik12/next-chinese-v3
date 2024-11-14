@@ -23,6 +23,7 @@ export interface User {
   createdAt: Date
   latestWord: number
   __v: number
+  preferredChars: 'traditional' | 'simplified'
 }
 
 export interface UserStatsRequest {

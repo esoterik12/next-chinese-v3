@@ -6,13 +6,15 @@ import { updateUserWords } from '../words/updateUserWords'
 import { saveSentences } from '../sentences/saveSentences'
 import { AppError } from '@/lib/errors/AppError'
 import { revalidatePath } from 'next/cache'
-import { updateLatestWord } from '../users/updateLatestWord'
 import { updateUserStats } from '../stats/updateUserStats'
+import { updateUser } from '../users/updateUser'
 
 interface EndLearnSessionProps {
   userId: string // coming from client-side component must be string
   finishedWords?: ReviewResultDocument[]
   latestWord?: number
+  characterState?: 'simplified' | 'traditional'
+  preferredChars?: 'simplified' | 'traditional'
 }
 
 /* 
@@ -21,13 +23,16 @@ It performs a number of updates in part 1:
   A. updateUserWords with results of the review session
   B. saveSentences to add any newly generated sentences to the db
   C. updates UserStats collection with daily view count
-  D. updates the user's latestWord if necessary
+  D. updates the user's latestWord + preferredChars if necessary
 It also ends a user's session in the dB in part 2
 */
+
 export async function endLearnSession({
   userId,
   finishedWords,
-  latestWord
+  latestWord,
+  characterState,
+  preferredChars
 }: EndLearnSessionProps) {
   try {
     // Check id and convert string to ObjectId
@@ -70,20 +75,16 @@ export async function endLearnSession({
         })
       )
 
-      // D: Get the highest word number in the finishedWords array
-      const highestWordNumber = finishedWords.reduce((max, word) => {
-        return word.wordNumber > max ? word.wordNumber : max
-      }, 0)
-      // If the input comes with finishedWords and latestWord, and highestWordNumber of finishedWords is > latestWord
-      // Updates the latestWord in the user collection (this is used to determine )
-      if (latestWord && finishedWords && highestWordNumber > latestWord) {
-        promises.push(
-          updateLatestWord({
-            newLatestWord: Math.max(highestWordNumber, latestWord),
-            userId: userIdObj
-          })
-        )
-      }
+      // D: updateUser conditional updates latestWord & preferredChars if they have changed
+      promises.push(
+        updateUser({
+          userId,
+          latestWord,
+          finishedWords,
+          characterState,
+          preferredChars
+        })
+      )
 
       await Promise.all(promises)
     }

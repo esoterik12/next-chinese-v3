@@ -19,11 +19,13 @@ import InlineError from '../shared/InlineError'
 interface CompletedLearnSession {
   userId: string
   latestWord: number
+  preferredChars: 'simplified' | 'traditional'
 }
 
 const CompletedLearnSession = ({
   userId,
-  latestWord
+  latestWord,
+  preferredChars
 }: CompletedLearnSession) => {
   const { finishedWords, dispatch, startTime, error, characterState } =
     useReviewContext()
@@ -34,21 +36,28 @@ const CompletedLearnSession = ({
     []
   )
 
-  // Create a new sorted array and set the state with sortByDate util fn
-  const sortedDateWords = finishedWords.sort(sortByDate)
-
-  // Used to track if sendUpdate has been called (Janky fix for now)
-  const sendUpdateCalled = useRef(false)
-
   useEffect(() => {
+    // Create a new sorted array and set the state with sortByDate util fn
+    const sortedDateWords = finishedWords.sort(sortByDate)
+
     setCompletedState(sortedDateWords)
     setHoveredWordStats(sortedDateWords[0])
     setCompletedTime(formatDuration(new Date(startTime)))
+  }, [finishedWords, startTime])
 
-    // Major Issue: TODO - This is running twice
+  // TODO: Used to track if sendUpdate has been called (Janky fix for now)
+  const sendUpdateCalled = useRef(false)
+
+  useEffect(() => {
     const sendUpdate = async () => {
       try {
-        await endLearnSession({ userId, finishedWords, latestWord })
+        await endLearnSession({
+          userId,
+          finishedWords,
+          latestWord,
+          preferredChars,
+          characterState
+        })
       } catch (error) {
         dispatch({
           type: 'setError',
@@ -58,11 +67,19 @@ const CompletedLearnSession = ({
       }
     }
 
+    // Temporary fix
     if (!sendUpdateCalled.current) {
       sendUpdate()
       sendUpdateCalled.current = true
     }
-  }, [finishedWords, dispatch, userId, latestWord, startTime, sortedDateWords])
+  }, [
+    finishedWords,
+    dispatch,
+    userId,
+    latestWord,
+    preferredChars,
+    characterState
+  ])
 
   const handleReset = () => {
     dispatch({ type: 'resetState' })

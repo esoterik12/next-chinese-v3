@@ -31,6 +31,7 @@ interface PrepLearnSessionProps {
   wordsDueCount: number
   latestWord: number
   userStats: BasicUserStatsData[]
+  preferredChars: 'traditional' | 'simplified'
 }
 
 const PrepLearnSession = ({
@@ -40,7 +41,8 @@ const PrepLearnSession = ({
   name,
   wordsDueCount,
   latestWord,
-  userStats
+  userStats,
+  preferredChars
 }: PrepLearnSessionProps) => {
   const { dispatch, error } = useReviewContext()
 
@@ -65,7 +67,8 @@ const PrepLearnSession = ({
         // Add words and latestWord to app context
         dispatch({
           type: 'loadWords',
-          fetchedWords: fetchedWordsSeenToday
+          fetchedWords: fetchedWordsSeenToday,
+          characterState: preferredChars
         })
       }
     } catch (error) {
@@ -125,9 +128,8 @@ const PrepLearnSession = ({
               valueText={latestWord}
             />
           </div>
+          
           {/* Last 30 days section */}
-          {/* TODO - UserStats: fix this to reflect stats from UserStats */}
-
           <div className='mb-8 mt-4'>
             <p className='py-2'>Last 30 days:</p>
             <div className='flex flex-row flex-wrap gap-1'>

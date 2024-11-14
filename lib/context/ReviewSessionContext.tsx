@@ -85,7 +85,8 @@ const reducer = (state: ReviewReducerState, action: ReviewReducerAction): Review
           progress: 'running',
           loadingState: false,
           unfinishedWords: action.fetchedWords,
-          finishedWords: []
+          finishedWords: [],
+          characterState: action.characterState
         }
       } else {
         return {

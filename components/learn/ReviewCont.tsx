@@ -15,6 +15,7 @@ interface ReviewContProps {
   wordsDueCount: number
   latestWord: number
   userStats: BasicUserStatsData[]
+  preferredChars: 'traditional' | 'simplified'
 }
 
 const ReviewCont = ({
@@ -22,7 +23,8 @@ const ReviewCont = ({
   name,
   wordsDueCount,
   latestWord,
-  userStats
+  userStats,
+  preferredChars
 }: ReviewContProps) => {
   const { progress, dispatch, finishedWords } = useReviewContext()
   const [goal, setGoal] = useState<number>(60)
@@ -34,7 +36,12 @@ const ReviewCont = ({
       event.returnValue = ''
 
       try {
-        await endLearnSession({ userId, latestWord, finishedWords })
+        await endLearnSession({
+          userId,
+          latestWord,
+          finishedWords,
+          preferredChars
+        })
       } catch (error) {
         console.error('Error ending session:', error)
       } finally {
@@ -47,7 +54,7 @@ const ReviewCont = ({
     return () => {
       window.removeEventListener('beforeunload', handleBeforeUnload)
     }
-  }, [userId, latestWord, finishedWords, dispatch])
+  }, [userId, latestWord, finishedWords, dispatch, preferredChars])
 
   if (!userId) {
     return (
@@ -70,6 +77,7 @@ const ReviewCont = ({
           wordsDueCount={wordsDueCount}
           name={name}
           latestWord={latestWord}
+          preferredChars={preferredChars}
         />
       )}
 
@@ -78,7 +86,11 @@ const ReviewCont = ({
 
       {/* If 'completed' show the CompletedLearnSession */}
       {progress === 'completed' && (
-        <CompletedLearnSession userId={userId} latestWord={latestWord} />
+        <CompletedLearnSession
+          userId={userId}
+          latestWord={latestWord}
+          preferredChars={preferredChars}
+        />
       )}
     </>
   )

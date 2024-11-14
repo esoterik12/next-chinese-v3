@@ -23,6 +23,7 @@ const LearnPage = async () => {
     )
 
   // Checks active user session in DB + gets key user info (latestWord, wordsDueCount, userStats)
+  // TODO: Add prefChar to this result
   const userInfo: UserInfoRequest = await fetchUserInfo({
     userEmail: serverSession.user.email
   })
@@ -43,6 +44,7 @@ const LearnPage = async () => {
     <PageContainer>
       <ReviewCont
         userStats={userInfo.result.userStats.result}
+        preferredChars={userInfo.result.user.preferredChars}
         userId={userInfo.result.user._id.toString()}
         wordsDueCount={userInfo.result.wordsDueCount}
         name={serverSession.user.name.split(' ')[0]}

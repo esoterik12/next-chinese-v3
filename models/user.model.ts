@@ -17,6 +17,11 @@ const userSchema = new mongoose.Schema({
   latestWord: {
     type: Number,
     default: 0
+  },
+  preferredChars: {
+    type: String,
+    enum: ['simplified', 'traditional'],
+    default: 'traditional'
   }
 })
 

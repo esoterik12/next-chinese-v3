@@ -17,10 +17,6 @@ export async function updateUserStats({
 
     await connectToDB()
 
-    console.log('sessionViewCount', sessionViewCount)
-
-
-    // TODO: possible issue here with number of viewCount
     await UserStats.findOneAndUpdate(
       {
         userId: userId,

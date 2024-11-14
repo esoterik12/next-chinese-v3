@@ -93,7 +93,6 @@ const Accordion = ({
   )
 }
 
-// TODO: any[]
 export const AccordionStack = ({
   accordionContent,
   conceptNumber
