@@ -21,7 +21,7 @@ const SentenceCard = ({
   fetching,
   setFetching
 }: SentenceCardProps) => {
-  const { unfinishedWords, dispatch } = useReviewContext()
+  const { unfinishedWords, characterState, dispatch } = useReviewContext()
   const [sentenceData, setSentenceData] = useState<SentenceProps | null>(null)
 
   // Memoizes handleSentence function, stops unnecessary re-renders, triggers when showSentence/unfinishedWords change.
@@ -67,14 +67,15 @@ const SentenceCard = ({
       <AnimatePresence mode='wait'>
         {showSent === 'hidden' && (
           <AnimatedSection classes='text-center' key='sentenceButton'>
+            {/* TODO: add some animation to the generating text */}
             <DefaultButton
               handleClick={handleSentence}
               customClasses='custom-hover-effect bg-gray-900 p-2 w-[290px]'
             >
               {!fetching ? (
-                <p className='text-center'>Context</p>
+                <p className='text-center'>Sentence</p>
               ) : (
-                <p className='text-center'>Generating</p>
+                <p className='text-center'>Generating...</p>
               )}
             </DefaultButton>
           </AnimatedSection>
@@ -92,7 +93,9 @@ const SentenceCard = ({
                   <p
                     className={`custom-large-text ml-2 ${showSent === 'showSentence' ? `transition-colors duration-300 hover:cursor-pointer hover:text-sky-300` : ``}`}
                   >
-                    {sentenceData.sentTraditional}
+                    {characterState === 'traditional'
+                      ? sentenceData.sentTraditional
+                      : sentenceData.sentSimplified}
                   </p>
                 </button>
               </>
@@ -108,9 +111,7 @@ const SentenceCard = ({
           >
             <>
               <p className=''>{sentenceData.sentPinyin}</p>
-              <p className=' custom-gray-text'>
-                {sentenceData.sentTranslation}
-              </p>
+              <p className='custom-gray-text'>{sentenceData.sentTranslation}</p>
             </>
           </AnimatedSection>
         )}

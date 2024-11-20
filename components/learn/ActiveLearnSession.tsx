@@ -3,20 +3,22 @@ import WordCard from '../cards/WordCard'
 import SentenceCard from '../cards/SentenceCard'
 import { useReviewContext } from '@/lib/context/ReviewSessionContext'
 import { useState } from 'react'
+import ProgressBar from './ProgressBar'
 
 interface ActiveLearnSessionProps {
   userId: string
+  goal: number
 }
 
 export type ShowSentenceOptions = 'hidden' | 'showSentence' | 'showTranslation'
 
-const ActiveLearnSession = ({ userId }: ActiveLearnSessionProps) => {
+const ActiveLearnSession = ({ userId, goal }: ActiveLearnSessionProps) => {
   const { unfinishedWords } = useReviewContext()
   const [showSent, setShowSent] = useState<ShowSentenceOptions>('hidden')
   const [fetching, setFetching] = useState(false)
 
   return (
-    <section className='flex w-full flex-grow flex-row items-center'>
+    <section className='flex w-full h-full flex-grow flex-col items-center'>
       <div className='flex w-full flex-grow flex-col items-center'>
         {unfinishedWords.length > 0 && (
           <>
@@ -34,6 +36,7 @@ const ActiveLearnSession = ({ userId }: ActiveLearnSessionProps) => {
           </>
         )}
       </div>
+      <ProgressBar goal={goal} progress={goal - unfinishedWords.length}/>
     </section>
   )
 }

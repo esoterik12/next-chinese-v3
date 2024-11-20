@@ -34,6 +34,7 @@ const LearnPage = async () => {
       <PageContainer>
         <InlineError classes='p-2 h-full w-full flex flex-grow flex-col items-center justify-center'>
           <p>{userInfo.message}</p>
+          <p>Click below to end the session.</p>
           <EndLearnSession userId={userInfo.result.toString()} />
         </InlineError>
       </PageContainer>

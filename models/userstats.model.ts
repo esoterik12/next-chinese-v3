@@ -4,6 +4,7 @@ export interface UserStatsDocument extends Document {
   userId: mongoose.Types.ObjectId;
   date: Date;
   viewCount: number;
+  duration: number;
 }
 
 const userStatsSchema = new Schema<UserStatsDocument>({
@@ -20,9 +21,12 @@ const userStatsSchema = new Schema<UserStatsDocument>({
     type: Number,
     default: 0
   },
+  duration: {
+    type: Number, // Value should be converted to seconds
+    default: 0
+  }
 });
 
-// Compound index on `userId` and `date`
 userStatsSchema.index({ userId: 1, date: 1 }, { unique: true });
 
 const UserStats =

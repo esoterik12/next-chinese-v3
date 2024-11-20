@@ -10,7 +10,7 @@ const Logo = async () => {
       >
         <div className='flex flex-row items-center w-60'>
           <IconOctahedron />
-          <p className='ml-2'>Next Chinese</p>
+          <p className='ml-2 hidden md:block'>Next Chinese</p>
         </div>
       </Link>
     </div>

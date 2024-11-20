@@ -56,7 +56,8 @@ const CompletedLearnSession = ({
           finishedWords,
           latestWord,
           preferredChars,
-          characterState
+          characterState,
+          startTime
         })
       } catch (error) {
         dispatch({
@@ -78,7 +79,8 @@ const CompletedLearnSession = ({
     userId,
     latestWord,
     preferredChars,
-    characterState
+    characterState, 
+    startTime
   ])
 
   const handleReset = () => {

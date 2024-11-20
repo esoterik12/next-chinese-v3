@@ -18,13 +18,12 @@ export default async function NavHeader() {
         {/* NavLinks */}
         <div className='mr-4 flex flex-row justify-center gap-x-2'>
           <NavLink href='/grammar'>
-            <p className='custom-hover-effect w-[60px] rounded-lg border-2 border-gray-500 p-1 text-center md:w-[90px]'>
-              {' '}
+            <p className='custom-hover-effect w-[90px] rounded-lg border-2 border-gray-500 p-1 text-center'>
               Grammar
             </p>
           </NavLink>
           <NavLink href='/learn'>
-            <p className='custom-hover-effect w-[60px] rounded-lg border-2 border-gray-500 p-1 text-center md:w-[90px]'>
+            <p className='custom-hover-effect w-[90px] rounded-lg border-2 border-gray-500 p-1 text-center'>
               Learn
             </p>
           </NavLink>

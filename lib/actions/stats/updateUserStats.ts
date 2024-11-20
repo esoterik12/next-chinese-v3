@@ -6,13 +6,17 @@ import { AppError } from '@/lib/errors/AppError'
 
 export async function updateUserStats({
   userId,
-  sessionViewCount
+  sessionViewCount,
+  sessionStartTime
 }: {
   userId: mongoose.Types.ObjectId
   sessionViewCount: number
+  sessionStartTime: number
 }) {
   try {
     const today = new Date()
+    const now = today.getTime() // for duration
+
     today.setUTCHours(0, 0, 0, 0)
 
     await connectToDB()
@@ -22,8 +26,13 @@ export async function updateUserStats({
         userId: userId,
         date: today
       },
-      { $inc: { viewCount: sessionViewCount } },
-      { upsert: true}
+      {
+        $inc: {
+          viewCount: sessionViewCount,
+          duration: Math.floor((now - sessionStartTime) / 1000)
+        }
+      },
+      { upsert: true }
     )
 
     return {

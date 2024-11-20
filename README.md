@@ -1,6 +1,19 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with
 [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+
+# TODO: 
+## Core Features
+- Add progress bar with animation / styling
+- Add joyride to first session + conditional take a tour depending on lastestWord
+- Add gram concept lib content (differentiate from textbook)
+- Add gram selection functionality (in library)
+
+## Fixes / Tweaks
+- 
+
+
+
 # Contents
 
 1. Getting Started (setting up the NextJS project with Tailwind and NextAuth and
@@ -13,6 +26,30 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with
 - [Database Design](./docs/database-design.md)
 
 ## 1. Getting Started
+
+### Prerequisites
+
+- Node.js / npm
+- MongoDB (app uses MongoDB Atlas)
+
+### Environment Setup
+
+- Authentication
+  - NEXTAUTH_SECRET
+  - NEXTAUTH_URL
+  - GOOGLE_CLIENT_ID
+  - GOOGLE_CLIENT_SECRET
+- Database:
+  - MONGODB_URL
+- OpenAI:
+  - OPENAI_API_KEY
+
+### Running the Project
+
+- Install Dependencies: npm install
+- Run Development Server: npm run dev
+
+## Dependencies
 
 ### prettier and prettier plugin for tailwind
 
@@ -48,6 +85,14 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with
   callbacks get a userId from mongo or make a new user entry with an id and
   store the id in the session for access on client-side.
 
+### mongoose
+
+- Mongoose is an ODM (Object Data Modeling) library for MongoDB. App's models and server actions that interface with MongoDB are based around mongoose
+
+### framer-motion
+
+- Animation library for React used on front end for transitions
+
 ## 2. Backend & MongoDB w/ Mongoose Implementation
 
 ### Connect to DB
@@ -66,6 +111,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with
   - UserWords
   - Sentences
   - Sessions
+  - UserStats
 
 ### Actions
 
@@ -81,6 +127,9 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with
   - `/lib/actions/sentences/fetchSentences.ts`
   - `/lib/actions/sentences/saveSentences.ts`
   - `/lib/actions/sentences/generateSentence.ts`
+  - `/lib/actions/users/updateUser.ts`: conditionally updates the latestWord
+    (used to track progress) and the preferred characters (simplified /
+    traditional)
 
 ## 3. Front-end:
 

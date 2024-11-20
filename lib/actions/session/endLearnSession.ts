@@ -15,6 +15,7 @@ interface EndLearnSessionProps {
   latestWord?: number
   characterState?: 'simplified' | 'traditional'
   preferredChars?: 'simplified' | 'traditional'
+  startTime?: number
 }
 
 /* 
@@ -32,7 +33,8 @@ export async function endLearnSession({
   finishedWords,
   latestWord,
   characterState,
-  preferredChars
+  preferredChars,
+  startTime
 }: EndLearnSessionProps) {
   try {
     // Check id and convert string to ObjectId
@@ -71,7 +73,8 @@ export async function endLearnSession({
       promises.push(
         updateUserStats({
           userId: userIdObj,
-          sessionViewCount: finishedWords.length
+          sessionViewCount: finishedWords.length,
+          sessionStartTime: startTime
         })
       )
 
