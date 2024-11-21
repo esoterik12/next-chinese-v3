@@ -9,15 +9,6 @@ import { revalidatePath } from 'next/cache'
 import { updateUserStats } from '../stats/updateUserStats'
 import { updateUser } from '../users/updateUser'
 
-interface EndLearnSessionProps {
-  userId: string // coming from client-side component must be string
-  finishedWords?: ReviewResultDocument[]
-  latestWord?: number
-  characterState?: 'simplified' | 'traditional'
-  preferredChars?: 'simplified' | 'traditional'
-  startTime?: number
-}
-
 /* 
 This function is used to end the learning session and also to update UserWords / Sentences
 It performs a number of updates in part 1:
@@ -28,12 +19,21 @@ It performs a number of updates in part 1:
 It also ends a user's session in the dB in part 2
 */
 
+interface EndLearnSessionProps {
+  userId: string // coming from client-side component must be string
+  finishedWords?: ReviewResultDocument[]
+  latestWord?: number
+  characterState?: 'simplified' | 'traditional'
+  preferredChars?: 'simplified' | 'traditional'
+  startTime?: number
+}
+
 export async function endLearnSession({
   userId,
   finishedWords,
   latestWord,
-  characterState,
-  preferredChars,
+  characterState = 'traditional',
+  preferredChars = 'traditional',
   startTime
 }: EndLearnSessionProps) {
   try {
@@ -70,6 +70,7 @@ export async function endLearnSession({
       )
 
       // C: Update UserStats collection:
+      // TODO: Use duration stored in database for stats in the future
       promises.push(
         updateUserStats({
           userId: userIdObj,

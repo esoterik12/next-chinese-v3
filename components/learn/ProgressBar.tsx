@@ -1,5 +1,6 @@
 'use client'
 import React from 'react'
+import { motion } from 'framer-motion'
 
 interface ProgressBarProps {
   goal: number
@@ -9,19 +10,19 @@ interface ProgressBarProps {
 const ProgressBar = ({ goal, progress }: ProgressBarProps) => {
   const percentComplete = Math.floor((progress / goal) * 100)
 
-  // TODO: Animation and better mobile support
-
   return (
-    <div>
-      <div
-        style={{ width: `${percentComplete}%` }}
+    <motion.div className='flex w-full flex-row'>
+      <motion.div
+        animate={{ width: `${percentComplete}%` }}
+        transition={{ duration: 0.5, ease: 'easeInOut' }}
         className='h-[2px] bg-sky-500'
-      ></div>
-      <div
-        style={{ width: `${100 - percentComplete}%` }}
+      />
+      <motion.div
+        animate={{ width: `${100 - percentComplete}%` }}
+        transition={{ duration: 0.5, ease: 'easeInOut' }}
         className='h-[2px] bg-gray-900'
-      ></div>
-    </div>
+      />
+    </motion.div>
   )
 }
 

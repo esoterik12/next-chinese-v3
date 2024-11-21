@@ -76,7 +76,6 @@ const reducer = (state: ReviewReducerState, action: ReviewReducerAction): Review
         error: action.error
       }
     case 'loadWords':
-      // TODO: Add a function that takes lastCharacterSetting from the User collection
       // This will requires the setting to be updates on each round
       if (action.fetchedWords && action.fetchedWords.length > 0) {
         return {

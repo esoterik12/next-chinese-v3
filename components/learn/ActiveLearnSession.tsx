@@ -8,11 +8,12 @@ import ProgressBar from './ProgressBar'
 interface ActiveLearnSessionProps {
   userId: string
   goal: number
+  latestWord: number
 }
 
 export type ShowSentenceOptions = 'hidden' | 'showSentence' | 'showTranslation'
 
-const ActiveLearnSession = ({ userId, goal }: ActiveLearnSessionProps) => {
+const ActiveLearnSession = ({ userId, goal, latestWord }: ActiveLearnSessionProps) => {
   const { unfinishedWords } = useReviewContext()
   const [showSent, setShowSent] = useState<ShowSentenceOptions>('hidden')
   const [fetching, setFetching] = useState(false)
@@ -26,6 +27,7 @@ const ActiveLearnSession = ({ userId, goal }: ActiveLearnSessionProps) => {
               userId={userId}
               fetching={fetching}
               setShowSent={setShowSent}
+              latestWord={latestWord}
             />
             <SentenceCard
               showSent={showSent}

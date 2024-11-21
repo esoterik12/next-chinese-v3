@@ -4,14 +4,15 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with
 
 # TODO: 
 ## Core Features
-- Add progress bar with animation / styling
 - Add joyride to first session + conditional take a tour depending on lastestWord
 - Add gram concept lib content (differentiate from textbook)
 - Add gram selection functionality (in library)
 
 ## Fixes / Tweaks
-- 
-
+- Use duration stored in db for stats
+- Figure out how to stop double useEffect call in CompletedLearnSession.tsx (using temp fix now)
+- Early end session shoukd add finishedWords, doesn't seem to
+- Quite a lot of prop drilling going on: latestWord and such, userId - could expand context
 
 
 # Contents

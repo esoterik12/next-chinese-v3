@@ -19,9 +19,10 @@ interface WordCardProps {
   setShowSent: React.Dispatch<SetStateAction<ShowSentenceOptions>>
   fetching: boolean
   userId: string
+  latestWord: number
 }
 
-const WordCard = ({ fetching, setShowSent, userId }: WordCardProps) => {
+const WordCard = ({ fetching, setShowSent, userId, latestWord }: WordCardProps) => {
   const [show, setShow] = useState(false)
   const { dispatch, unfinishedWords, characterState } = useReviewContext()
   const voice = useVoices()
@@ -91,7 +92,7 @@ const WordCard = ({ fetching, setShowSent, userId }: WordCardProps) => {
       {/* Top Word section - fixed height */}
       <div className='mx-1 flex h-[60px] justify-between p-2'>
         <ToggleCharacters />
-        <EndLearnSession userId={userId} />
+        <EndLearnSession userId={userId} latestWord={latestWord} />
       </div>
 
       <div className='flex h-[100px] flex-col items-center text-center'>

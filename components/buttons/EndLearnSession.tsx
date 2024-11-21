@@ -5,12 +5,17 @@ import { endLearnSession } from '@/lib/actions/session/endLearnSession'
 import IconPower from '../icons/IconPower'
 import { useReviewContext } from '@/lib/context/ReviewSessionContext'
 
-const EndLearnSession = ({ userId }: { userId: string }) => {
-  const { dispatch } = useReviewContext()
+interface EndLearnSessionProps {
+  userId: string
+  latestWord?: number
+}
+
+const EndLearnSession = ({ userId, latestWord }: EndLearnSessionProps ) => {
+  const { dispatch, finishedWords, characterState, startTime } = useReviewContext()
   const router = useRouter()
 
   const onClickEnd = async () => {
-    await endLearnSession({ userId })
+    await endLearnSession({ userId, finishedWords, characterState, latestWord, startTime })
     dispatch({ type: 'resetState' })
     router.push('/')
   }

@@ -82,7 +82,7 @@ const ReviewCont = ({
       )}
 
       {/* If 'running' show ActiveLearnSession with WordCard and SentenceCard */}
-      {progress === 'running' && <ActiveLearnSession userId={userId} goal={goal}  />}
+      {progress === 'running' && <ActiveLearnSession userId={userId} goal={goal} latestWord={latestWord}  />}
 
       {/* If 'completed' show the CompletedLearnSession */}
       {progress === 'completed' && (

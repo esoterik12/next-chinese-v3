@@ -18,7 +18,7 @@ const learningOptionsObject = [
   { value: 2, border: 'border-gray-500', textColor: 'text-gray-300' },
   { value: 20, border: 'border-gray-500', textColor: 'text-gray-300' },
   { value: 40, border: 'border-gray-500', textColor: 'text-gray-300' },
-  { value: 60, border: 'border-gray-500', textColor: 'text-gray-300' },
+  // { value: 60, border: 'border-gray-500', textColor: 'text-gray-300' },
   { value: 80, border: 'border-gray-500', textColor: 'text-gray-300' },
   { value: 100, border: 'border-gray-500', textColor: 'text-gray-300' }
 ]
