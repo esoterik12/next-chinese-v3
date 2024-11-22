@@ -7,6 +7,7 @@ import { useReviewContext } from '@/lib/context/ReviewSessionContext'
 import generateSentence from '@/lib/actions/sentences/generateSentence'
 import { SentenceProps } from '@/types/review.types'
 import { ShowSentenceOptions } from '../learn/ActiveLearnSession'
+import { motion } from 'framer-motion'
 
 interface SentenceCardProps {
   showSent: ShowSentenceOptions
@@ -67,16 +68,36 @@ const SentenceCard = ({
       <AnimatePresence mode='wait'>
         {showSent === 'hidden' && (
           <AnimatedSection classes='text-center' key='sentenceButton'>
-            {/* TODO: add some animation to the generating text */}
             <DefaultButton
+              id='sentenceButton'
               handleClick={handleSentence}
               customClasses='custom-hover-effect bg-gray-900 p-2 w-[290px]'
             >
-              {!fetching ? (
-                <p className='text-center'>Sentence</p>
-              ) : (
-                <p className='text-center'>Generating...</p>
-              )}
+              <AnimatePresence mode='wait'>
+                {!fetching ? (
+                  <motion.p
+                    key='sentence' // Unique key for AnimatePresence
+                    className='text-center'
+                    initial={{ opacity: 0, y: -5 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 5 }}
+                    transition={{ duration: 0.15 }}
+                  >
+                    Sentence
+                  </motion.p>
+                ) : (
+                  <motion.p
+                    key='generating' // Unique key for AnimatePresence
+                    className='text-center'
+                    initial={{ opacity: 0, y: -5 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 5 }}
+                    transition={{ duration: 0.15 }}
+                  >
+                    Generating...
+                  </motion.p>
+                )}
+              </AnimatePresence>
             </DefaultButton>
           </AnimatedSection>
         )}

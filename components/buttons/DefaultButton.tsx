@@ -7,7 +7,10 @@ interface DefaultButtonProps {
   customClasses?: string
   handleClick?: MouseEventHandler<HTMLButtonElement>
   btnType?: 'button' | 'submit'
-  textStyles?: string
+  id?: string
+  'aria-label'?: string
+  'data-action'?: string
+  role?: string
 }
 
 const DefaultButton = ({
@@ -16,11 +19,13 @@ const DefaultButton = ({
   customClasses,
   handleClick,
   btnType,
+  id,
 }: DefaultButtonProps) => {
   return (
     <button
       onClick={handleClick}
       type={btnType || 'button'}
+      id={id}
       className={`custom-hover-effect rounded-lg disabled:cursor-not-allowed ${customClasses}`}
       disabled={isDisabled}
     >

@@ -91,11 +91,11 @@ const WordCard = ({ fetching, setShowSent, userId, latestWord }: WordCardProps) 
     <div className='custom-gradient-background custom-border mt-14 h-[400px] w-[290px]'>
       {/* Top Word section - fixed height */}
       <div className='mx-1 flex h-[60px] justify-between p-2'>
-        <ToggleCharacters />
-        <EndLearnSession userId={userId} latestWord={latestWord} />
+        <ToggleCharacters id="toggleCharacters" />
+        <EndLearnSession id="endLearnSession" userId={userId} latestWord={latestWord} />
       </div>
 
-      <div className='flex h-[100px] flex-col items-center text-center'>
+      <div id="wordContainer" className='flex h-[100px] flex-col items-center text-center'>
         <>
           {characterState === 'traditional' ? (
             <p className='text-[42px] font-bold'>
@@ -123,7 +123,7 @@ const WordCard = ({ fetching, setShowSent, userId, latestWord }: WordCardProps) 
         <AnimatePresence mode='wait'>
           {!show && (
             <AnimatedSection classes='mb-8' motionKey='button'>
-              <DefaultButton handleClick={handleShow} customClasses='p-2'>
+              <DefaultButton id="showButton" handleClick={handleShow} customClasses='p-2'>
                 <IconDownChevron classes='h-6 w-6 text-gray-400' />
               </DefaultButton>
             </AnimatedSection>
@@ -152,7 +152,7 @@ const WordCard = ({ fetching, setShowSent, userId, latestWord }: WordCardProps) 
       </div>
       <div className='mx-2 flex h-[57px] flex-col items-center justify-center'>
         {!unfinishedWords[0].seenToday && (
-          <div className='mb-3 flex w-full flex-row items-center justify-between gap-x-1'>
+          <div id='resultsButtons' className='mb-3 flex w-full flex-row items-center justify-between gap-x-1'>
             <ResultButton
               disabled={fetching}
               handleClick={e => handleResult(1, e)}

@@ -1,8 +1,10 @@
 export default function IconPower({
   classes,
+  id,
   onClick
 }: {
   classes: string
+  id?: string
   onClick: () => void
 }) {
   return (
@@ -14,6 +16,7 @@ export default function IconPower({
       stroke='currentColor'
       className={classes}
       onClick={onClick}
+      id={id}
     >
       <path
         strokeLinecap='round'

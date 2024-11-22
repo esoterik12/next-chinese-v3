@@ -13,6 +13,11 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with
 - Figure out how to stop double useEffect call in CompletedLearnSession.tsx (using temp fix now)
 - Early end session shoukd add finishedWords, doesn't seem to
 - Quite a lot of prop drilling going on: latestWord and such, userId - could expand context
+- Favicon
+- Find a way to make loading in the middle of circle background gradient?
+- Layout shift when selecting target number of words
+- Improve navbar links
+- Mouse over of last 30 days to show each day's total
 
 
 # Contents

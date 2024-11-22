@@ -4,7 +4,7 @@ import IconTraditional from '../icons/IconTraditional'
 import IconSimplified from '../icons/IconSimplified'
 import { useReviewContext } from '@/lib/context/ReviewSessionContext'
 
-const ToggleCharacters = () => {
+const ToggleCharacters = ({id}: {id?: string}) => {
   const { dispatch, characterState } = useReviewContext()
 
   const toggleCharacterState = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -17,7 +17,7 @@ const ToggleCharacters = () => {
     'text-gray-400 text-xl transition-colors duration-300 hover:text-gray-300 hover:cursor-pointer'
 
   return (
-    <button className='m-0 h-7 p-0' onClick={toggleCharacterState}>
+    <button id={id} className='m-0 h-7 p-0' onClick={toggleCharacterState}>
       {characterState === 'simplified' ? (
         <IconSimplified classes={toggleClasses} />
       ) : (

@@ -4,6 +4,7 @@ import SentenceCard from '../cards/SentenceCard'
 import { useReviewContext } from '@/lib/context/ReviewSessionContext'
 import { useState } from 'react'
 import ProgressBar from './ProgressBar'
+import JoyrideMain from '../joyride/JoyrideMain'
 
 interface ActiveLearnSessionProps {
   userId: string
@@ -20,6 +21,7 @@ const ActiveLearnSession = ({ userId, goal, latestWord }: ActiveLearnSessionProp
 
   return (
     <section className='flex w-full h-full flex-grow flex-col items-center'>
+      <JoyrideMain />
       <div className='flex w-full flex-grow flex-col items-center'>
         {unfinishedWords.length > 0 && (
           <>
