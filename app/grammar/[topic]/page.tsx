@@ -11,7 +11,7 @@ const GrammarTopicPage = ({ params }: { params: { topic: string } }) => {
 
   return (
     <PageContainer customClasses='p-4 lg:px-12'>
-      <section className='flex flex-col'>
+      <section className='flex flex-col mb-24'>
         <h1 className='custom-header my-2 md:my-4'>
           Grammar {topic.conceptNumber}: {topic.sectionTitle}
         </h1>

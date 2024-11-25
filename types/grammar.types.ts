@@ -13,6 +13,7 @@ export interface SubSectionConcept {
   title: string;
   explanation: string;
   examples: SubSectionExample[];
+  notes?: string[]
 }
 
 export interface SectionConceptsData {

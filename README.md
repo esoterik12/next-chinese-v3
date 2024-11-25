@@ -3,10 +3,17 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with
 
 
 # TODO: 
+## Research:
+- Watch this podcast: https://www.youtube.com/watch?v=mBhreX30dbo
+- Hack Chinese website
+
 ## Core Features
-- Add joyride to first session + conditional take a tour depending on lastestWord
 - Add gram concept lib content (differentiate from textbook)
 - Add gram selection functionality (in library)
+- Start at Level 1, 2, 3, 4:
+  - Details: This feature has to sort of assign all assumed words a nextReviewDate
+  It would, for example, go through level 1 and 2 words and give say 10 words a nextReviewDate of 
+  the next day/tomorrow, and then give the next 10 words a nextReviewDate of the day after and so on.
 
 ## Fixes / Tweaks
 - Use duration stored in db for stats
@@ -18,6 +25,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with
 - Layout shift when selecting target number of words
 - Improve navbar links
 - Mouse over of last 30 days to show each day's total
+- Learn session progress bar
 
 
 # Contents

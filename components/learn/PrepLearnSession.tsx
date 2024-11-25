@@ -128,7 +128,7 @@ const PrepLearnSession = ({
               valueText={latestWord}
             />
           </div>
-          
+
           {/* Last 30 days section */}
           <div className='mb-8 mt-4'>
             <p className='py-2'>Last 30 days:</p>
@@ -146,7 +146,7 @@ const PrepLearnSession = ({
         {/* Select learning goals section */}
         <div className=''>
           <p className='custom-subheader mb-4 mt-6'>Select your target:</p>
-          <div className='flex flex-row flex-wrap gap-2 py-2 '>
+          <div className='flex flex-row flex-wrap gap-2 py-2'>
             {learningOptionsObject.map(item => (
               <DefaultButton
                 key={item.value}

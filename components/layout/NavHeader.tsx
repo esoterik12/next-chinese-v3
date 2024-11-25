@@ -8,7 +8,7 @@ export default async function NavHeader() {
   const session = await getServerSession()
 
   return (
-    <header className='z-20 h-14 bg-gray-900'>
+    <header className='z-20 h-14 bg-slate-950'>
       <nav className='flex flex-row items-center justify-between'>
         {/* Logo - Left Side */}
         <div className='flex w-1/4 flex-row'>

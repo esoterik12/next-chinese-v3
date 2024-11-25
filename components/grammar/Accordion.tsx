@@ -11,6 +11,7 @@ interface AccordionProps {
   conceptNumber: number
   expanded: boolean | number
   setExpanded: React.Dispatch<React.SetStateAction<false | number>>
+  notes?: string[]
 }
 
 const Accordion = ({
@@ -18,7 +19,8 @@ const Accordion = ({
   conceptContent,
   conceptNumber,
   expanded,
-  setExpanded
+  setExpanded,
+  notes
 }: AccordionProps) => {
   const isOpen = i === expanded
 
@@ -30,7 +32,6 @@ const Accordion = ({
       <motion.header
         className='mb-4 flex h-10 cursor-pointer flex-row items-center rounded-lg'
         initial={false}
-        // Set header colors here:
         animate={{ backgroundColor: isOpen ? '#0ea5e9' : '#111827' }}
         onClick={() => setExpanded(isOpen ? false : i)}
       >
@@ -61,9 +62,7 @@ const Accordion = ({
             >
               <div className='p-4'>
                 <p className='mb-2'>{conceptContent.explanation}</p>
-                <DefaultButton
-                  customClasses='w-32 border-2 border-sky-500 p-2'
-                >
+                <DefaultButton customClasses='w-32 border-2 border-sky-500 p-2'>
                   <p>Highlight</p>
                 </DefaultButton>
                 {conceptContent.examples.map(example => (
@@ -84,6 +83,8 @@ const Accordion = ({
                     </div>
                   </div>
                 ))}
+                <p className='font-semibold text-rose-500'>Notes:</p>
+                <div>{notes && notes.map((item, idx) => <p key={idx}>{item}</p>)}</div>
               </div>
             </motion.div>
           </motion.section>
@@ -114,6 +115,7 @@ export const AccordionStack = ({
           i={idx}
           expanded={expanded}
           setExpanded={setExpanded}
+          notes={section.notes}
         />
       ))}
     </div>

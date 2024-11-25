@@ -3,16 +3,6 @@
 @tailwind utilities;
 
 @layer utilities {
-  .safe-viewport {
-    height: calc(100vh - 56px);
-  }
-
-  @supports (height: 100dvh) {
-    .safe-viewport {
-      height: calc(100dvh - 56px);
-    }
-  }
-
   .custom-transition-class {
     @apply transition-all duration-150 hover:text-red-400 hover:underline dark:hover:text-red-300;
   }
