@@ -20,9 +20,9 @@ const ActiveLearnSession = ({ userId, goal, latestWord }: ActiveLearnSessionProp
   const [fetching, setFetching] = useState(false)
 
   return (
-    <section className='flex w-full h-full flex-grow flex-col items-center'>
+    <section className='flex w-full h-full flex-col items-center'>
       <JoyrideMain />
-      <div className='flex w-full flex-grow flex-col items-center'>
+      <div className='flex w-full flex-col items-center'>
         {unfinishedWords.length > 0 && (
           <>
             <WordCard
