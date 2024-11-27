@@ -83,8 +83,13 @@ const Accordion = ({
                     </div>
                   </div>
                 ))}
-                <p className='font-semibold text-rose-500'>Notes:</p>
-                <div>{notes && notes.map((item, idx) => <p key={idx}>{item}</p>)}</div>
+                {notes && <p className='font-semibold text-rose-500'>Notes:</p>}
+                <div>
+                  <ul className='list-disc pl-5'>
+                    {notes &&
+                      notes.map((item, idx) => <li key={idx}>{item}</li>)}
+                  </ul>
+                </div>
               </div>
             </motion.div>
           </motion.section>

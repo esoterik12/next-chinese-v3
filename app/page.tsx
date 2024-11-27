@@ -3,18 +3,12 @@ import HomePageButton from '@/components/buttons/HomePageButton'
 import HomepageCard from '@/components/cards/HomepageCard'
 import PageContainer from '@/components/containers/PageContainer'
 
-/*
-Ideas for this page:
--Spaced repetition, proven, 
--Counting up number for stats: words, users, sentences, etc, views
-*/
-
 export default function Home() {
   return (
     <PageContainer customClasses='p-4 lg:px-12'>
       <>
         <div className='flex flex-col md:flex-row'>
-          <section className='flex w-full flex-col items-center'>
+          <section className='flex w-full flex-col text-center items-center'>
             <h1 className='custom-header-large mt-6 md:mt-14'>
               Start Your Journey to{' '}
               <span className='text-sky-500'>Fluency</span>
@@ -26,11 +20,10 @@ export default function Home() {
             <HomePageButton />
           </section>
         </div>
-
-        <div className='mt-6 flex w-full flex-row items-center justify-center gap-x-8'>
+        <div className='my-6 flex w-full flex-col lg:flex-row items-center justify-center gap-x-8'>
           <HomepageCard
             image='/images/chinese-meng.png'
-            subtitle='Spaced Repetition Learning:'
+            subtitle='Spaced Repetition:'
             text='Proven strategy for learning thousands of new words.'
           />
           <HomepageCard

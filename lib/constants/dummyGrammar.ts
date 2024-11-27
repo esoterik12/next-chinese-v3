@@ -418,25 +418,33 @@ export const dummyGrammar: SectionConceptsData[] = [
         examples: [
           {
             exNumber: 1,
-            exExplanation: 'Reflexive pronouns may include a personal pronoun for clarity.',
+            exExplanation:
+              'Reflexive pronouns may include a personal pronoun for clarity.',
             exStructure: '[personal pronoun] + 自己',
-            exSimplified: '我自己, 我们自己, 你自己, 你们自己, 他自己, 他们自己',
-            exTraditional: '我自己, 我們自己, 你自己, 你們自己, 他自己, 他們自己',
-            exPinyin: 'wǒ zìjǐ, wǒmen zìjǐ, nǐ zìjǐ, nǐmen zìjǐ, tā zìjǐ, tāmen zìjǐ',
-            exTranslation: 'myself, ourselves, yourself, yourselves, himself/herself, themselves'
+            exSimplified:
+              '我自己, 我们自己, 你自己, 你们自己, 他自己, 他们自己',
+            exTraditional:
+              '我自己, 我們自己, 你自己, 你們自己, 他自己, 他們自己',
+            exPinyin:
+              'wǒ zìjǐ, wǒmen zìjǐ, nǐ zìjǐ, nǐmen zìjǐ, tā zìjǐ, tāmen zìjǐ',
+            exTranslation:
+              'myself, ourselves, yourself, yourselves, himself/herself, themselves'
           },
           {
             exNumber: 2,
-            exExplanation: 'When used in object position without a personal pronoun, 自己 refers to the subject.',
+            exExplanation:
+              'When used in object position without a personal pronoun, 自己 refers to the subject.',
             exStructure: '[subject] + 把 + 自己 + [verb phrase]',
             exSimplified: '你在中国一定得把自己照顾好。',
             exTraditional: '你在中國一定得把自己照顧好。',
             exPinyin: 'nǐ zài Zhōngguó yīdìng děi bǎ zìjǐ zhàogù hǎo.',
-            exTranslation: 'When you are in China you certainly should take good care of yourself.'
+            exTranslation:
+              'When you are in China you certainly should take good care of yourself.'
           },
           {
             exNumber: 3,
-            exExplanation: '自己 can emphasize self-reference and is understood contextually.',
+            exExplanation:
+              '自己 can emphasize self-reference and is understood contextually.',
             exStructure: '[noun/pronoun] + 不 + 喜欢 + 自己',
             exSimplified: '没有人不喜欢自己的。',
             exTraditional: '沒有人不喜歡自己的。',
@@ -445,21 +453,25 @@ export const dummyGrammar: SectionConceptsData[] = [
           },
           {
             exNumber: 4,
-            exExplanation: '自己 may indicate contrast when paired with another noun or pronoun.',
+            exExplanation:
+              '自己 may indicate contrast when paired with another noun or pronoun.',
             exStructure: '[subject] + 自己 + [contrast phrase]',
             exSimplified: '我希望他们结婚，可是我自己不想结婚。',
             exTraditional: '我希望他們結婚，可是我自己不想結婚。',
             exPinyin: 'wǒ xīwàng tāmen jiéhūn, kěshì wǒ zìjǐ bù xiǎng jiéhūn.',
-            exTranslation: 'I hope they will get married, but I myself don’t plan to get married.'
+            exTranslation:
+              'I hope they will get married, but I myself don’t plan to get married.'
           },
           {
             exNumber: 5,
-            exExplanation: '自己 can emphasize personal ownership or responsibility.',
+            exExplanation:
+              '自己 can emphasize personal ownership or responsibility.',
             exStructure: '[noun/pronoun] + 的 + 自己 + [object]',
             exSimplified: '这是我自己的事。你不用管。',
             exTraditional: '這是我自己的事。你不用管。',
             exPinyin: 'zhè shì wǒ zìjǐ de shì. nǐ bù yòng guǎn.',
-            exTranslation: 'This is my affair. You need not be concerned with it.'
+            exTranslation:
+              'This is my affair. You need not be concerned with it.'
           }
         ]
       },
@@ -472,28 +484,72 @@ export const dummyGrammar: SectionConceptsData[] = [
           {
             exNumber: 1,
             exExplanation:
-              "咱们/咱們 zánmen refers inclusively to the speaker, the addressee, and others in the group.",
-            exStructure: "[subject] + 都是 + [phrase]",
-            exSimplified: "咱们都是自己人。",
-            exTraditional: "咱們都是自己人。",
-            exPinyin: "zánmen dōu shì zìjǐ rén.",
-            exTranslation: "We are all family. (We, including you, are all one family.)"
+              '咱们/咱們 zánmen refers inclusively to the speaker, the addressee, and others in the group.',
+            exStructure: '[subject] + 都是 + [phrase]',
+            exSimplified: '咱们都是自己人。',
+            exTraditional: '咱們都是自己人。',
+            exPinyin: 'zánmen dōu shì zìjǐ rén.',
+            exTranslation:
+              'We are all family. (We, including you, are all one family.)'
           },
           {
             exNumber: 2,
             exExplanation:
-              "Exclusive 我们/我們 wǒmen refers to the speaker and others associated with the speaker, excluding the addressee.",
-            exStructure: "[subject] + 欢迎 + [object]",
-            exSimplified: "我们欢迎你。",
-            exTraditional: "我們歡迎你。",
-            exPinyin: "wǒmen huānyíng nǐ.",
-            exTranslation: "We welcome you. (Exclusive of the addressee.)"
+              'Exclusive 我们/我們 wǒmen refers to the speaker and others associated with the speaker, excluding the addressee.',
+            exStructure: '[subject] + 欢迎 + [object]',
+            exSimplified: '我们欢迎你。',
+            exTraditional: '我們歡迎你。',
+            exPinyin: 'wǒmen huānyíng nǐ.',
+            exTranslation: 'We welcome you. (Exclusive of the addressee.)'
           }
         ],
         notes: [
-          "咱们/咱們 zánmen is exclusively inclusive and only used as a subject.",
-          "我们/我們 wǒmen can be inclusive or exclusive and can function as both subject and object.",
-          "咱们/咱們 zánmen is less commonly used than 我们/我們 wǒmen."
+          '咱们/咱們 zánmen is exclusively inclusive and only used as a subject.',
+          '我们/我們 wǒmen can be inclusive or exclusive and can function as both subject and object.',
+          '咱们/咱們 zánmen is less commonly used than 我们/我們 wǒmen.'
+        ]
+      },
+      {
+        subSection: 5,
+        title: 'Modification of Pronouns',
+        explanation:
+          'In general, Mandarin pronouns represent entire noun phrases and are not further modified. However, there are exceptions in certain literary expressions where pronouns can be modified by adjectives or descriptive phrases.',
+        examples: [
+          {
+            exNumber: 1,
+            exExplanation:
+              "The pronoun 我 wǒ ('me') is modified by the adjective 可怜/可憐 kělián ('poor') to express emotion.",
+            exStructure: '[adjective] + 的 + [pronoun]',
+            exSimplified: '可怜的我',
+            exTraditional: '可憐的我',
+            exPinyin: 'kělián de wǒ',
+            exTranslation: 'Poor me'
+          },
+          {
+            exNumber: 2,
+            exExplanation:
+              "The pronoun 她 tā ('her') is modified by the adjective 美丽/美麗 měilì ('pretty') to describe appearance.",
+            exStructure: '[adjective] + 的 + [pronoun]',
+            exSimplified: '美丽的她',
+            exTraditional: '美麗的她',
+            exPinyin: 'měilì de tā',
+            exTranslation: 'Pretty her'
+          },
+          {
+            exNumber: 3,
+            exExplanation:
+              "The noun 高老师/高老師 Gāo lǎoshī ('Professor Gao') is modified by the adjective 善良 shànliáng ('good-hearted') to highlight a personal quality.",
+            exStructure: '[adjective] + 的 + [noun]',
+            exSimplified: '善良的高老师',
+            exTraditional: '善良的高老師',
+            exPinyin: 'shànliáng de Gāo lǎoshī',
+            exTranslation: 'Good-hearted Professor Gao'
+          }
+        ],
+        notes: [
+          'These modifications are more commonly found in literary or poetic contexts.',
+          "The structure '[adjective] + 的 + [pronoun/noun]' adds descriptive or emotional nuance.",
+          'While such constructions are rare in everyday speech, they are used for stylistic or expressive purposes.'
         ]
       }
     ]

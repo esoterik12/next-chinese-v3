@@ -9,7 +9,7 @@ type HomepageCardProps = {
 
 const HomepageCard = ({ image, subtitle, text }: HomepageCardProps) => {
   return (
-    <div className='mt-6 flex h-[190px] max-w-[320px] flex-col rounded-xl border border-gray-800 p-4 md:flex-col'>
+    <div className='mt-6 flex h-[160px] md:h-[190px] w-[340px] lg:max-w-[320px] flex-col rounded-xl border border-gray-800 p-4 md:flex-col'>
       {/* Top Section Icon Design */}
       <div
         style={{
@@ -31,16 +31,17 @@ const HomepageCard = ({ image, subtitle, text }: HomepageCardProps) => {
         </div>
         {/* Right Long Line */}
         <div
-          className='mb-1 ml-1 h-1 w-[220px] border-b-[1px]'
+          className='mb-1 ml-1 h-1 w-[12px] md:w-[220px] border-b-[1px]'
           style={{
             borderImage: 'linear-gradient(to right, #9ca3af, black) 1'
           }}
         ></div>
+        <p className='font-bold md:hidden ml-2 mb-0.5'>{subtitle}</p>
       </div>
 
       {/* Main/Bottom Section Text */}
-      <div className='ml-3 mt-4'>
-        <p className='font-bold'>{subtitle}</p>
+      <div className='md:ml-3 md:mt-4'>
+        <p className='font-bold hidden md:block'>{subtitle}</p>
         <p className='mt-2 font-light text-gray-400'>{text}</p>
       </div>
     </div>
