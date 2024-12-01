@@ -13,6 +13,7 @@ import InlineError from '../shared/InlineError'
 import calcLevel from '@/lib/utils/calcLevel'
 import { BasicUserStatsData } from '@/types/user.types'
 import { formatLastSession } from '@/lib/utils/formatLastSession'
+import Link from 'next/link'
 
 const learningOptionsObject = [
   { value: 2, border: 'border-gray-500', textColor: 'text-gray-300' },
@@ -87,7 +88,7 @@ const PrepLearnSession = ({
       initialY={-20}
       easeType={[0.22, 0, 0.42, 1]}
       exitY={20}
-      classes='h-full flex flex-col p-6'
+      classes='h-full flex flex-col'
     >
       <div>
         {/* Top section */}
@@ -98,13 +99,13 @@ const PrepLearnSession = ({
           </h1>
 
           {userStats && latestWord > 0 && (
-            <p className='py-2'>
+            <p className='mb-6 text-gray-400'>
               Your last session was {formatLastSession(userStats[0].date)}.
             </p>
           )}
 
           {!userStats && latestWord === 0 && (
-            <p className='py-2'>
+            <p className='py-4'>
               Begin your first learning session by choosing how many words you
               would like to learn today.
             </p>
@@ -179,6 +180,13 @@ const PrepLearnSession = ({
                 <p className='font-semibold'>Retry</p>
               </DefaultButton>
             )}
+            <Link href='/settings'>
+              <DefaultButton
+                customClasses='md:w-[138px] w-[128px] h-[44px] bg-gray-900 p-2'
+              >
+                <p className='font-semibold'>Settings</p>
+              </DefaultButton>
+            </Link>
             {error && (
               <div className=''>
                 <InlineError

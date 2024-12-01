@@ -2,7 +2,6 @@
 import Word from '@/models/word.model'
 import { connectToDB } from '@/lib/mongoose'
 import { AppError } from '@/lib/errors/AppError'
-import { WordClientData } from '@/types/review.types'
 
 export async function fetchNewWords({
   newWordsDue,
@@ -13,7 +12,7 @@ export async function fetchNewWords({
 }) {
   try {
     await connectToDB()
-    const fetchedNewWords: WordClientData[] = await Word.find({
+    const fetchedNewWords = await Word.find({
       wordNumber: { $gte: latestWordNumber + 1 }
     })
       // .lean() // Ensures only JS objects returned - removes mongoose overhead

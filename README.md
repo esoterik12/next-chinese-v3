@@ -14,6 +14,8 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with
   - Details: This feature has to sort of assign all assumed words a nextReviewDate
   It would, for example, go through level 1 and 2 words and give say 10 words a nextReviewDate of 
   the next day/tomorrow, and then give the next 10 words a nextReviewDate of the day after and so on.
+- General settings page (mostly for level adjustment above)
+- Timezones support
 
 ## Fixes / Tweaks
 - Use duration stored in db for stats
@@ -26,6 +28,8 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with
 - Improve navbar links
 - Mouse over of last 30 days to show each day's total
 - Learn session progress bar
+- Test the sm2.ts function for correct output
+- Fix voice
 
 
 # Contents

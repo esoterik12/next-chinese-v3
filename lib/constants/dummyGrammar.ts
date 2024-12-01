@@ -551,6 +551,165 @@ export const dummyGrammar: SectionConceptsData[] = [
           "The structure '[adjective] + 的 + [pronoun/noun]' adds descriptive or emotional nuance.",
           'While such constructions are rare in everyday speech, they are used for stylistic or expressive purposes.'
         ]
+      },
+      {
+        subSection: 6,
+        title: 'Possessive Pronouns in Mandarin',
+        explanation:
+          'Mandarin does not have possessive pronouns. The meaning of possessive pronouns is conveyed by pronoun + 的 (de). When followed by a noun, it translates to "my," "your," etc. When not followed by a noun, it translates to "mine," "yours," etc.',
+        examples: [
+          {
+            exNumber: 1,
+            exExplanation: 'Possessive pronoun followed by a noun.',
+            exStructure: 'pronoun + 的 + noun',
+            exSimplified: '我的朋友',
+            exTraditional: '我的朋友',
+            exPinyin: 'wǒ de péngyou',
+            exTranslation: 'my friend'
+          },
+          {
+            exNumber: 2,
+            exExplanation: 'Possessive pronoun followed by a noun.',
+            exStructure: 'pronoun + 的 + noun',
+            exSimplified: '他的小狗',
+            exTraditional: '他的⼩狗',
+            exPinyin: 'tā de xiǎogǒu',
+            exTranslation: 'his puppy'
+          },
+          {
+            exNumber: 3,
+            exExplanation: 'Singular possessive pronoun example.',
+            exStructure: 'pronoun + 的',
+            exSimplified: '我的',
+            exTraditional: '我的',
+            exPinyin: 'wǒ de',
+            exTranslation: 'my/mine'
+          },
+          {
+            exNumber: 4,
+            exExplanation: 'Plural possessive pronoun example.',
+            exStructure: 'pronoun + 的',
+            exSimplified: '我们 的',
+            exTraditional: '我們 的',
+            exPinyin: 'wǒmen de',
+            exTranslation: 'our/ours'
+          },
+          {
+            exNumber: 5,
+            exExplanation: 'Possessive pronoun with a noun.',
+            exStructure: '这是 + pronoun + 的 + noun',
+            exSimplified: '这是我的书。',
+            exTraditional: '這是我的書。',
+            exPinyin: 'Zhè shì wǒ de shū.',
+            exTranslation: 'This is my book.'
+          },
+          {
+            exNumber: 6,
+            exExplanation: 'Possessive pronoun without a noun.',
+            exStructure: '这是 + pronoun + 的',
+            exSimplified: '这是我的，那是你的。',
+            exTraditional: '這是我的，那是你的。',
+            exPinyin: 'Zhè shì wǒ de, nà shì nǐ de.',
+            exTranslation: 'This is mine, that is yours.'
+          }
+        ],
+        notes: [
+          'When pronoun + 的 (de) is followed by a noun, the English equivalent is "my," "your," "his/her," etc.',
+          'When pronoun + 的 (de) is not followed by a noun, the English equivalent is "mine," "yours," "his/hers," etc.',
+          'In reflexive possession, 自己的 (zìjǐ de) is used for "one’s own."',
+          'The structure "pronoun + 的" is versatile and context-dependent.'
+        ]
+      },
+      {
+        subSection: 7,
+        title: 'Definition of Proper Nouns',
+        explanation:
+          'Proper nouns in Mandarin include personal names, place names, names of companies, names of schools, etc. They typically occur without additional modification but can occasionally appear in literary expressions with modifiers.',
+        examples: [
+          {
+            exNumber: 1,
+            exExplanation:
+              'Example of a proper noun representing an institution.',
+            exStructure: 'Proper noun without modification.',
+            exSimplified: '牛津大学',
+            exTraditional: '牛津大學',
+            exPinyin: 'Niújīn Dàxué',
+            exTranslation: 'Oxford University'
+          },
+          {
+            exNumber: 2,
+            exExplanation: 'Example of a proper noun representing a place.',
+            exStructure: 'Proper noun without modification.',
+            exSimplified: '伦敦',
+            exTraditional: '倫敦',
+            exPinyin: 'Lúndūn',
+            exTranslation: 'London'
+          },
+          {
+            exNumber: 3,
+            exExplanation:
+              'Example of a proper noun representing a historical site.',
+            exStructure: 'Proper noun without modification.',
+            exSimplified: '万里长城',
+            exTraditional: '萬里長城',
+            exPinyin: 'Wànlǐ Chángchéng',
+            exTranslation: 'The Great Wall'
+          },
+          {
+            exNumber: 4,
+            exExplanation:
+              'Example of a proper noun representing a geographical feature.',
+            exStructure: 'Proper noun without modification.',
+            exSimplified: '喜玛拉雅山脉',
+            exTraditional: '喜瑪拉雅山脈',
+            exPinyin: 'Xǐmǎlāyǎ shān mài',
+            exTranslation: 'Himalayan Mountains'
+          }
+        ],
+        notes: [
+          'Proper nouns typically do not require additional modification.',
+          'They include names of people, places, organizations, and more.'
+        ]
+      },
+      {
+        subSection: 8,
+        title: 'Modified Proper Nouns in Literary Expressions',
+        explanation:
+          'In Mandarin, proper nouns may occasionally appear with modifiers, especially in literary or poetic contexts. These modifiers provide descriptive or emotive context.',
+        examples: [
+          {
+            exNumber: 1,
+            exExplanation: 'Modified personal name for an affectionate tone.',
+            exStructure: 'modifier + 的 + proper noun',
+            exSimplified: '可爱的王美玲',
+            exTraditional: '可愛的王美玲',
+            exPinyin: 'kě’ài de Wáng Měilíng',
+            exTranslation: 'charming Wang Meiling'
+          },
+          {
+            exNumber: 2,
+            exExplanation: 'Modified place name for descriptive emphasis.',
+            exStructure: 'modifier + 的 + proper noun',
+            exSimplified: '山清水秀的台湾',
+            exTraditional: '山清水秀的臺灣',
+            exPinyin: 'shānqīng shuǐxiù de Táiwān',
+            exTranslation:
+              'Taiwan of green hills and clear streams → beautiful Taiwan'
+          },
+          {
+            exNumber: 3,
+            exExplanation: 'Modified country name for descriptive emphasis.',
+            exStructure: 'modifier + 的 + proper noun',
+            exSimplified: '地大物博的美国',
+            exTraditional: '地大物博的美國',
+            exPinyin: 'dìdà wùbó de Měiguó',
+            exTranslation: 'America vast in territory and rich in resources'
+          }
+        ],
+        notes: [
+          'Modifiers used with proper nouns in literary contexts often convey emotion, imagery, or additional descriptive details.',
+          'Such expressions are less common in everyday speech but can enhance communication in creative or formal writing.'
+        ]
       }
     ]
   }

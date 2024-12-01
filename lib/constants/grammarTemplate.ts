@@ -1,3 +1,6 @@
+// This template file does not export
+// It is a copy of the main types file to use in prompts
+
 export const grammarTemplate = {
   subSection: 1,
   title: 'Common nouns',
@@ -29,29 +32,27 @@ export const grammarTemplate = {
   ]
 }
 
-// This template file does not export
-// It is a copy of the main types file to use in prompts
-interface SubSectionExample {
-  exNumber: number;
-  exExplanation?: string;
-  exStructure?: string;
-  exSimplified: string;
-  exTraditional: string;
-  exPinyin: string;
-  exTranslation: string;
-}
+// interface SubSectionExample {
+//   exNumber: number;
+//   exExplanation?: string;
+//   exStructure?: string;
+//   exSimplified: string;
+//   exTraditional: string;
+//   exPinyin: string;
+//   exTranslation: string;
+// }
 
-interface SubSectionConcept {
-  subSection: number;
-  title: string;
-  explanation: string;
-  examples: SubSectionExample[];
-  notes?: string[]
-}
+// interface SubSectionConcept {
+//   subSection: number;
+//   title: string;
+//   explanation: string;
+//   examples: SubSectionExample[];
+//   notes?: string[]
+// }
 
-interface SectionConceptsData {
-  sectionTitle: string,
-  sectionLink: string,
-  conceptNumber: number
-  sectionConcepts: SubSectionConcept[];
-}
+// interface SectionConceptsData {
+//   sectionTitle: string,
+//   sectionLink: string,
+//   conceptNumber: number
+//   sectionConcepts: SubSectionConcept[];
+// }

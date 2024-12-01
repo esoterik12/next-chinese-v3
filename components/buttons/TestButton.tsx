@@ -1,10 +1,10 @@
 'use client'
 import React from 'react'
+import { setLevel } from '@/lib/actions/words/setLevel'
 
-const TestButton = () => {
+const TestButton = ({userId}: {userId: string}) => {
   const handleTestClick = async () => {
-    console.log('no function here')
-    // await deleteSentenceArray()
+    await setLevel({userId: userId, selectedLevel: 2, userLatestWord: 420})
   }
 
   return (

@@ -35,11 +35,11 @@ const Accordion = ({
         animate={{ backgroundColor: isOpen ? '#0ea5e9' : '#111827' }}
         onClick={() => setExpanded(isOpen ? false : i)}
       >
-        <p className='custom-small-text md:custom-text ml-4'>
-          <span className={`font-semibold ${isOpen ? 'text-rose-600' : ''}`}>
+        <p className='custom-small-text flec-row md:custom-text ml-4 flex'>
+          <div className='w-[30px] font-semibold'>
             {conceptNumber}.{conceptContent.subSection}
-          </span>{' '}
-          - {conceptContent.title}
+          </div>{' '}
+          {conceptContent.title}
         </p>
       </motion.header>
       <AnimatePresence initial={false}>

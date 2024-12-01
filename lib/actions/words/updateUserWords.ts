@@ -37,7 +37,7 @@ export async function updateUserWords({
       })
     )
     
-    await UserWord.bulkWrite(bulkUserWordsUpdate)
+    await UserWord.bulkWrite(bulkUserWordsUpdate);
 
     return {
       message: 'Successfully updated user words',

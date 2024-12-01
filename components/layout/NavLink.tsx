@@ -20,7 +20,7 @@ const NavLink = ({ href, children, className, ...props }: NavLink) => {
       href={href}
       className={clsx(
         className,
-        isActiveLink && 'underline decoration-gray-500'
+        isActiveLink && 'underline decoration-sky-500'
       )}
     >
       {children}

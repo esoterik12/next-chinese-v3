@@ -43,7 +43,7 @@ const wordSchema = new mongoose.Schema({
   }
 })
 
-const Word =
-  mongoose.models.Word || mongoose.model<Document>('Word', wordSchema)
+const Word = mongoose.models.Word || mongoose.model('Word', wordSchema);
+
 
 export default Word
