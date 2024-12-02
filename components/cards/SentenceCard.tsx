@@ -1,13 +1,12 @@
 'use client'
 import DefaultButton from '../buttons/DefaultButton'
 import { SetStateAction, useState, useEffect, useCallback } from 'react'
-import { AnimatePresence } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import AnimatedSection from './AnimatedSection'
 import { useReviewContext } from '@/lib/context/ReviewSessionContext'
 import generateSentence from '@/lib/actions/sentences/generateSentence'
 import { SentenceProps } from '@/types/review.types'
 import { ShowSentenceOptions } from '../learn/ActiveLearnSession'
-import { motion } from 'framer-motion'
 
 interface SentenceCardProps {
   showSent: ShowSentenceOptions

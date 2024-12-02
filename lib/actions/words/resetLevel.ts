@@ -1,46 +1,45 @@
 'use server'
-// import UserWord from '@/models/userword.model'
+import UserWord from '@/models/userword.model'
 import { connectToDB } from '@/lib/mongoose'
-// import mongoose from 'mongoose'
+import mongoose from 'mongoose'
 import { AppError } from '@/lib/errors/AppError'
+import User from '@/models/user.model'
+import UserStats from '@/models/userstats.model'
+import Session from '@/models/session.model'
 
 /*
-  This function will delete all UserWords with the userId and effectively reset their progress
-
-  LEFT OF HERE: create a resetLevel function to be used if
-  selectedLevel word < user's latestWord
-  This will simply delete all UserWords above selectedLevel word
-
-  ALSO: can be used as a reset account progress with the selectedLevel input as 0
-
-  COMPLICATIONS?:
-    This will involve collecting all word id that are above a certain level
-
-  Process:
-    1. Delete All UserWords where userId === userId
-
-  Considerations:
-    UserStats
-    Reset Latest Word Number
+  This function will delete all UserWords with the userId and effectively reset their progress.
+  It also cleans up UserStats records, any Sessions, and updates their latestWord to to 0.
+  This function is also using mongoose to set up MongoDB transactions.
+  This means if any update fails, then other updates are also rolled back.
 */
 
-export async function resetLevel({
-  userId,
-}: {
-  userId: string
-}) {
+export async function resetLevel({ userId }: { userId: string }) {
+  const session = await mongoose.startSession()
+  session.startTransaction()
+
   try {
     await connectToDB()
-    // set userId to mongoose id
-    // const mongoUserId = new mongoose.Types.ObjectId(userId)
+    const mongoUserId = new mongoose.Types.ObjectId(userId)
 
-    // await UserWord.deleteMany({ mongoUserId })
+    await UserWord.deleteMany({ userId: mongoUserId }).session(session)
+    await User.updateOne(
+      { _id: mongoUserId },
+      { $set: { latestWord: 0 } }
+    ).session(session)
+    await UserStats.deleteMany({ userId: mongoUserId }).session(session)
+    await Session.deleteMany({ userId: mongoUserId }).session(session)
+
+    await session.commitTransaction()
+    session.endSession()
 
     return {
       message: `Successfully reset UserWords for user with id of ${userId}.`,
       code: 200
     }
   } catch (error) {
+    await session.abortTransaction()
+    session.endSession()
     console.error(
       `Error context: Failed to reset UserWords for user with id of ${userId}`,
       error

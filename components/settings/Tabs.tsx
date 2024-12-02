@@ -4,14 +4,27 @@ import StatsContainer from '../containers/StatsContainer'
 import IconAcademic from '../icons/IconAcademic'
 import GeneralSettings from './GeneralSettings'
 
-const Tabs = () => {
+type TabsProbs = {
+  userId: string
+  userEmail: string
+  userName: string
+  userSince: Date
+}
+
+const Tabs = ({ userId, userEmail, userName, userSince }: TabsProbs) => {
   const [activeTab, setActiveTab] = useState(0)
 
   const tabs = ['General Settings', 'Subscription']
   const tabContent = [
-    <GeneralSettings key="general-settings" />,
+    <GeneralSettings
+      userId={userId}
+      userEmail={userEmail}
+      userName={userName}
+      userSince={userSince}
+      key='general-settings'
+    />,
     <StatsContainer
-      key="stats-container"
+      key='stats-container'
       icon={<IconAcademic classes='h-6 w-6' />}
       titleText='SS'
       valueText='22'
