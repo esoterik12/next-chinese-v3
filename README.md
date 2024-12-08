@@ -32,6 +32,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with
 - Fix voice
 - Fix the google org name
 - Fix loading in the center of circle + remake the animation somehow to be more branded (colors and unique)
+- Loading function on adjust level, reset account
 
 
 # Contents

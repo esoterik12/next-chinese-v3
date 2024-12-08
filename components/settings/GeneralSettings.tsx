@@ -1,5 +1,6 @@
 'use client'
 import DefaultButton from '../buttons/DefaultButton'
+import LevelAdjustment from './LevelAdjustment'
 import ResetAccount from './ResetAccount'
 
 type GeneralSettingsProps = {
@@ -32,27 +33,7 @@ const GeneralSettings = ({
         </div>
       </div>
       <div className='my-6 border border-gray-600' />
-      <div className='w-full'>
-        <h3 className='custom-large-text font-bold'>Time Zone</h3>
-        <div className='p-2'>
-          {/* Make a drop down to select time zones */}
-          <p className='text-gray-400'>
-            Adjust your timezome preference. This will match your review
-            schedule to your local timezone.
-          </p>
-        </div>
-      </div>
-      <div className='my-6 border border-gray-600' />
-      <div className='w-full'>
-        <h3 className='custom-large-text font-bold'>Level Adjustments</h3>
-        <div className='p-2'>
-          <p className='text-gray-400'>
-            This setting allows you to set your level higher than Level 1. This
-            change is not reversible. However, you can reset your account and
-            then use this feature.
-          </p>
-        </div>
-      </div>
+      <LevelAdjustment userId={userId} />
       <div className='my-6 border border-gray-600' />
       <ResetAccount userId={userId} />
       <div className='my-6 border border-gray-600' />

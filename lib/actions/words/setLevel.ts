@@ -1,9 +1,10 @@
 'use server'
-// import UserWord from '@/models/userword.model'
 import { connectToDB } from '@/lib/mongoose'
 import mongoose from 'mongoose'
 import { AppError } from '@/lib/errors/AppError'
 import Word from '@/models/word.model'
+import UserWord from '@/models/userword.model'
+import User from '@/models/user.model'
 
 /*
   Updates a user's progress to match a selected target level.
@@ -17,9 +18,9 @@ import Word from '@/models/word.model'
     the target range.
  3. Uses `bulkWrite` to execute the update, ensuring new `UserWord` entries 
     are created if they don't already exist.
-
 */
 
+// These are the FIRST words in each level
 const startLevelWordNumber = {
   1: 0,
   2: 501,
@@ -34,7 +35,7 @@ export async function setLevel({
   userLatestWord
 }: {
   userId: string
-  selectedLevel: 1 | 2 | 3 | 4 | 5
+  selectedLevel: number
   userLatestWord: number
 }) {
   try {
@@ -85,9 +86,13 @@ export async function setLevel({
 
     // TODO: Complete this function
     // Currently Disabled
-    // await UserWord.bulkWrite(newUserWordsUpdate);
+    await UserWord.bulkWrite(newUserWordsUpdate)
 
     // TODO: This function also has to reset user stats for at least latestWord
+    await User.findOneAndUpdate(
+      { _id: mongoUserId },
+      { latestWord: startLevelWordNumber[selectedLevel] - 1 }
+    )
     console.log('newUserWords', newUserWordsUpdate)
 
     return {
