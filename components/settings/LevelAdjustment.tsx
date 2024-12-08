@@ -1,7 +1,6 @@
 'use client'
 import React, { useState } from 'react'
 import DefaultButton from '../buttons/DefaultButton'
-import { resetLevel } from '@/lib/actions/words/resetLevel'
 import { InputField } from '../forms/InputField'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useRouter } from 'next/navigation'
@@ -152,7 +151,14 @@ const LevelAdjustment = ({ userId }: LevelAdjustmentProps) => {
             handleClick={onAdjustLevel}
             customClasses='w-40 h-11 border-2 hover:border-sky-600 border-gray-600 p-2'
           >
-            {!adjustClicked ? <p>Adjust Level</p> : <p>Confirm</p>}
+            <>
+              {loading && <p>Loading...</p>}
+              {!adjustClicked && !loading ? (
+                <p>Adjust Level</p>
+              ) : (
+                <p>Confirm</p>
+              )}
+            </>
           </DefaultButton>
         </div>
         {/* Notes: */}
