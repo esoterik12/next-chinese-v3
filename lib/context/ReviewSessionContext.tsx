@@ -49,7 +49,10 @@ const initialContext: ReviewReducerState = {
   error: null
 }
 
-const reducer = (state: ReviewReducerState, action: ReviewReducerAction): ReviewReducerState => {
+const reducer = (
+  state: ReviewReducerState,
+  action: ReviewReducerAction
+): ReviewReducerState => {
   // Get the current word - should always be at the start of the unfinished array
   const currentUnfinishedWords = [...state.unfinishedWords]
   const currentFinishedWords = [...state.finishedWords]
@@ -140,7 +143,7 @@ const reducer = (state: ReviewReducerState, action: ReviewReducerAction): Review
       const updatedNextReviewDate = new Date()
       updatedNextReviewDate.setDate(updatedNextReviewDate.getDate() + i)
 
-      // Update word properties immutably
+      // Update word properties immutably - to be added to corresponding array below
       const updatedWordWithStats = {
         ...word,
         reviewHistory: updatedReviewHistory, // Use the new reviewHistory array
@@ -160,10 +163,21 @@ const reducer = (state: ReviewReducerState, action: ReviewReducerAction): Review
           progress: getProgressState(currentUnfinishedWords)
         }
       } else {
-        // Otherwise return it to the unfinished words to be seen once more until correct
+        // Places an incorrect word at index +2 - +4 of current for the next view
+        const updatedUnifishedWords = [...currentUnfinishedWords]
+
+        let insertIndex: number
+        if (updatedUnifishedWords.length <= 3) {
+          insertIndex = updatedUnifishedWords.length - 1
+        } else {
+          insertIndex = Math.floor(Math.random() * 3 + 2)
+        }
+
+        updatedUnifishedWords.splice(insertIndex, 0, updatedWordWithStats)
+
         return {
           ...state,
-          unfinishedWords: [...currentUnfinishedWords, updatedWordWithStats]
+          unfinishedWords: [...updatedUnifishedWords]
         }
       }
 
@@ -184,9 +198,21 @@ const reducer = (state: ReviewReducerState, action: ReviewReducerAction): Review
       if (!word) {
         return { ...state }
       }
+      // Places an incorrect word at index +2 - +4 of current for the next view
+      const updatedUnifishedWords = [...currentUnfinishedWords]
+
+      let insertIndex: number
+      if (updatedUnifishedWords.length <= 3) {
+        insertIndex = updatedUnifishedWords.length - 1
+      } else {
+        insertIndex = Math.floor(Math.random() * 3 + 2)
+      }
+
+      updatedUnifishedWords.splice(insertIndex, 0, word)
+
       return {
         ...state,
-        unfinishedWords: [...currentUnfinishedWords, word]
+        unfinishedWords: [...updatedUnifishedWords]
       }
     case 'toggleCharacterState':
       return {
@@ -204,7 +230,7 @@ const reducer = (state: ReviewReducerState, action: ReviewReducerAction): Review
         ...state,
         loadingState: false
       }
-    case 'setError' :
+    case 'setError':
       return {
         ...state,
         error: action.error
@@ -220,7 +246,9 @@ const reducer = (state: ReviewReducerState, action: ReviewReducerAction): Review
 
 const ReviewContext = createContext<AppContextTypes | null>(null)
 
-const ReviewContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+const ReviewContextProvider: React.FC<{ children: ReactNode }> = ({
+  children
+}) => {
   const [state, dispatch] = useReducer(reducer, initialContext)
 
   return (

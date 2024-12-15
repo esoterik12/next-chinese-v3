@@ -19,7 +19,6 @@ export interface SubSectionConcept {
 
 export interface SectionConceptsData {
   sectionTitle: string,
-  sectionLink: string,
   conceptNumber: number
   sectionConcepts: SubSectionConcept[];
 }

@@ -8,6 +8,8 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with
 - Hack Chinese website
 
 ## Core Features
+- Perhaps: Add a resume session or start new session function if there is a session...
+- Add a daily goal setting to Settings that is used to determine last 30 days grid colors
 - Add gram concept lib content (differentiate from textbook)
 - Add gram selection functionality (in library)
 - Start at Level 1, 2, 3, 4:
@@ -16,25 +18,36 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with
   the next day/tomorrow, and then give the next 10 words a nextReviewDate of the day after and so on.
 - General settings page (mostly for level adjustment above)
 - Timezones support
+- Add support for spacebar to trigger voice again after reveal / click on pinyin
 
 ## Fixes / Tweaks
-- Use duration stored in db for stats
-- Figure out how to stop double useEffect call in CompletedLearnSession.tsx (using temp fix now)
-- Early end session shoukd add finishedWords, doesn't seem to
+- sm2 state context will require a tweak. Incorrect words need to be added like a random 2-4 places ahead of the current index.
+- Early end session should add finishedWords, doesn't seem to
 - Quite a lot of prop drilling going on: latestWord and such, userId - could expand context
-- Favicon
 - Find a way to make loading in the middle of circle background gradient?
 - Layout shift when selecting target number of words
 - Improve navbar links
 - Mouse over of last 30 days to show each day's total
 - Learn session progress bar
 - Test the sm2.ts function for correct output
-- Fix voice
+- Change last 30 days to be a grid 3x10
 - Fix the google org name
 - Fix loading in the center of circle + remake the animation somehow to be more branded (colors and unique)
 - Loading function on adjust level, reset account
 - Grammer content should be refactored to use dynamic pages to load constant data in different files
+- Seems to be an issue with the unload useEffect hook not updating user stats when window is closed - investigate
+- Add a 2 / 4 to the incorrect / correct buttons in a corner
+- Translation and pinyin wordcar dblock should be mt-1 lower
+- Try to make the main word less bold
+- Add keyboard keys to the Joyride
 
+## Words that need a look at:
+- 
+
+
+## Low Priority Fixes / Tweaks
+- Use duration stored in db for stats
+- Figure out how to stop double useEffect call in CompletedLearnSession.tsx (using temp fix now)
 
 # Contents
 

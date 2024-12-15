@@ -1,6 +1,6 @@
 import React from 'react'
 import PageContainer from '@/components/containers/PageContainer'
-import Tabs from '@/components/settings/Tabs'
+import SettingsTabs from '@/components/settings/Tabs'
 import { getServerSession } from 'next-auth'
 import InlineError from '@/components/shared/InlineError'
 import GoogleSignIn from '@/components/buttons/GoogleSignIn'
@@ -30,11 +30,12 @@ const SettingsPage = async () => {
     <PageContainer customClasses='p-4 lg:px-24'>
       <>
         <h2 className='custom-header'>Account Settings</h2>
-        <Tabs
+        <SettingsTabs
           userId={userInfo.result.user._id.toString()}
           userEmail={serverSession.user.email}
           userName={serverSession.user.name}
           userSince={userInfo.result.user.createdAt}
+          userLatestWord={userInfo.result.user.latestWord}
         />
       </>
     </PageContainer>

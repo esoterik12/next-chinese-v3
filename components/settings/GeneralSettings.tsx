@@ -8,13 +8,15 @@ type GeneralSettingsProps = {
   userEmail: string
   userName: string
   userSince: Date
+  userLatestWord: number
 }
 
 const GeneralSettings = ({
   userId,
   userEmail,
   userName,
-  userSince
+  userSince,
+  userLatestWord
 }: GeneralSettingsProps) => {
   return (
     <section>
@@ -28,12 +30,13 @@ const GeneralSettings = ({
             Email: <span className='text-white'>{userEmail}</span>
           </p>{' '}
           <p className='text-gray-400'>
-            User since: <span className='text-white'>{userSince.toDateString()}</span>
+            User since:{' '}
+            <span className='text-white'>{userSince.toDateString()}</span>
           </p>
         </div>
       </div>
       <div className='my-6 border border-gray-600' />
-      <LevelAdjustment userId={userId} />
+      <LevelAdjustment userId={userId} userLatestWord={userLatestWord} />
       <div className='my-6 border border-gray-600' />
       <ResetAccount userId={userId} />
       <div className='my-6 border border-gray-600' />

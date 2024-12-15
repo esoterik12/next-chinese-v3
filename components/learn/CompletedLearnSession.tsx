@@ -166,7 +166,6 @@ const CompletedLearnSession = ({
           </div>
 
           {/* Session result visual */}
-
           <div className='mb-4 mt-4 flex flex-col-reverse gap-4 md:flex-row'>
             {hoveredWordState !== null && (
               <WordResultCard word={hoveredWordState} />

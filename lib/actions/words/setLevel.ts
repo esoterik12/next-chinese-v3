@@ -5,6 +5,8 @@ import { AppError } from '@/lib/errors/AppError'
 import Word from '@/models/word.model'
 import UserWord from '@/models/userword.model'
 import User from '@/models/user.model'
+import { startLevelWordNumber } from '@/lib/constants/startLevelWordNumber'
+import { revalidatePath } from 'next/cache'
 
 /*
   Updates a user's progress to match a selected target level.
@@ -18,16 +20,9 @@ import User from '@/models/user.model'
     the target range.
  3. Uses `bulkWrite` to execute the update, ensuring new `UserWord` entries 
     are created if they don't already exist.
-*/
 
-// These are the FIRST words in each level
-const startLevelWordNumber = {
-  1: 0,
-  2: 501,
-  3: 999,
-  4: 2502,
-  5: 4998
-}
+  **At the moment this function does not update user stats
+*/
 
 export async function setLevel({
   userId,
@@ -45,6 +40,16 @@ export async function setLevel({
 
     // Sets the user's new latestWord value
     const newUserLatestWord = startLevelWordNumber[selectedLevel] - 1 // -1 to make latest word last word of prev level
+
+    // Ensure selected level is higher than current
+    // Frontend does not allow this either
+    if (newUserLatestWord <= userLatestWord) {
+      return {
+        message:
+          'Invalid request; you cannot select a level lower than your current level.',
+        code: 400
+      }
+    }
 
     // Gets all words that will need to be added as new UserWords to fit level target
     const wordsToUpdate = await Word.find({
@@ -84,16 +89,14 @@ export async function setLevel({
       }
     })
 
-    // TODO: Complete this function
-    // Currently Disabled
     await UserWord.bulkWrite(newUserWordsUpdate)
 
-    // TODO: This function also has to reset user stats for at least latestWord
     await User.findOneAndUpdate(
       { _id: mongoUserId },
       { latestWord: startLevelWordNumber[selectedLevel] - 1 }
     )
-    console.log('newUserWords', newUserWordsUpdate)
+
+    revalidatePath('/learn')
 
     return {
       message: 'Successfully set new level for user.',

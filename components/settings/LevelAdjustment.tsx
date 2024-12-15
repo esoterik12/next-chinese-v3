@@ -1,47 +1,63 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useReducer, useState } from 'react'
 import DefaultButton from '../buttons/DefaultButton'
 import { InputField } from '../forms/InputField'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 import { levelDetails } from '@/lib/constants/levelDetails'
 import { setLevel } from '@/lib/actions/words/setLevel'
+import { startLevelWordNumber } from '@/lib/constants/startLevelWordNumber'
+import calcLevel from '@/lib/utils/calcLevel'
+import {
+  adjustLevelReducer,
+  initialAdjustLevelState
+} from '@/lib/state/adjustLevelReducer'
 
 type LevelAdjustmentProps = {
   userId: string
+  userLatestWord: number
 }
 
-const LevelAdjustment = ({ userId }: LevelAdjustmentProps) => {
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<null | string>(null)
-  const [adjustClicked, setAdjustClicked] = useState(false)
+const LevelAdjustment = ({ userId, userLatestWord }: LevelAdjustmentProps) => {
+  const [state, dispatch] = useReducer(
+    adjustLevelReducer,
+    initialAdjustLevelState
+  )
+  const { loading, selectedLevel, error, adjustClicked } = state
   const [inputValue, setInputValue] = useState('')
-  const [selectedLevel, setSelectedLevel] = useState<number | null>(null)
   const router = useRouter()
 
   const handleLevelClick = (level: number) => {
-    setSelectedLevel(level)
+    dispatch({ type: 'SET_SELECTED_LEVEL', payload: level })
   }
 
   async function onAdjustLevel() {
     if (adjustClicked) {
       if (inputValue.toLowerCase() !== 'change') {
-        setError('Type "change" here.')
+        dispatch({ type: 'SET_ERROR', payload: 'Type "change" here.' })
         return
       }
 
-      setLoading(true)
-      setError(null) // Clear previous errors
+      dispatch({ type: 'SET_LOADING', payload: true })
+      dispatch({ type: 'SET_ERROR', payload: null })
 
       try {
         if (userId) {
           const resetResult = await setLevel({
             userId: userId,
             selectedLevel: selectedLevel,
-            userLatestWord: 0
+            userLatestWord: userLatestWord
           })
-          console.log('resetting level')
-          setAdjustClicked(false)
+          if (resetResult.code === 400) {
+            setInputValue('')
+            dispatch({
+              type: 'SET_ERROR',
+              payload:
+                'Invalid request; you are already at this level or above.'
+            })
+            return
+          }
+          dispatch({ type: 'TOGGLE_ADJUST_CLICKED' })
           setInputValue('')
 
           // TODO: Provide some feedback here possibly
@@ -52,13 +68,16 @@ const LevelAdjustment = ({ userId }: LevelAdjustmentProps) => {
           throw new Error('Invalid user. Please try again.')
         }
       } catch (error) {
-        setError('An error occurred. Please try again.')
+        dispatch({
+          type: 'SET_ERROR',
+          payload: 'An error occurred. Please try again.'
+        })
       } finally {
-        setLoading(false)
+        dispatch({ type: 'SET_LOADING', payload: false })
       }
     } else {
       // Enter confirmation mode
-      setAdjustClicked(true)
+      dispatch({ type: 'TOGGLE_ADJUST_CLICKED' })
     }
   }
 
@@ -67,13 +86,24 @@ const LevelAdjustment = ({ userId }: LevelAdjustmentProps) => {
       <h3 className='custom-large-text font-bold'>Level Adjustments</h3>
       <div className='w-full p-2'>
         <p className='text-gray-400'>
-          This feature allows you to set your level higher than Level 1.{' '}
+          This feature allows you to set your level higher than your current
+          level.{' '}
           <span className='underline'>This action is not reversible</span>.
           However, you can reset your account and then use this feature again.
         </p>
         <p className='mt-2 text-gray-400'>
           All words below your selected level will be spaced out over future
           learning sessions as words you already know for periodic review.
+        </p>
+        <p className='mt-2'>
+          Your current level is:{' '}
+          <span className='font-semibold text-sky-500'>
+            {/* +1 is added so the current level displayed is what the user's next word will be, not current */}
+            {calcLevel(userLatestWord + 1)}
+          </span>
+        </p>
+        <p className='mt-2 text-gray-400'>
+          This change may take 10 to 20 seconds.
         </p>
         <div className='mt-6'>
           {/* Selector:  */}
@@ -98,7 +128,12 @@ const LevelAdjustment = ({ userId }: LevelAdjustmentProps) => {
               {levelDetails.map(item => (
                 <DefaultButton
                   key={item.level}
-                  isDisabled={loading || item.level === 1}
+                  isDisabled={
+                    loading ||
+                    item.level === 1 ||
+                    // +1 is added to stop users setting their current level again
+                    userLatestWord + 1 >= startLevelWordNumber[item.level] // prevents setting level below your current
+                  }
                   handleClick={() => handleLevelClick(item.level)}
                   customClasses={`${selectedLevel === item.level && 'bg-gray-800'} w-full h-11 mt-3 bg-gray-900 hover:border-sky-600 border-gray-600 p-2`}
                 >
@@ -122,6 +157,7 @@ const LevelAdjustment = ({ userId }: LevelAdjustmentProps) => {
             </div>
           </div>
         </div>
+
         <div className='mt-6 flex h-20 w-full flex-row items-end justify-end'>
           <AnimatePresence mode='wait'>
             {adjustClicked && (
@@ -137,7 +173,6 @@ const LevelAdjustment = ({ userId }: LevelAdjustmentProps) => {
                   id='reset-account-confrimation'
                   type='text'
                   inputClasses='h-11 w-52'
-                  // label='Type "reset" & confrim.'
                   placeholder='Type "change"'
                   value={inputValue}
                   setValue={setInputValue}
@@ -147,19 +182,28 @@ const LevelAdjustment = ({ userId }: LevelAdjustmentProps) => {
             )}
           </AnimatePresence>
           <DefaultButton
-            isDisabled={loading}
+            isDisabled={loading || selectedLevel === null}
             handleClick={onAdjustLevel}
             customClasses='w-40 h-11 border-2 hover:border-sky-600 border-gray-600 p-2'
           >
             <>
               {loading && <p>Loading...</p>}
-              {!adjustClicked && !loading ? (
-                <p>Adjust Level</p>
-              ) : (
-                <p>Confirm</p>
-              )}
+              {!adjustClicked && !loading && <p>Adjust Level</p>}
+              {adjustClicked && !loading && <p>Confirm</p>}
             </>
           </DefaultButton>
+        </div>
+        <div>
+          {loading && (
+            <motion.div
+              key='reset-confirmation'
+              className='mr-4 flex flex-row'
+              initial={{ opacity: 0, x: -5 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, y: 5 }}
+              transition={{ duration: 0.3, ease: [0.25, 0.25, 0.75, 1] }}
+            ></motion.div>
+          )}
         </div>
         {/* Notes: */}
         <div className='custom-small-text mt-6 flex flex-col gap-y-1 text-gray-400 md:mt-10'>

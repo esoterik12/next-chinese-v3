@@ -1,27 +1,28 @@
 import { useState, useEffect } from 'react'
 
 export default function useVoices() {
-  const [voices, setVoices] = useState<SpeechSynthesisVoice>()
+  const [voice, setVoice] = useState<SpeechSynthesisVoice | null>(null)
 
   useEffect(() => {
     const loadVoices = () => {
       const availableVoices = speechSynthesis.getVoices()
       if (availableVoices.length > 0) {
-        setVoices(availableVoices.find(voice => voice.lang === 'zh-TW'))
+        const zhTWVoice = availableVoices.find(voice => voice.lang === 'zh-TW')
+        setVoice(zhTWVoice || null) // Ensure fallback to null
       }
     }
 
     // Load voices initially
     loadVoices()
 
-    // Add an event listener to detect when voices change
-    window.speechSynthesis.onvoiceschanged = loadVoices
+    // Add event listener for voices change
+    window.speechSynthesis.addEventListener('voiceschanged', loadVoices)
 
+    // Clean up event listener
     return () => {
-      // Clean up event listener
-      window.speechSynthesis.onvoiceschanged = null
+      window.speechSynthesis.removeEventListener('voiceschanged', loadVoices)
     }
   }, [])
 
-  return voices
+  return voice
 }

@@ -18,24 +18,15 @@ const JoyrideMain = () => {
   // Loads joyride state from JoyrideSteps, a separate tsx component with jsx for the modals
   const [joyRideState, setJoyrideState] = useState({
     run: false,
-    steps: JoyrideSteps,
-  });
+    steps: JoyrideSteps
+  })
 
   useEffect(() => {
-    setJoyrideState((prevState) => ({
+    setJoyrideState(prevState => ({
       ...prevState,
-      run: true,
-    }));
-  }, []);
-
-  // Currently unused - could be used for a "Take a tour" functionality in the future for second, third visits etc.
-  // const handleClickStart = (event: React.MouseEvent<HTMLElement>) => {
-  //   event.preventDefault()
-  //   setJoyrideState((prevState) => ({
-  //     ...prevState,
-  //     run: true,
-  //   }));
-  // }
+      run: true
+    }))
+  }, [])
 
   // passed to JoyrideNoSSR component
   const handleJoyrideCallback = (data: CallBackProps) => {
@@ -43,10 +34,10 @@ const JoyrideMain = () => {
     const finishedStatuses: string[] = [STATUS.FINISHED, STATUS.SKIPPED]
 
     if (finishedStatuses.includes(status)) {
-      setJoyrideState((prevState) => ({
+      setJoyrideState(prevState => ({
         ...prevState,
-        run: false,
-      }));
+        run: false
+      }))
     }
   }
 
@@ -62,6 +53,7 @@ const JoyrideMain = () => {
       hideCloseButton
       showProgress
       showSkipButton
+      disableOverlay
       steps={joyRideState.steps}
       styles={{
         options: {

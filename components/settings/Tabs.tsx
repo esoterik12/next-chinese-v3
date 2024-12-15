@@ -9,9 +9,16 @@ type TabsProbs = {
   userEmail: string
   userName: string
   userSince: Date
+  userLatestWord: number
 }
 
-const Tabs = ({ userId, userEmail, userName, userSince }: TabsProbs) => {
+const SettingsTabs = ({
+  userId,
+  userEmail,
+  userName,
+  userSince,
+  userLatestWord
+}: TabsProbs) => {
   const [activeTab, setActiveTab] = useState(0)
 
   const tabs = ['General Settings', 'Subscription']
@@ -21,6 +28,7 @@ const Tabs = ({ userId, userEmail, userName, userSince }: TabsProbs) => {
       userEmail={userEmail}
       userName={userName}
       userSince={userSince}
+      userLatestWord={userLatestWord}
       key='general-settings'
     />,
     <StatsContainer
@@ -56,4 +64,4 @@ const Tabs = ({ userId, userEmail, userName, userSince }: TabsProbs) => {
   )
 }
 
-export default Tabs
+export default SettingsTabs

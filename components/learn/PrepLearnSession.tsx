@@ -16,10 +16,10 @@ import { formatLastSession } from '@/lib/utils/formatLastSession'
 import Link from 'next/link'
 
 const learningOptionsObject = [
-  { value: 2, border: 'border-gray-500', textColor: 'text-gray-300' },
+  // { value: 2, border: 'border-gray-500', textColor: 'text-gray-300' },
+  { value: 5, border: 'border-gray-500', textColor: 'text-gray-300' },
   { value: 20, border: 'border-gray-500', textColor: 'text-gray-300' },
-  { value: 40, border: 'border-gray-500', textColor: 'text-gray-300' },
-  // { value: 60, border: 'border-gray-500', textColor: 'text-gray-300' },
+  { value: 60, border: 'border-gray-500', textColor: 'text-gray-300' },
   { value: 80, border: 'border-gray-500', textColor: 'text-gray-300' },
   { value: 100, border: 'border-gray-500', textColor: 'text-gray-300' }
 ]
@@ -116,7 +116,8 @@ const PrepLearnSession = ({
             <StatsContainer
               icon={<IconLevel classes='w-6 h-6 text-sky-500' />}
               titleText='Current level:'
-              valueText={calcLevel(latestWord)}
+              // +1 is added so the current level displayed is what the user's next word will be, not current
+              valueText={calcLevel(latestWord + 1)}
             />
             <StatsContainer
               icon={<IconRocket classes='w-6 h-6 text-emerald-500' />}
@@ -133,7 +134,7 @@ const PrepLearnSession = ({
           {/* Last 30 days section */}
           <div className='mb-8 mt-4'>
             <p className='py-2'>Last 30 days:</p>
-            <div className='flex flex-row flex-wrap gap-1'>
+            <div className='gap-1'>
               {userStats.map((item, idx) => (
                 <div
                   className={`flex h-[16px] w-[16px] items-center justify-center rounded-sm border-white p-2 md:h-[20px] md:w-[20px] md:rounded-md ${item.viewCount >= 50 ? 'bg-emerald-500' : item.viewCount > 0 ? 'bg-sky-500' : 'bg-gray-500'}`}
