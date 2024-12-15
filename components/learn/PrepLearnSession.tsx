@@ -17,8 +17,8 @@ import Link from 'next/link'
 
 const learningOptionsObject = [
   // { value: 2, border: 'border-gray-500', textColor: 'text-gray-300' },
-  { value: 5, border: 'border-gray-500', textColor: 'text-gray-300' },
   { value: 20, border: 'border-gray-500', textColor: 'text-gray-300' },
+  { value: 40, border: 'border-gray-500', textColor: 'text-gray-300' },
   { value: 60, border: 'border-gray-500', textColor: 'text-gray-300' },
   { value: 80, border: 'border-gray-500', textColor: 'text-gray-300' },
   { value: 100, border: 'border-gray-500', textColor: 'text-gray-300' }
@@ -134,10 +134,10 @@ const PrepLearnSession = ({
           {/* Last 30 days section */}
           <div className='mb-8 mt-4'>
             <p className='py-2'>Last 30 days:</p>
-            <div className='gap-1'>
+            <div className='gap-1 grid grid-cols-15 md:flex md:flex-row w-[330px] md:w-full'>
               {userStats.map((item, idx) => (
                 <div
-                  className={`flex h-[16px] w-[16px] items-center justify-center rounded-sm border-white p-2 md:h-[20px] md:w-[20px] md:rounded-md ${item.viewCount >= 50 ? 'bg-emerald-500' : item.viewCount > 0 ? 'bg-sky-500' : 'bg-gray-500'}`}
+                  className={`flex h-[18px] w-[18px] md:h-[20px] md:w-[20px] items-center justify-center rounded-sm border-white p-2 ${item.viewCount >= 50 ? 'bg-emerald-500' : item.viewCount > 0 ? 'bg-sky-500' : 'bg-gray-500'}`}
                   key={idx}
                 ></div>
               ))}

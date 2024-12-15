@@ -15,7 +15,7 @@ const ServerActionTestPage = async () => {
     return (
       <PageContainer>
         <InlineError classes='p-2 h-full w-full flex flex-grow flex-col items-center justify-center'>
-          <p className='text-rose-500'>You are not logged in.</p>
+          <p className='text-rose-500 mb-4'>You are not logged in.</p>
           <GoogleSignIn />
         </InlineError>
       </PageContainer>

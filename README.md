@@ -21,25 +21,15 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with
 - Add support for spacebar to trigger voice again after reveal / click on pinyin
 
 ## Fixes / Tweaks
-- sm2 state context will require a tweak. Incorrect words need to be added like a random 2-4 places ahead of the current index.
-- Early end session should add finishedWords, doesn't seem to
-- Quite a lot of prop drilling going on: latestWord and such, userId - could expand context
-- Find a way to make loading in the middle of circle background gradient?
-- Layout shift when selecting target number of words
-- Improve navbar links
+- Early end session should add finishedWords, doesn't seem to work
 - Mouse over of last 30 days to show each day's total
-- Learn session progress bar
 - Test the sm2.ts function for correct output
-- Change last 30 days to be a grid 3x10
 - Fix the google org name
 - Fix loading in the center of circle + remake the animation somehow to be more branded (colors and unique)
 - Loading function on adjust level, reset account
-- Grammer content should be refactored to use dynamic pages to load constant data in different files
 - Seems to be an issue with the unload useEffect hook not updating user stats when window is closed - investigate
-- Add a 2 / 4 to the incorrect / correct buttons in a corner
-- Translation and pinyin wordcar dblock should be mt-1 lower
-- Try to make the main word less bold
-- Add keyboard keys to the Joyride
+- Handling of sessions could be imporved (perhaps more ending of sessions on navigation and learn page)
+- Fix ability to change account
 
 ## Words that need a look at:
 - 

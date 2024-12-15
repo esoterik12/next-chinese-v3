@@ -32,7 +32,7 @@ export const JoyrideSteps: Step[] = [
     title: "Show Button",
     content: (
       <div>
-        <h3>Click here or use the spacebar to show translations.</h3>
+        <h3>Click here or use the <span className="text-sky-500 font-semibold">spacebar</span> to show translations.</h3>
       </div>
     ),
     placement: "left",
@@ -43,7 +43,7 @@ export const JoyrideSteps: Step[] = [
     content: (
       <div>
         <h3>Select how easy a word is to recall.</h3>
-        <ul className="ml-2">
+        <ul className="ml-2 mt-2">
           <li>
             <p>
               <span className="text-rose-600 font-semibold">1</span>: No
@@ -58,6 +58,7 @@ export const JoyrideSteps: Step[] = [
             </p>
           </li>
         </ul>
+        <h3 className="mt-2">Click or use the keyboard <span className="text-sky-500 font-semibold">numbers</span>.</h3>
       </div>
     ),
     placement: "left",
@@ -68,11 +69,11 @@ export const JoyrideSteps: Step[] = [
     content: (
       <div>
         <h3>
-          Click here to generate a context sentence.
+          Click here or press <span className="text-sky-500 font-semibold">c</span> to generate a context sentence.
         </h3>
-        <h3>
+        <h3 className="mt-2">
           Click the generated
-          sentence to reveal its translations.
+          sentence or press <span className="text-sky-500 font-semibold">c</span> again to reveal its translations.
         </h3>
       </div>
     ),
@@ -81,7 +82,7 @@ export const JoyrideSteps: Step[] = [
   },
   {
     title: "Tutorial Complete",
-    content: <h2>Time to begin your session.</h2>,
+    content: <h2>Time to begin learning!</h2>,
     placement: "center",
     target: "body",
   },

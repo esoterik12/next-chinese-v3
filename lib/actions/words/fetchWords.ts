@@ -34,6 +34,7 @@ export async function fetchWords({
 
     // 3: fetch due words
     // This fetches the due UserWords data and fills in the wordId field with data from the Words collection
+    // TODO: This section seems to not be working or the handling on the front end may not be working
     const today = new Date()
     const wordsDueResult = await UserWord.find({
       userId: userId,

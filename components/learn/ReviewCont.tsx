@@ -27,7 +27,7 @@ const ReviewCont = ({
   preferredChars
 }: ReviewContProps) => {
   const { progress, dispatch, finishedWords } = useReviewContext()
-  const [goal, setGoal] = useState<number>(40)
+  const [goal, setGoal] = useState<number>(60)
 
   // useEffect to trigger when page unloads
   // This will still update the db with whatever words have been finished

@@ -146,19 +146,16 @@ const CompletedLearnSession = ({
           {/* Main stats boxes */}
           <div className='flex flex-col flex-wrap gap-4 md:flex-row'>
             <StatsContainer
-              width='w-[260px]'
               icon={<IconViews classes='w-6 h-6 text-sky-500' />}
               titleText='Words seen:'
               valueText={completedState.length}
             />
             <StatsContainer
-              width='w-[260px]'
               icon={<IconStars classes='w-6 h-6 text-emerald-500' />}
               titleText='New words:'
               valueText={newWordsCount}
             />
             <StatsContainer
-              width='w-[260px]'
               icon={<IconTime classes='w-6 h-6 text-rose-500' />}
               titleText='Time:'
               valueText={completedTime}

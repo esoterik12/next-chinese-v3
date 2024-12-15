@@ -95,23 +95,24 @@ const WordCard = ({ fetching, setShowSent, userId, latestWord }: WordCardProps) 
         <EndLearnSession id="endLearnSession" userId={userId} latestWord={latestWord} />
       </div>
 
+      {/* Middle Main Section */}
       <div id="wordContainer" className='flex h-[100px] flex-col items-center text-center'>
         <>
           {characterState === 'traditional' ? (
-            <p className='text-[42px] font-bold'>
+            <p className='text-[42px]'>
               {unfinishedWords[0].wordTraditional}
             </p>
           ) : (
-            <p className='text-[42px] font-bold'>
+            <p className='text-[42px]'>
               {unfinishedWords[0].wordSimplified}
             </p>
           )}
           {characterState === 'traditional' ? (
-            <p className='custom-large-text text-gray-500'>
+            <p className='custom-large-text font-light text-gray-500'>
               {unfinishedWords[0].wordSimplified}
             </p>
           ) : (
-            <p className='custom-large-text text-gray-500'>
+            <p className='custom-large-text font-light text-gray-500'>
               {unfinishedWords[0].wordTraditional}
             </p>
           )}
@@ -131,7 +132,7 @@ const WordCard = ({ fetching, setShowSent, userId, latestWord }: WordCardProps) 
 
           {show && (
             <AnimatedSection
-              classes='h-full flex-col mt-8 justify-between text-center'
+              classes='h-full flex-col mt-9 justify-between text-center'
               motionKey='answer'
             >
               <div>
@@ -192,12 +193,14 @@ const WordCard = ({ fetching, setShowSent, userId, latestWord }: WordCardProps) 
               handleClick={e => handleIncorrect(e)}
               icon={<IconXCircle classes='h-6 w-6' />}
               textColor='text-rose-500'
+              keyboardKey='2'
             />
             <CorrectButton
               disabled={fetching}
               handleClick={e => handleCorrect(e)}
               icon={<IconCheckCircle classes='h-6 w-6' />}
               textColor='text-emerald-500'
+              keyboardKey='4'
             />
           </div>
         )}

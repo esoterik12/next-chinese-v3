@@ -8,7 +8,7 @@ export default function Home() {
     <PageContainer customClasses='p-4 lg:px-12'>
       <>
         <div className='flex flex-col md:flex-row'>
-          <section className='flex w-full flex-col text-center items-center'>
+          <section className='flex w-full flex-col items-center text-center'>
             <h1 className='custom-header-large mt-6 md:mt-14'>
               Start Your Journey to{' '}
               <span className='text-sky-500'>Fluency</span>
@@ -20,7 +20,7 @@ export default function Home() {
             <HomePageButton />
           </section>
         </div>
-        <div className='my-6 flex w-full flex-col lg:flex-row items-center justify-center gap-x-8'>
+        <div className='my-6 flex w-full flex-col items-center justify-center gap-x-8 lg:flex-row'>
           <HomepageCard
             image='/images/chinese-meng.png'
             subtitle='Spaced Repetition:'

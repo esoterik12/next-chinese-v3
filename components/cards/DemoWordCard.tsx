@@ -188,12 +188,14 @@ const DemoWordCard = ({ fetching, setShowSent }: DemoWordCardProps) => {
               handleClick={e => handleIncorrect(e)}
               icon={<IconXCircle classes='h-6 w-6' />}
               textColor='text-rose-500'
+              keyboardKey='2'
             />
             <CorrectButton
               disabled={fetching}
               handleClick={e => handleCorrect(e)}
               icon={<IconCheckCircle classes='h-6 w-6' />}
               textColor='text-emerald-500'
+              keyboardKey='4'
             />
           </div>
         )}
