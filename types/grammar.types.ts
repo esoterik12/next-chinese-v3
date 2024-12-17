@@ -10,7 +10,7 @@ export interface SubSectionExample {
 }
 
 export interface SubSectionConcept {
-  subSection: number;
+  subSectionNumber: number;
   title: string;
   explanation: string;
   examples: SubSectionExample[];
@@ -18,7 +18,7 @@ export interface SubSectionConcept {
 }
 
 export interface SectionConceptsData {
-  sectionTitle: string,
+  title: string,
   conceptNumber: number
   sectionConcepts: SubSectionConcept[];
 }

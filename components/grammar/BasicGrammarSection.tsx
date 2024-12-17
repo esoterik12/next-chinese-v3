@@ -8,17 +8,18 @@ const BasicGrammarSection = ({ topic }: { topic: SectionConceptsData }) => {
     <>
       {topic.sectionConcepts.map((concept, index) => (
         <div
-          key={concept.subSection} className={`p-4 ${index < topic.sectionConcepts.length - 1 ? 'border-b-2' : ''}`}
+          key={concept.subSectionNumber}
+          className={`p-4 ${index < topic.sectionConcepts.length - 1 ? 'border-b-2' : ''}`}
         >
           <h3 className='custom-subheader text-sky-500'>
-            {topic.conceptNumber}.{concept.subSection} - {concept.title}
+            {topic.conceptNumber}.{concept.subSectionNumber} - {concept.title}
           </h3>
           <p>{concept.explanation}</p>
           {concept.examples.map(example => (
             <div key={example.exNumber} className='px-4 py-2'>
               <p className='font-semibold'>
-                {topic.conceptNumber}.{concept.subSection}.{example.exNumber}:{' '}
-                {example.exExplanation}
+                {topic.conceptNumber}.{concept.subSectionNumber}.
+                {example.exNumber}: {example.exExplanation}
               </p>
               <p className='mb-2 text-gray-500'>{example.exStructure}</p>
               <div className='px-4 py-2'>

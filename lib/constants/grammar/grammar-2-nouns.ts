@@ -1,11 +1,11 @@
 import { SectionConceptsData } from '@/types/grammar.types'
 
 export const grammar2Nouns: SectionConceptsData = {
-  sectionTitle: 'Nouns',
+  title: 'Nouns',
   conceptNumber: 2,
   sectionConcepts: [
     {
-      subSection: 1,
+      subSectionNumber: 1,
       title: 'Common nouns',
       explanation:
         'Most nouns in Mandarin are common nouns, referring to either concrete or abstract entities. They do not distinguish between mass and count nouns and have a single, invariant form, making them unspecified for singular or plural unless modified.',
@@ -73,7 +73,7 @@ export const grammar2Nouns: SectionConceptsData = {
       ]
     },
     {
-      subSection: 2,
+      subSectionNumber: 2,
       title: 'Pronouns',
       explanation:
         'Mandarin has first, second, and third-person pronouns, along with a reflexive pronoun. Pronouns are not distinguished by grammatical role, and they share singular and plural forms. Gender distinctions are minimal and primarily found in written third-person pronouns.',
@@ -141,8 +141,8 @@ export const grammar2Nouns: SectionConceptsData = {
       ]
     },
     {
-      subSection: 3,
-      title: 'Reflexive Pronoun: 自己 zìjǐ ("self")',
+      subSectionNumber: 3,
+      title: 'Reflexive Pronoun: 自己 zìjǐ',
       explanation:
         'Mandarin has one reflexive pronoun, 自己 zìjǐ, which is not marked for person or gender. It can refer to the subject of the sentence or indicate contrast with other pronouns or noun phrases. Optional personal pronouns may precede 自己 to specify person.',
       examples: [
@@ -203,8 +203,8 @@ export const grammar2Nouns: SectionConceptsData = {
       ]
     },
     {
-      subSection: 4,
-      title: "Inclusive Pronoun: 咱们/咱們 zánmen ('we')",
+      subSectionNumber: 4,
+      title: "Inclusive Pronoun: 咱们/咱們 zánmen",
       explanation:
         "The inclusive pronoun 咱们/咱們 zánmen, used in northern Mandarin dialects, refers to 'we' including the speaker, the addressee, and other associated individuals. Unlike the more common 我们/我們 wǒmen, which can be inclusive or exclusive, 咱们/咱們 zánmen is always inclusive and only used as a subject.",
       examples: [
@@ -237,7 +237,7 @@ export const grammar2Nouns: SectionConceptsData = {
       ]
     },
     {
-      subSection: 5,
+      subSectionNumber: 5,
       title: 'Modification of Pronouns',
       explanation:
         'In general, Mandarin pronouns represent entire noun phrases and are not further modified. However, there are exceptions in certain literary expressions where pronouns can be modified by adjectives or descriptive phrases.',
@@ -280,7 +280,7 @@ export const grammar2Nouns: SectionConceptsData = {
       ]
     },
     {
-      subSection: 6,
+      subSectionNumber: 6,
       title: 'Possessive Pronouns in Mandarin',
       explanation:
         'Mandarin does not have possessive pronouns. The meaning of possessive pronouns is conveyed by pronoun + 的 (de). When followed by a noun, it translates to "my," "your," etc. When not followed by a noun, it translates to "mine," "yours," etc.',
@@ -348,7 +348,7 @@ export const grammar2Nouns: SectionConceptsData = {
       ]
     },
     {
-      subSection: 7,
+      subSectionNumber: 7,
       title: 'Definition of Proper Nouns',
       explanation:
         'Proper nouns in Mandarin include personal names, place names, names of companies, names of schools, etc. They typically occur without additional modification but can occasionally appear in literary expressions with modifiers.',
@@ -399,8 +399,8 @@ export const grammar2Nouns: SectionConceptsData = {
       ]
     },
     {
-      subSection: 8,
-      title: 'Modified Proper Nouns in Literary Expressions',
+      subSectionNumber: 8,
+      title: 'Proper Nouns in Literary Expressions',
       explanation:
         'In Mandarin, proper nouns may occasionally appear with modifiers, especially in literary or poetic contexts. These modifiers provide descriptive or emotive context.',
       examples: [

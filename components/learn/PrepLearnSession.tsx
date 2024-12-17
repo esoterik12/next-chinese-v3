@@ -14,15 +14,7 @@ import calcLevel from '@/lib/utils/calcLevel'
 import { BasicUserStatsData } from '@/types/user.types'
 import { formatLastSession } from '@/lib/utils/formatLastSession'
 import Link from 'next/link'
-
-const learningOptionsObject = [
-  // { value: 2, border: 'border-gray-500', textColor: 'text-gray-300' },
-  { value: 20, border: 'border-gray-500', textColor: 'text-gray-300' },
-  { value: 40, border: 'border-gray-500', textColor: 'text-gray-300' },
-  { value: 60, border: 'border-gray-500', textColor: 'text-gray-300' },
-  { value: 80, border: 'border-gray-500', textColor: 'text-gray-300' },
-  { value: 100, border: 'border-gray-500', textColor: 'text-gray-300' }
-]
+import GrammarSelectMain from '../forms/GrammarSelectMain'
 
 interface PrepLearnSessionProps {
   userId: string // converted from ObjectId in page.tsx
@@ -92,7 +84,7 @@ const PrepLearnSession = ({
     >
       <div>
         {/* Top section */}
-        <div className='border-b border-gray-700'>
+        <div className='border-gray-700'>
           {/* Conditional formating depending on userStats & latestWord */}
           <h1 className='md:custom-header custom-subheader'>
             Welcome{latestWord > 0 ? ' back' : ''}, {name}
@@ -132,33 +124,37 @@ const PrepLearnSession = ({
           </div>
 
           {/* Last 30 days section */}
-          <div className='mb-8 mt-4'>
-            <p className='py-2'>Last 30 days:</p>
-            <div className='gap-1 grid grid-cols-15 md:flex md:flex-row w-[330px] md:w-full'>
+          <div className='mb-4 mt-4'>
+            <p className='pb-1 pt-2 text-gray-400'>Last 30 days:</p>
+            <div className='grid w-[330px] grid-cols-15 gap-1 md:flex md:w-full md:flex-row'>
               {userStats.map((item, idx) => (
                 <div
-                  className={`flex h-[18px] w-[18px] md:h-[20px] md:w-[20px] items-center justify-center rounded-sm border-white p-2 ${item.viewCount >= 50 ? 'bg-emerald-500' : item.viewCount > 0 ? 'bg-sky-500' : 'bg-gray-500'}`}
+                  className={`flex h-[18px] w-[18px] items-center justify-center rounded-sm border-white p-2 md:h-[20px] md:w-[20px] ${item.viewCount >= 50 ? 'bg-emerald-500' : item.viewCount > 0 ? 'bg-sky-500' : 'bg-gray-500'}`}
                   key={idx}
                 ></div>
               ))}
             </div>
           </div>
+
+          {/* Last 30 days section */}
+          <div className='mb-6'>
+            <p className='pb-1 pt-2 text-gray-400'>Select grammar topic: </p>
+            <GrammarSelectMain />
+          </div>
         </div>
 
         {/* Select learning goals section */}
         <div className=''>
-          <p className='custom-subheader mb-4 mt-6'>Select your target:</p>
+          <p className='mb-1 mt-6 text-gray-400'>Select your target:</p>
           <div className='flex flex-row flex-wrap gap-2 py-2'>
-            {learningOptionsObject.map(item => (
+            {[20, 40, 60, 80, 100].map(item => (
               <DefaultButton
-                key={item.value}
-                customClasses={`md:w-[138px] w-[60px] bg-gray-900 p-2 ${goal === item.value ? 'border-2 border-gray-400 bg-gray-900 font-semibold' : item.border}`}
-                handleClick={() => setGoal(item.value)}
+                key={item}
+                customClasses={`md:w-[138px] w-[60px] bg-gray-900 p-2 ${goal === item ? 'border-2 border-gray-400 bg-gray-900 font-semibold' : 'border border-gray-800'}`}
+                handleClick={() => setGoal(item)}
               >
-                <p
-                  className={` ${goal === item.value ? 'text-gray-100' : item.textColor}`}
-                >
-                  {item.value}
+                <p className={` ${goal === item ? 'text-gray-100' : item}`}>
+                  {item}
                 </p>
               </DefaultButton>
             ))}
@@ -169,22 +165,20 @@ const PrepLearnSession = ({
             {!error ? (
               <DefaultButton
                 handleClick={() => handleStart()}
-                customClasses='md:w-[138px] w-[128px] border-2 border-emerald-500 p-2'
+                customClasses='md:w-[138px] w-[128px] border-2 bg-gray-900 border-emerald-500 p-2'
               >
                 <p className='font-semibold'>Start</p>
               </DefaultButton>
             ) : (
               <DefaultButton
                 handleClick={() => handleRetry()}
-                customClasses='md:w-[138px] w-[128px] border-2 border-sky-500 p-2'
+                customClasses='md:w-[138px] w-[128px] border-2 bg-gray-900 border-sky-500 p-2'
               >
                 <p className='font-semibold'>Retry</p>
               </DefaultButton>
             )}
             <Link href='/settings'>
-              <DefaultButton
-                customClasses='md:w-[138px] w-[128px] h-[44px] bg-gray-900 p-2'
-              >
+              <DefaultButton customClasses='md:w-[138px] w-[128px] h-[44px] border border-gray-800 bg-gray-900 p-2'>
                 <p className='font-semibold'>Settings</p>
               </DefaultButton>
             </Link>

@@ -1,11 +1,11 @@
 import { SectionConceptsData } from '@/types/grammar.types'
 
 export const grammar3Numbers: SectionConceptsData = {
-  sectionTitle: 'Numbers',
+  title: 'Numbers',
   conceptNumber: 3,
   sectionConcepts: [
     {
-      subSection: 1,
+      subSectionNumber: 1,
       title: 'Mandarin Numbers 0 to 99',
       explanation:
         'Mandarin numbers from 0 to 99 are constructed using simple building blocks. The numbers 0 to 10 are the foundation for larger numbers, while unique rules apply for the number 2 depending on its context.',
@@ -47,7 +47,7 @@ export const grammar3Numbers: SectionConceptsData = {
       ]
     },
     {
-      subSection: 2,
+      subSectionNumber: 2,
       title: 'Numbers 11 to 19',
       explanation:
         'Mandarin numbers 11 to 19 are formed by combining the number 10 (十 shí) with the numbers 1 (一 yī) through 9 (九 jiǔ). The number 12 is uniquely 十二 (shíèr) and not 十两.',
@@ -69,7 +69,7 @@ export const grammar3Numbers: SectionConceptsData = {
       notes: ['The number 12 uses 十二 (shíèr), not 十两 (shí liǎng).']
     },
     {
-      subSection: 3,
+      subSectionNumber: 3,
       title: 'Numbers 20 to 99',
       explanation:
         'Numbers from 20 to 99 in Mandarin combine multiples of 10 (20, 30, 40, etc.) with digits 1 to 9. They follow a consistent structure: [multiplier] + 十 (shí) + [digit].',
@@ -103,7 +103,7 @@ export const grammar3Numbers: SectionConceptsData = {
       ]
     },
     {
-      subSection: 4,
+      subSectionNumber: 4,
       title: '100, 1,000, 10,000, and 100,000,000',
       explanation:
         'Mandarin has distinct words for multiples of 100, 1,000, 10,000, and 100,000,000. These words also function as classifiers. The number 2 typically uses 两/兩 (liǎng) before these classifiers, though 二 (èr) is also acceptable in many dialects.',
@@ -161,7 +161,7 @@ export const grammar3Numbers: SectionConceptsData = {
       ]
     },
     {
-      subSection: 5,
+      subSectionNumber: 5,
       title: 'Forming Numbers Through 9,999',
       explanation:
         'Mandarin numbers up to 9,999 follow a consistent pattern: combining hundreds, tens, and single digits using 百 (bǎi), 十 (shí), and direct numerals.',
@@ -208,7 +208,7 @@ export const grammar3Numbers: SectionConceptsData = {
       ]
     },
     {
-      subSection: 6,
+      subSectionNumber: 6,
       title: 'Zero as a Placeholder',
       explanation:
         '零 (líng) is used as a placeholder when the hundreds or tens place is empty, provided numbers exist before and after it.',

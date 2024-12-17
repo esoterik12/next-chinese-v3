@@ -3,22 +3,51 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with
 
 
 # TODO: 
+## December Completion Game Plan
+- Complete Stripe Functionality
+- Complete the Grammar Library
+- Complete a drop down menu system for grammar review
+- Complete the Homepage
+
 ## Research:
 - Watch this podcast: https://www.youtube.com/watch?v=mBhreX30dbo
 - Hack Chinese website
 
 ## Core Features
+- Add Stripe subscription support
 - Perhaps: Add a resume session or start new session function if there is a session...
 - Add a daily goal setting to Settings that is used to determine last 30 days grid colors
-- Add gram concept lib content (differentiate from textbook)
-- Add gram selection functionality (in library)
-- Start at Level 1, 2, 3, 4:
-  - Details: This feature has to sort of assign all assumed words a nextReviewDate
-  It would, for example, go through level 1 and 2 words and give say 10 words a nextReviewDate of 
-  the next day/tomorrow, and then give the next 10 words a nextReviewDate of the day after and so on.
-- General settings page (mostly for level adjustment above)
 - Timezones support
 - Add support for spacebar to trigger voice again after reveal / click on pinyin
+- Add support to show which words are assumed - they could be flagged in UserWords somehow when a user adjusts level
+- Create a grammar collection for pages read on the grammar library
+
+## Grammar Concept Plan:
+- REVAMP / RECONSIDER:
+  - Ultimately this needs to be done on the server
+  - User experience won't work smoothly between refreshes and reloads.
+  - Users will forget what they're doing
+
+- Grammar needs to be its own path. The data can be hard coded objects, but the database
+does need to store a user's progress, completed section
+
+
+- A. Create grammar context that is accessible in the /grammar page buttons (client comp)
+  - This will display the selected grammar concepts at the top of the grammar pages
+  - This will allow buttons to be selected and added to the context
+
+- B. GrammarContext: will accept only three chosen sub concepts
+  - Adding a concept will replace the last
+
+- C. Sentence Generation: will send the selected grammar phrases (structure and example) to ChatGPT and ask for it to use one of those as the structure of the context sentences
+
+- D. Sentence Card / Button will not use any existing sentences if grammar context is enabled
+
+- E. Save Sentence will not be triggered if grammar context contains concepts and is being used in the sentence generation
+
+- F. PrepLearnSession: 
+  - will display selected grammar concepts 
+  - will allow a user to clear grammar context and emphasize that this makes sentences more random
 
 ## Fixes / Tweaks
 - Early end session should add finishedWords, doesn't seem to work
@@ -30,6 +59,9 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with
 - Seems to be an issue with the unload useEffect hook not updating user stats when window is closed - investigate
 - Handling of sessions could be imporved (perhaps more ending of sessions on navigation and learn page)
 - Fix ability to change account
+- Increase sentence chinese text size
+- Add a function to shuffle the fetched words so assumed words and new words are mixed together
+- Make sentence card button same width as other buttons (correct and incorrect)
 
 ## Words that need a look at:
 - 

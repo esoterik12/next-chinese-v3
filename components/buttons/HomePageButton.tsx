@@ -6,12 +6,14 @@ import IconRightChevron from '../icons/IconRightChevron'
 
 const HomePageButton = () => {
   return (
-    <DefaultButton customClasses='w-44 mt-10 border-2 border-emerald-500 p-2'>
-      <Link className='flex flex-row gap-x-2 items-center justify-center' href='/learn'>
-        <p>Learn Now</p>
-        <IconRightChevron classes='h-4 w-4 mt-0.5' />
-      </Link>
-    </DefaultButton>
+    <Link href='/learn'>
+      <DefaultButton customClasses='w-44 mt-10 flex flex-row border-2 items-center justify-center gap-x-2 border-emerald-500 p-2'>
+        <>
+          <p>Learn Now</p>
+          <IconRightChevron classes='h-4 w-4 mt-0.5' />
+        </>
+      </DefaultButton>
+    </Link>
   )
 }
 

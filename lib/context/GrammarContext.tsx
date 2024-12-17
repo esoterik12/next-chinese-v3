@@ -2,68 +2,110 @@
 import { SubSectionConcept } from '@/types/grammar.types'
 import { createContext, useContext, useReducer, ReactNode } from 'react'
 
-interface GrammarReducerAction {
-  type:
-    | 'addConcept'
-    | 'removeConcept'
-    | 'resetState'
-    | 'setError'
-    | 'startLoading'
-    | 'endLoading'
-  error?: null | string
+type GrammarReducerAction =
+  // THe toggleConcept gives the overall conceptNumber and the subConceptNumber can be accessed withing the concept object
+  | { type: 'toggleConcept'; concept: GrammarContextConcept }
+  | { type: 'removeConcept'; concept: GrammarContextConcept }
+  | { type: 'resetState' }
+  | { type: 'setError'; error: string }
+  | { type: 'startLoading' }
+  | { type: 'endLoading' }
+
+export type GrammarContextConcept = {
+  conceptContextId: string
+  conceptTitle: string
   concept: SubSectionConcept
 }
 
-interface GrammarContextTypes {
-  concepts: SubSectionConcept[]
-  error: null | string
-  loadingState: boolean
-  dispatch: React.Dispatch<GrammarReducerAction>
-}
-
 interface GrammarReducerState {
-  concepts: SubSectionConcept[]
+  concepts: GrammarContextConcept[]
   error: string | null
   loadingState: boolean
+  dispatch: React.Dispatch<GrammarReducerAction>
 }
 
 const initialContext: GrammarReducerState = {
   concepts: [],
   error: null,
-  loadingState: false
+  loadingState: false,
+  dispatch: () => {}
 }
 
 const reducer = (
   state: GrammarReducerState,
   action: GrammarReducerAction
 ): GrammarReducerState => {
-  // Will get a subsection object from grammar page / load page
+  const currentConcepts = [...state.concepts]
 
   switch (action.type) {
-    case 'addConcept':
+    case 'toggleConcept': {
       if (!action.concept) {
         return {
           error: 'Invalid grammar context input',
           ...state
         }
       }
+      const exists = currentConcepts.some(
+        item => item.conceptContextId === action.concept.conceptContextId
+      )
 
-      return {
-        concepts: [...state.concepts, action.concept],
-        ...state
+      if (exists) {
+        // Remove the concept if it already exists
+        const updatedConcepts = currentConcepts.filter(
+          item => item.conceptContextId !== action.concept.conceptContextId
+        )
+        return {
+          ...state,
+          concepts: updatedConcepts
+        }
       }
 
+      // Add the concept if it does not exist, limit to 3 items
+      if (currentConcepts.length >= 3) {
+        currentConcepts.pop() // Remove the last element to keep the size at 3
+      }
+
+      return {
+        ...state,
+        concepts: [action.concept, ...currentConcepts]
+      }
+    }
+    case 'removeConcept':
+      console.log('Clicking remove')
+      const updatedConcepts = currentConcepts.filter(
+        item => item.conceptContextId !== action.concept.conceptContextId
+      )
+      return {
+        concepts: [...updatedConcepts],
+        ...state
+      }
     case 'resetState':
       return {
         ...initialContext
       }
-
+    case 'setError':
+      return {
+        ...state,
+        error: action.error || 'An unknown error occurred',
+        loadingState: false
+      }
+    case 'startLoading':
+      return {
+        ...state,
+        loadingState: true,
+        error: null
+      }
+    case 'endLoading':
+      return {
+        ...state,
+        loadingState: false
+      }
     default:
-      throw new Error(`Unknown action: ${action.type}`)
+      throw new Error('Unknown action in grammar context.')
   }
 }
 
-const GrammarContext = createContext<GrammarContextTypes | null>(null)
+const GrammarContext = createContext<GrammarReducerState>(initialContext)
 
 const GrammarContextProvider: React.FC<{ children: ReactNode }> = ({
   children

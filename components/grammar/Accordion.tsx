@@ -3,12 +3,11 @@ import * as React from 'react'
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { SubSectionConcept } from '@/types/grammar.types'
-import DefaultButton from '../buttons/DefaultButton'
 
 interface AccordionProps {
   i: number
-  conceptContent: SubSectionConcept
   conceptNumber: number
+  conceptContent: SubSectionConcept
   expanded: boolean | number
   setExpanded: React.Dispatch<React.SetStateAction<false | number>>
   notes?: string[]
@@ -16,8 +15,8 @@ interface AccordionProps {
 
 const Accordion = ({
   i,
-  conceptContent,
   conceptNumber,
+  conceptContent,
   expanded,
   setExpanded,
   notes
@@ -35,12 +34,12 @@ const Accordion = ({
         animate={{ backgroundColor: isOpen ? '#0ea5e9' : '#111827' }}
         onClick={() => setExpanded(isOpen ? false : i)}
       >
-        <p className='custom-small-text flec-row md:custom-text ml-4 flex'>
-          <div className='w-[30px] font-semibold'>
-            {conceptNumber}.{conceptContent.subSection}
-          </div>{' '}
+        <div className='custom-small-text flec-row md:custom-text ml-4 flex'>
+          <p className='w-[30px] font-semibold'>
+            {conceptNumber}.{conceptContent.subSectionNumber}
+          </p>{' '}
           {conceptContent.title}
-        </p>
+        </div>
       </motion.header>
       <AnimatePresence initial={false}>
         {isOpen && (
@@ -62,14 +61,11 @@ const Accordion = ({
             >
               <div className='p-4'>
                 <p className='mb-2'>{conceptContent.explanation}</p>
-                <DefaultButton customClasses='w-32 border-2 border-sky-500 p-2'>
-                  <p>Highlight</p>
-                </DefaultButton>
                 {conceptContent.examples.map(example => (
                   <div key={example.exNumber} className='py-2'>
                     <p className='font-semibold'>
                       <span className='text-rose-500'>
-                        {conceptNumber}.{conceptContent.subSection}.
+                        {conceptNumber}.{conceptContent.subSectionNumber}.
                         {example.exNumber}
                       </span>
                       : {example.exExplanation}
@@ -100,11 +96,11 @@ const Accordion = ({
 }
 
 export const AccordionStack = ({
-  accordionContent,
-  conceptNumber
+  conceptNumber,
+  accordionContent
 }: {
-  accordionContent: SubSectionConcept[]
   conceptNumber: number
+  accordionContent: SubSectionConcept[]
 }) => {
   // This approach is if you only want max one section open at a time. If you want multiple
   // sections to potentially be open simultaneously, they can all be given their own `useState`.
@@ -114,9 +110,9 @@ export const AccordionStack = ({
     <div className='w-full'>
       {accordionContent.map((section, idx) => (
         <Accordion
-          key={section.subSection}
-          conceptContent={section}
           conceptNumber={conceptNumber}
+          key={section.subSectionNumber}
+          conceptContent={section}
           i={idx}
           expanded={expanded}
           setExpanded={setExpanded}

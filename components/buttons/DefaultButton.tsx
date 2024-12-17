@@ -26,7 +26,7 @@ const DefaultButton = ({
       onClick={handleClick}
       type={btnType || 'button'}
       id={id}
-      className={`custom-hover-effect rounded-lg disabled:cursor-not-allowed ${customClasses}`}
+      className={`custom-hover-effect  rounded-lg disabled:cursor-not-allowed ${customClasses}`}
       disabled={isDisabled}
     >
       {children}

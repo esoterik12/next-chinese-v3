@@ -1,12 +1,12 @@
 import { SectionConceptsData } from '@/types/grammar.types'
 
 export const grammar1PhraseOrder: SectionConceptsData = {
-  sectionTitle: 'Phrase Order',
+  title: 'Phrase Order',
   conceptNumber: 1,
   sectionConcepts: [
     {
-      subSection: 1,
-      title: 'The position of direct and indirect objects',
+      subSectionNumber: 1,
+      title: 'Position of objects',
       explanation:
         'In neutral sentences, the direct and indirect objects of the verb come after the verb. The verb and its objects are called the verb phrase.',
       examples: [
@@ -32,8 +32,8 @@ export const grammar1PhraseOrder: SectionConceptsData = {
       ]
     },
     {
-      subSection: 2,
-      title: 'The position of prepositional phrases',
+      subSectionNumber: 2,
+      title: 'Position of prepositional phrases',
       explanation:
         'Prepositional phrases generally occur right before the verb and its objects.',
       examples: [
@@ -50,8 +50,8 @@ export const grammar1PhraseOrder: SectionConceptsData = {
       ]
     },
     {
-      subSection: 3,
-      title: 'The position of location phrases',
+      subSectionNumber: 3,
+      title: 'Position of location phrases',
       explanation:
         'The location phrase, which indicates where an action occurs, is a type of prepositional phrase. It always occurs before the verb phrase.',
       examples: [
@@ -79,8 +79,8 @@ export const grammar1PhraseOrder: SectionConceptsData = {
       ]
     },
     {
-      subSection: 4,
-      title: 'The position of "time when" phrases',
+      subSectionNumber: 4,
+      title: 'Position of "time when" phrases',
       explanation:
         'A phrase that indicates the "time when" a situation takes place occurs at the beginning of the predicate. If "time when" is emphasized or contrasted with another time, it may occur before the subject. Within the "time when" phrase, the order of constituents is from the largest block of time to the smallest block of time.',
       examples: [
@@ -126,9 +126,9 @@ export const grammar1PhraseOrder: SectionConceptsData = {
       ]
     },
     {
-      subSection: 5,
+      subSectionNumber: 5,
       title:
-        'The relative order of the "time when" phrase and the location phrase',
+        'Order of the time and location phrase',
       explanation:
         'When a sentence includes both a "time when" phrase and a location phrase, the "time when" phrase generally occurs before the location phrase.',
       examples: [
@@ -145,8 +145,8 @@ export const grammar1PhraseOrder: SectionConceptsData = {
       ]
     },
     {
-      subSection: 6,
-      title: 'The position of adverbs',
+      subSectionNumber: 6,
+      title: 'Position of adverbs',
       explanation:
         'Adverbs occur at the beginning of the predicate, before the verb and any prepositional phrase. Adverbs usually occur after the "time when" phrase.',
       examples: [
@@ -163,8 +163,8 @@ export const grammar1PhraseOrder: SectionConceptsData = {
       ]
     },
     {
-      subSection: 7,
-      title: 'The position of negation',
+      subSectionNumber: 7,
+      title: 'Position of negation',
       explanation:
         'Negation occurs before the verb and any prepositional phrase. It usually occurs after an adverb, though certain adverbs may either precede or follow negation.',
       examples: [
@@ -181,8 +181,8 @@ export const grammar1PhraseOrder: SectionConceptsData = {
       ]
     },
     {
-      subSection: 8,
-      title: 'The position of duration phrases',
+      subSectionNumber: 8,
+      title: 'Position of duration phrases',
       explanation:
         'Duration phrases indicate the length of time that an action occurs. They follow the verb directly and do not use prepositions.',
       examples: [
@@ -209,7 +209,7 @@ export const grammar1PhraseOrder: SectionConceptsData = {
       ]
     },
     {
-      subSection: 9,
+      subSectionNumber: 9,
       title: 'Order within the noun phrase',
       explanation:
         'The head noun occurs as the last word in the noun phrase, with all descriptive or modifying phrases occurring before it.',
@@ -227,7 +227,7 @@ export const grammar1PhraseOrder: SectionConceptsData = {
       ]
     },
     {
-      subSection: 10,
+      subSectionNumber: 10,
       title: 'Phrase order in questions',
       explanation:
         'In Mandarin, the phrase order in questions is identical to that in statements. Mandarin does not use a special question word order as in English and many European languages.',

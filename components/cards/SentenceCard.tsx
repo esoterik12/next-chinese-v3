@@ -23,8 +23,12 @@ const SentenceCard = ({
 }: SentenceCardProps) => {
   const { unfinishedWords, characterState, dispatch } = useReviewContext()
   const [sentenceData, setSentenceData] = useState<SentenceProps | null>(null)
+  // TODO: Add a call for 
 
   // Memoizes handleSentence function, stops unnecessary re-renders, triggers when showSentence/unfinishedWords change.
+  // TODO: this process needs a change to consider selected grammar concept(s):
+    // - If there are grammar concepts selected then we don't load existing sentence
+    // We will generate a new sentence
   const handleSentence = useCallback(async () => {
     if (unfinishedWords[0].sentence) {
       // If word has existing sentence, set as sentence data
