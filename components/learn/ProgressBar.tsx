@@ -20,7 +20,7 @@ const ProgressBar = ({ goal, progress }: ProgressBarProps) => {
       <motion.div
         animate={{ width: `${100 - percentComplete}%` }}
         transition={{ duration: 0.5, ease: 'easeInOut' }}
-        className='h-[2px] bg-gray-900'
+        className='h-[2px] custom-background'
       />
     </motion.div>
   )

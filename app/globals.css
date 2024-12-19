@@ -8,10 +8,10 @@
   }
   /* Text Colors */
   .custom-gray-text {
-    @apply text-gray-500;
+    @apply text-gray-400;
   }
   .custom-primary-color {
-    @apply text-blue-500;
+    @apply text-sky-500;
   }
   .custom-secondary-color {
     @apply text-rose-700;
@@ -50,13 +50,25 @@
 
   /* Effects, Borders & Backgrounds */
   .custom-hover-effect {
-    @apply transition-colors duration-300 ease-in-out hover:bg-gray-800;
+    @apply transition-colors duration-300 ease-in-out hover:bg-zinc-800;
+  }
+  .custom-dark-background {
+    @apply bg-zinc-950; /* #09090b */
+  }
+  .custom-background {
+    @apply bg-zinc-900; /* #18181b */
+  }
+  .custom-light-background {
+    @apply bg-zinc-800; /* #27272a */
   }
   .custom-gradient-background {
     @apply bg-gradient-to-tl from-gray-950 to-gray-950;
   }
   .custom-border {
-    @apply rounded-xl border border-gray-500 shadow-xl;
+    @apply rounded-lg border border-zinc-800 shadow-lg;
+  }
+  .custom-dark-border {
+    @apply rounded-lg border border-zinc-900 shadow-lg;
   }
 }
 

@@ -135,7 +135,7 @@ const LevelAdjustment = ({ userId, userLatestWord }: LevelAdjustmentProps) => {
                     userLatestWord + 1 >= startLevelWordNumber[item.level] // prevents setting level below your current
                   }
                   handleClick={() => handleLevelClick(item.level)}
-                  customClasses={`${selectedLevel === item.level && 'bg-gray-800'} w-full h-11 mt-3 bg-gray-900 hover:border-sky-600 border-gray-600 p-2`}
+                  customClasses={`${selectedLevel === item.level && 'custom-light-background'} w-full h-11 mt-3 custom-background hover:border-sky-600 border-gray-600 p-2`}
                 >
                   <div
                     className={`grid grid-cols-5 ${selectedLevel === item.level && 'text-sky-500'}`}

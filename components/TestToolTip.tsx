@@ -92,7 +92,7 @@ const TestToolTip = ({
   return (
     <div
       // EDIT: Container styles here
-      className='flex min-h-[210px] w-[380px] flex-col justify-between rounded-lg border border-gray-500 bg-gray-950 p-4'
+      className='flex min-h-[210px] w-[380px] flex-col justify-between rounded-lg border border-gray-500 custom-dark-background p-4'
       {...tooltipProps}
     >
       {/* EDIT: added this top section container */}
@@ -138,7 +138,7 @@ const TestToolTip = ({
               aria-label={primaryProps['aria-label']}
               data-action={primaryProps['data-action']}
               role={primaryProps.role}
-              customClasses='w-[80px] border-sky-500 bg-gray-900 p-2'
+              customClasses='w-[80px] border-sky-500 custom-background p-2'
             >
               <p>Next</p>
             </DefaultButton>
@@ -158,7 +158,7 @@ const TestToolTip = ({
                 width: `${100 - percentComplete}%`,
                 transition: 'width 0.5s ease-in-out'
               }}
-              className='h-[2px] bg-gray-900'
+              className='h-[2px] custom-background'
             />
           </div>
         </div>

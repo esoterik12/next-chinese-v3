@@ -13,7 +13,7 @@ const ResultButton = ({
 }: ResultButtonProps) => {
   return (
     <button disabled={disabled} onClick={handleClick}>
-      <div className='custom-hover-effect flex h-[50px] w-[50px] flex-col justify-center rounded-lg bg-gray-900 text-center'>
+      <div className='custom-hover-effect flex h-[50px] w-[50px] flex-col justify-center rounded-lg custom-background custom-border text-center'>
         <p className={`font-semibold ${textColor}`}>{text}</p>
       </div>
     </button>

@@ -14,13 +14,18 @@ interface ActiveLearnSessionProps {
 
 export type ShowSentenceOptions = 'hidden' | 'showSentence' | 'showTranslation'
 
-const ActiveLearnSession = ({ userId, goal, latestWord }: ActiveLearnSessionProps) => {
+const ActiveLearnSession = ({
+  userId,
+  goal,
+  latestWord
+}: ActiveLearnSessionProps) => {
   const { unfinishedWords } = useReviewContext()
   const [showSent, setShowSent] = useState<ShowSentenceOptions>('hidden')
   const [fetching, setFetching] = useState(false)
 
   return (
-    <section className='flex w-full h-full flex-col items-center'>
+    <section className='flex h-full w-full flex-col items-center'>
+      <ProgressBar goal={goal} progress={goal - unfinishedWords.length} />
       <JoyrideMain />
       <div className='flex w-full flex-col items-center'>
         {unfinishedWords.length > 0 && (
@@ -40,7 +45,6 @@ const ActiveLearnSession = ({ userId, goal, latestWord }: ActiveLearnSessionProp
           </>
         )}
       </div>
-      <ProgressBar goal={goal} progress={goal - unfinishedWords.length}/>
     </section>
   )
 }

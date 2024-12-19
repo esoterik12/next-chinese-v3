@@ -54,9 +54,9 @@ export function CustomDropdown({
     return (
       <div>
         {/* width is being passed as md:w-[XYZpx] */}
-        <div className={`flex ${width} border rounded-lg border-gray-800 focus:border-sky-500 flex-col gap-1`}>
+        <div className={`flex ${width} flex-col gap-1 rounded-lg`}>
           <div
-            className='flex cursor-pointer justify-between rounded-lg bg-gray-900 p-2'
+            className=' flex cursor-pointer justify-between rounded-lg border border-zinc-800 p-2 focus:border-zinc-400'
             {...getToggleButtonProps()}
           >
             {/* Sets the placeholder or shows the selected state*/}
@@ -68,7 +68,7 @@ export function CustomDropdown({
           </div>
         </div>
         <ul
-          className={`absolute z-10 mt-1 max-h-80 border border-gray-800 ${width} overflow-scroll rounded-lg bg-gray-900 p-0 shadow-md ${
+          className={`absolute z-10 mt-1 max-h-80 ${width} custom-background border border-zinc-800 overflow-scroll rounded-lg p-0 shadow-md ${
             !isOpen && 'hidden'
           }`}
           {...getMenuProps()}

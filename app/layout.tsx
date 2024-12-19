@@ -44,7 +44,9 @@ export default function RootLayout({
   return (
     <html lang='en' suppressHydrationWarning>
       <body
-        className={`${inter.className} min-h-screen w-full bg-[radial-gradient(circle,_#020617,_#01030d)] text-gray-100 antialiased`}
+        // 0d0d0d is like zinc-925 equivalent
+        // bg-[radial-gradient(circle,_#0d0d0d,_#09090b)]
+        className={`${inter.className} min-h-screen w-full bg-[radial-gradient(circle,_#0d0d0d,_#09090b)] text-gray-100 antialiased`}
       >
         <Providers>
           <NavHeader />

@@ -23,7 +23,7 @@ const UnanimatedProgressBar = ({ goal, progress }: ProgressBarProps) => {
           width: `${100 - percentComplete}%`,
           transition: 'width 0.5s ease-in-out'
         }}
-        className='h-[2px] bg-gray-900'
+        className='h-[2px] custom-background'
       />
     </div>
   )

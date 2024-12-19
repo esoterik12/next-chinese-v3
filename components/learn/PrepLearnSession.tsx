@@ -12,7 +12,6 @@ import { useReviewContext } from '@/lib/context/ReviewSessionContext'
 import InlineError from '../shared/InlineError'
 import calcLevel from '@/lib/utils/calcLevel'
 import { BasicUserStatsData } from '@/types/user.types'
-import { formatLastSession } from '@/lib/utils/formatLastSession'
 import Link from 'next/link'
 import GrammarSelectMain from '../forms/GrammarSelectMain'
 
@@ -80,21 +79,15 @@ const PrepLearnSession = ({
       initialY={-20}
       easeType={[0.22, 0, 0.42, 1]}
       exitY={20}
-      classes='h-full flex flex-col'
+      classes='h-full flex flex-col custom-dark-background py-4 rounded-lg'
     >
       <div>
         {/* Top section */}
-        <div className='border-gray-700'>
+        <div>
           {/* Conditional formating depending on userStats & latestWord */}
           <h1 className='md:custom-header custom-subheader'>
             Welcome{latestWord > 0 ? ' back' : ''}, {name}
           </h1>
-
-          {userStats && latestWord > 0 && (
-            <p className='mb-6 text-gray-400'>
-              Your last session was {formatLastSession(userStats[0].date)}.
-            </p>
-          )}
 
           {!userStats && latestWord === 0 && (
             <p className='py-4'>
@@ -104,7 +97,7 @@ const PrepLearnSession = ({
           )}
 
           {/* Top level primary stats boxes */}
-          <div className='mt-2 flex flex-row flex-wrap gap-4 md:gap-8'>
+          <div className='mt-2 flex flex-row flex-wrap gap-4 md:gap-16'>
             <StatsContainer
               icon={<IconLevel classes='w-6 h-6 text-sky-500' />}
               titleText='Current level:'
@@ -124,33 +117,33 @@ const PrepLearnSession = ({
           </div>
 
           {/* Last 30 days section */}
-          <div className='mb-4 mt-4'>
-            <p className='pb-1 pt-2 text-gray-400'>Last 30 days:</p>
+          <div className='mt-6 md:mt-0 pb-6'>
+            <p className='pb-1 pt-2 text-zinc-400'>Last 30 days:</p>
             <div className='grid w-[330px] grid-cols-15 gap-1 md:flex md:w-full md:flex-row'>
               {userStats.map((item, idx) => (
                 <div
-                  className={`flex h-[18px] w-[18px] items-center justify-center rounded-sm border-white p-2 md:h-[20px] md:w-[20px] ${item.viewCount >= 50 ? 'bg-emerald-500' : item.viewCount > 0 ? 'bg-sky-500' : 'bg-gray-500'}`}
+                  className={`flex h-[18px] w-[18px] items-center justify-center rounded-sm border-white p-2 md:h-[20px] md:w-[20px] ${item.viewCount >= 50 ? 'bg-emerald-500' : item.viewCount > 0 ? 'bg-sky-500' : 'bg-zinc-700'}`}
                   key={idx}
                 ></div>
               ))}
             </div>
           </div>
 
-          {/* Last 30 days section */}
-          <div className='mb-6'>
-            <p className='pb-1 pt-2 text-gray-400'>Select grammar topic: </p>
+          {/* Grammar Topic */}
+          <div className='mt-2'>
+            <p className='pb-1 pt-2 text-zinc-400'>Select grammar topic: </p>
             <GrammarSelectMain />
           </div>
         </div>
 
         {/* Select learning goals section */}
-        <div className=''>
-          <p className='mb-1 mt-6 text-gray-400'>Select your target:</p>
-          <div className='flex flex-row flex-wrap gap-2 py-2'>
+        <div className='mt-8'>
+          <p className='mb-1 text-zinc-400'>Select your target:</p>
+          <div className='flex flex-row flex-wrap gap-2'>
             {[20, 40, 60, 80, 100].map(item => (
               <DefaultButton
                 key={item}
-                customClasses={`md:w-[138px] w-[60px] bg-gray-900 p-2 ${goal === item ? 'border-2 border-gray-400 bg-gray-900 font-semibold' : 'border border-gray-800'}`}
+                customClasses={`md:w-[138px] border w-[60px] p-2 ${goal === item ? 'border-zinc-400 custom-light-background font-semibold' : 'border-zinc-800'}`}
                 handleClick={() => setGoal(item)}
               >
                 <p className={` ${goal === item ? 'text-gray-100' : item}`}>
@@ -161,24 +154,24 @@ const PrepLearnSession = ({
           </div>
 
           {/* Start Button and Error Display: */}
-          <div className='mt-6 flex flex-row gap-2'>
+          <div className='mt-8 flex flex-row gap-2'>
             {!error ? (
               <DefaultButton
                 handleClick={() => handleStart()}
-                customClasses='md:w-[138px] w-[128px] border-2 bg-gray-900 border-emerald-500 p-2'
+                customClasses='md:w-[138px] w-[128px] border-2 border-emerald-500 p-2'
               >
                 <p className='font-semibold'>Start</p>
               </DefaultButton>
             ) : (
               <DefaultButton
                 handleClick={() => handleRetry()}
-                customClasses='md:w-[138px] w-[128px] border-2 bg-gray-900 border-sky-500 p-2'
+                customClasses='md:w-[138px] w-[128px] border-2 border-sky-500 p-2'
               >
                 <p className='font-semibold'>Retry</p>
               </DefaultButton>
             )}
             <Link href='/settings'>
-              <DefaultButton customClasses='md:w-[138px] w-[128px] h-[44px] border border-gray-800 bg-gray-900 p-2'>
+              <DefaultButton customClasses='md:w-[138px] w-[128px] h-[44px] custom-border p-2'>
                 <p className='font-semibold'>Settings</p>
               </DefaultButton>
             </Link>

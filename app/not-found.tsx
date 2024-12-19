@@ -10,7 +10,7 @@ export default function NotFound() {
         href='/'
         className='text-primary-500 hover:text-primary-200 transition-colors duration-150'
       >
-        <DefaultButton customClasses='custom-hover-effect bg-gray-900 p-2 w-[160px] m-4'>
+        <DefaultButton customClasses='custom-hover-effect custom-background p-2 w-[160px] m-4'>
           <p>Homepage</p>
         </DefaultButton>
       </Link>

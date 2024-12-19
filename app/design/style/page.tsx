@@ -31,18 +31,18 @@ const colors = [
   },
   {
     number: 900,
-    background: 'bg-gray-900',
-    hex: '#111827' // Tailwind gray-900
+    background: 'bg-zinc-900',
+    hex: 'update' // OUTDATED
   },
   {
     number: 400,
-    background: 'bg-gray-400',
-    hex: '#9ca3af' // Tailwind gray-400
+    background: 'bg-zinc-400',
+    hex: 'update' // OUTDATED
   },
   {
     number: 100,
-    background: 'bg-gray-100',
-    hex: '#f3f4f6' // Tailwind gray-100
+    background: 'bg-zinc-100',
+    hex: 'update' // OUTDATED
   }
 ]
 

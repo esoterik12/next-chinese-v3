@@ -12,7 +12,7 @@ const StatsContainer = ({
   valueText,
 }: StatsContainerProps) => {
   return (
-    <div className={`flex w-[330px] md:w-[220px] flex-row rounded-xl border-gray-800 border bg-gray-900 p-2 md:flex-col justify-between`}>
+    <div className={`flex w-[330px] md:w-[200px] flex-row rounded-xl  p-2 md:flex-col justify-between`}>
       <div className='flex flex-row gap-2'>
         {icon}
         <p className=''>{titleText}</p>

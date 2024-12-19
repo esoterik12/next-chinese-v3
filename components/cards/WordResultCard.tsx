@@ -9,7 +9,7 @@ import IconViews from '../icons/IconViews'
 
 const WordResultCard = ({ word }: { word: ReviewResultDocument }) => {
   return (
-    <section className='hidden w-[260px] flex-row rounded-xl border-gray-500 bg-gray-900 p-2 md:flex md:flex-col'>
+    <section className='hidden w-[260px] flex-row rounded-xl border-gray-500 custom-background p-2 md:flex md:flex-col'>
       <div className='flex flex-col gap-y-2 px-4'>
         <div className='mt-2 flex flex-row justify-between border-gray-500'>
           <p className='custom-large-text mb-2'>{word.wordTraditional}</p>

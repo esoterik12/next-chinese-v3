@@ -167,7 +167,7 @@ const CompletedLearnSession = ({
             {hoveredWordState !== null && (
               <WordResultCard word={hoveredWordState} />
             )}
-            <div className='flex w-[260px] flex-col justify-between rounded-xl border-gray-500 bg-gray-900 p-2 md:w-[535px]'>
+            <div className='flex w-[260px] flex-col justify-between rounded-xl border-gray-500 custom-background p-2 md:w-[535px]'>
               <div>
                 <p className='flex flex-row gap-x-2 pb-2'>
                   <IconResults classes='h-6 w-6 text-gray-500' />

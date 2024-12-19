@@ -1,5 +1,4 @@
 'use client'
-import * as React from 'react'
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { SubSectionConcept } from '@/types/grammar.types'
@@ -31,7 +30,7 @@ const Accordion = ({
       <motion.header
         className='mb-4 flex h-10 cursor-pointer flex-row items-center rounded-lg'
         initial={false}
-        animate={{ backgroundColor: isOpen ? '#0ea5e9' : '#111827' }}
+        animate={{ backgroundColor: isOpen ? '#0ea5e9' : '#18181b' }}
         onClick={() => setExpanded(isOpen ? false : i)}
       >
         <div className='custom-small-text flec-row md:custom-text ml-4 flex'>

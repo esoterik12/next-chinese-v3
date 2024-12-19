@@ -16,7 +16,7 @@ export default function CustomTooltip(props: TooltipRenderProps) {
 
   return (
     <div
-      className='flex min-h-[210px] w-[380px] flex-col justify-between rounded-lg border border-gray-500 bg-gray-950 p-4'
+      className='flex min-h-[210px] w-[380px] flex-col justify-between rounded-lg border border-gray-500 custom-dark-background p-4'
       {...tooltipProps}
     >
       <div className='flex flex-col'>
@@ -56,7 +56,7 @@ export default function CustomTooltip(props: TooltipRenderProps) {
                 aria-label={primaryProps['aria-label']}
                 data-action={primaryProps['data-action']}
                 role={primaryProps.role}
-                customClasses='w-[80px] border-sky-500 bg-gray-900 p-2'
+                customClasses='w-[80px] border-sky-500 custom-background p-2'
               >
                 <p>Next</p>
               </DefaultButton>

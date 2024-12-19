@@ -74,7 +74,7 @@ const SentenceCard = ({
             <DefaultButton
               id='sentenceButton'
               handleClick={handleSentence}
-              customClasses='custom-hover-effect bg-gray-900 p-2 w-[290px]'
+              customClasses='custom-hover-effect custom-dark-border custom-dark-background p-2 w-[290px]'
             >
               <AnimatePresence mode='wait'>
                 {!fetching ? (
