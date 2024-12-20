@@ -1,18 +1,24 @@
-import { useState } from 'react'
+import React, { SetStateAction } from 'react'
 import { grammarConcepts } from '@/lib/constants/grammar/grammarConcepts'
 import { SectionConceptsData, SubSectionConcept } from '@/types/grammar.types'
 import { CustomDropdown } from './CustomDropdown'
 
-const GrammarSelectMain = () => {
-  // State for selected concept and section
-  const [selectedConcept, setSelectedConcept] =
-    useState<SectionConceptsData | null>(null)
-  const [selectedSection, setSelectedSection] =
-    useState<SubSectionConcept | null>(null)
+interface GrammarSelectMain {
+  selectedConcept: SectionConceptsData
+  setSelectedConcept: React.Dispatch<SetStateAction<SectionConceptsData>>
+  selectedSection: SubSectionConcept
+  setSelectedSection: React.Dispatch<SetStateAction<SubSectionConcept>>
+}
 
+const GrammarSelectMain = ({
+  selectedConcept,
+  setSelectedConcept,
+  selectedSection,
+  setSelectedSection
+}: GrammarSelectMain) => {
   return (
     <div className=''>
-      <div className='flex flex-col gap-8 md:flex-row'>
+      <div className='flex flex-col gap-2 md:flex-row'>
         {/* First Dropdown */}
         <CustomDropdown
           selectedItem={selectedConcept}
@@ -21,7 +27,7 @@ const GrammarSelectMain = () => {
           placeholder='Select a concept'
           secondaryState={selectedSection}
           setSecondaryState={setSelectedSection}
-          width='w-[330px] md:w-[220px]'
+          width='w-[330px] md:w-[282px]'
         />
         {selectedConcept && selectedConcept.conceptNumber !== 0 && (
           <CustomDropdown
@@ -29,7 +35,7 @@ const GrammarSelectMain = () => {
             setSelectedItem={setSelectedSection}
             placeholder='Select a section'
             dropdownItems={selectedConcept.sectionConcepts}
-            width='w-[330px] md:w-[470px]'
+            width='w-[330px] md:w-[432px]'
           />
         )}
       </div>

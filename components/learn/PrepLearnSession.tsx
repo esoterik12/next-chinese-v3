@@ -1,5 +1,5 @@
 'use client'
-import React, { SetStateAction } from 'react'
+import React, { SetStateAction, useState } from 'react'
 import DefaultButton from '@/components/buttons/DefaultButton'
 import IconLevel from '@/components/icons/IconLevel'
 import IconRocket from '@/components/icons/IconRocket'
@@ -14,6 +14,7 @@ import calcLevel from '@/lib/utils/calcLevel'
 import { BasicUserStatsData } from '@/types/user.types'
 import Link from 'next/link'
 import GrammarSelectMain from '../forms/GrammarSelectMain'
+import { SectionConceptsData, SubSectionConcept } from '@/types/grammar.types'
 
 interface PrepLearnSessionProps {
   userId: string // converted from ObjectId in page.tsx
@@ -37,6 +38,10 @@ const PrepLearnSession = ({
   preferredChars
 }: PrepLearnSessionProps) => {
   const { dispatch, error } = useReviewContext()
+  const [selectedConcept, setSelectedConcept] =
+    useState<SectionConceptsData | null>(null)
+  const [selectedSection, setSelectedSection] =
+    useState<SubSectionConcept | null>(null)
 
   const handleStart = async () => {
     try {
@@ -79,7 +84,7 @@ const PrepLearnSession = ({
       initialY={-20}
       easeType={[0.22, 0, 0.42, 1]}
       exitY={20}
-      classes='h-full flex flex-col custom-dark-background py-4 rounded-lg'
+      classes='h-full flex flex-col custom-dark-background px-4 md:px-0 py-4 rounded-lg'
     >
       <div>
         {/* Top section */}
@@ -97,8 +102,8 @@ const PrepLearnSession = ({
           )}
 
           {/* Top level primary stats boxes */}
-          <div className='custom-background flex max-w-[725px] flex-col items-stretch justify-between rounded-lg p-2'>
-            <div className='flex flex-row flex-wrap ml-6 gap-4 md:gap-12'>
+          <div className='custom-background flex max-w-[335px] md:max-w-[725px] flex-col items-stretch justify-between rounded-lg p-2'>
+            <div className='md:ml-6 flex flex-row flex-wrap gap-4 md:gap-12'>
               <StatsContainer
                 icon={<IconLevel classes='w-6 h-6 text-sky-500' />}
                 titleText='Current level:'
@@ -119,10 +124,10 @@ const PrepLearnSession = ({
             {/* Last 30 days section */}
             <div className='mt-6 md:mt-0'>
               <p className='pb-1 pt-2 text-zinc-400'>Last 30 days:</p>
-              <div className='grid w-[330px] grid-cols-15 gap-1 md:flex md:w-full md:flex-row'>
+              <div className='grid w-[320px] grid-cols-15 gap-1 md:flex md:w-full md:flex-row'>
                 {userStats.map((item, idx) => (
                   <div
-                    className={`flex h-[18px] w-[18px] items-center justify-center rounded-sm border-white p-2 md:h-[20px] md:w-[20px] ${item.viewCount >= 50 ? 'bg-emerald-500' : item.viewCount > 0 ? 'bg-sky-500' : 'bg-zinc-700'}`}
+                    className={`flex h-[17px] w-[17px] items-center justify-center rounded-sm border-white p-2 md:h-[20px] md:w-[20px] ${item.viewCount >= 50 ? 'bg-emerald-500' : item.viewCount > 0 ? 'bg-sky-500' : 'bg-zinc-700'}`}
                     key={idx}
                   ></div>
                 ))}
@@ -131,9 +136,14 @@ const PrepLearnSession = ({
           </div>
 
           {/* Grammar Topic */}
-          <div className='mt-2 ml-1'>
+          <div className='ml-1 mt-2'>
             <p className='pb-1 pt-2 text-zinc-400'>Select grammar topic: </p>
-            <GrammarSelectMain />
+            <GrammarSelectMain 
+                selectedConcept={selectedConcept}
+                setSelectedConcept={setSelectedConcept}
+                selectedSection={selectedSection}
+                setSelectedSection={setSelectedSection}
+            />
           </div>
         </div>
 
