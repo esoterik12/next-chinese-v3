@@ -1,5 +1,5 @@
 import { SectionConceptsData } from '@/types/grammar.types'
-
+// TODO: Not complete data = could add more
 export const grammar3Numbers: SectionConceptsData = {
   title: 'Numbers',
   conceptNumber: 3,
@@ -246,6 +246,141 @@ export const grammar3Numbers: SectionConceptsData = {
       ],
       notes: [
         '零 (líng) is not repeated for consecutive empty places; it appears only once.'
+      ]
+    },
+    {
+      subSectionNumber: 7,
+      title: 'Forming Numbers 10,000 to 100,000,000',
+      explanation:
+        'In Chinese, numbers between 10,000 and 100,000,000 are read in terms of ten-thousands, unlike English, which uses thousands and millions. Numbers are divided into categories of tens, hundreds, thousands, ten-thousands, and hundred millions.',
+      examples: [
+        {
+          exNumber: 1,
+          exExplanation: 'Example for 1,000.',
+          exStructure: 'Number + 千',
+          exSimplified: '一千',
+          exTraditional: '一千',
+          exPinyin: 'yī qiān',
+          exTranslation: '1,000'
+        },
+        {
+          exNumber: 2,
+          exExplanation: 'Example for 10,000.',
+          exStructure: 'Number + 万/萬',
+          exSimplified: '一万',
+          exTraditional: '一萬',
+          exPinyin: 'yī wàn',
+          exTranslation: '10,000'
+        },
+        {
+          exNumber: 3,
+          exExplanation: 'Example for 100,000.',
+          exStructure: 'Number + 万/萬',
+          exSimplified: '十万',
+          exTraditional: '十萬',
+          exPinyin: 'shí wàn',
+          exTranslation: '100,000'
+        },
+        {
+          exNumber: 4,
+          exExplanation: 'Example for 1,000,000.',
+          exStructure: 'Number + 万/萬',
+          exSimplified: '百万',
+          exTraditional: '百萬',
+          exPinyin: 'bǎi wàn',
+          exTranslation: '1,000,000'
+        },
+        {
+          exNumber: 5,
+          exExplanation: 'Example for 10,000,000.',
+          exStructure: 'Number + 万/萬',
+          exSimplified: '千万',
+          exTraditional: '千萬',
+          exPinyin: 'qiān wàn',
+          exTranslation: '10,000,000'
+        },
+        {
+          exNumber: 6,
+          exExplanation: 'Example for 100,000,000.',
+          exStructure: 'Number + 亿/億',
+          exSimplified: '一亿',
+          exTraditional: '一億',
+          exPinyin: 'yī yì',
+          exTranslation: '100,000,000'
+        },
+        {
+          exNumber: 7,
+          exExplanation: 'Example for 1,000,000,000.',
+          exStructure: 'Number + 亿/億',
+          exSimplified: '十亿',
+          exTraditional: '十億',
+          exPinyin: 'shí yì',
+          exTranslation: '1,000,000,000'
+        }
+      ],
+      notes: [
+        'In Mandarin Chinese, numbers from 10,000 to 100,000,000 are often read in terms of the categories: 万 (wàn) for ten thousand and 亿 (yì) for hundred million.',
+        "The concept of a 'ten-thousand' is central in Chinese number formation, while in English, numbers like 10,000 and 100,000 are handled with thousands and hundreds."
+      ]
+    },
+    {
+      subSectionNumber: 8,
+      title: 'Examples with Larger Numbers',
+      explanation:
+        "In Chinese, larger numbers are broken down in terms of ten-thousands and hundred millions. Here's how you read complex numbers.",
+      examples: [
+        {
+          exNumber: 1,
+          exExplanation: 'Example for 25,250.',
+          exStructure: 'Number + 万 + Number + 千 + Number + 百 + Number',
+          exSimplified: '两万五千二百五十',
+          exTraditional: '兩萬五千二百五十',
+          exPinyin: 'liǎng wàn wǔ qiān èr bǎi wǔ shí',
+          exTranslation: '25,250'
+        },
+        {
+          exNumber: 2,
+          exExplanation: 'Example for 225,250.',
+          exStructure: 'Number + 万 + Number + 千 + Number + 百 + Number',
+          exSimplified: '二十二万五千二百五十',
+          exTraditional: '二十二萬五千二百五十',
+          exPinyin: 'èr shí èr wàn wǔ qiān èr bǎi wǔ shí',
+          exTranslation: '225,250'
+        },
+        {
+          exNumber: 3,
+          exExplanation: 'Example for 2,225,250.',
+          exStructure:
+            'Number + 百 + Number + 万 + Number + 千 + Number + 百 + Number',
+          exSimplified: '两百二十二万五千二百五十',
+          exTraditional: '兩百二十二萬五千二百五十',
+          exPinyin: 'liǎng bǎi èr shí èr wàn wǔ qiān èr bǎi wǔ shí',
+          exTranslation: '2,225,250'
+        },
+        {
+          exNumber: 4,
+          exExplanation: 'Example for 22,225,250.',
+          exStructure:
+            'Number + 千 + Number + 百 + Number + 万 + Number + 千 + Number + 百 + Number',
+          exSimplified: '两千二百二十二万五千二百五十',
+          exTraditional: '兩千二百二十二萬五千二百五十',
+          exPinyin: 'liǎng qiān èr bǎi èr shí èr wàn wǔ qiān èr bǎi wǔ shí',
+          exTranslation: '22,225,250'
+        },
+        {
+          exNumber: 5,
+          exExplanation: 'Example for 522,225,250.',
+          exStructure:
+            'Number + 亿 + Number + 千 + Number + 万 + Number + 千 + Number + 百 + Number',
+          exSimplified: '五亿两千二百二十二万五千二百五十',
+          exTraditional: '五億兩千二百二十二萬五千二百五十',
+          exPinyin:
+            'wǔ yì liǎng qiān èr bǎi èr shí èr wàn wǔ qiān èr bǎi wǔ shí',
+          exTranslation: '522,225,250'
+        }
+      ],
+      notes: [
+        'Larger numbers are built by combining units of 万 (wàn), 千 (qiān), and 亿 (yì) from right to left. For example, 522,225,250 is broken down as 五亿 (wǔ yì) for hundred million, 两千二百二十二万 (liǎng qiān èr bǎi èr shí èr wàn) for thousands, and 五千二百五十 (wǔ qiān èr bǎi wǔ shí) for remaining numbers.'
       ]
     }
   ]

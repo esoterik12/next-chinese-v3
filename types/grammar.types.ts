@@ -6,7 +6,6 @@ export interface SubSectionExample {
   exTraditional: string;
   exPinyin: string;
   exTranslation: string;
-  
 }
 
 export interface SubSectionConcept {

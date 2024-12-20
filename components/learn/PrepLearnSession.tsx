@@ -97,47 +97,48 @@ const PrepLearnSession = ({
           )}
 
           {/* Top level primary stats boxes */}
-          <div className='mt-2 flex flex-row flex-wrap gap-4 md:gap-16'>
-            <StatsContainer
-              icon={<IconLevel classes='w-6 h-6 text-sky-500' />}
-              titleText='Current level:'
-              // +1 is added so the current level displayed is what the user's next word will be, not current
-              valueText={calcLevel(latestWord + 1)}
-            />
-            <StatsContainer
-              icon={<IconRocket classes='w-6 h-6 text-emerald-500' />}
-              titleText='Awaiting review:'
-              valueText={wordsDueCount}
-            />
-            <StatsContainer
-              icon={<IconViews classes='w-6 h-6 text-rose-500' />}
-              titleText='Words learned:'
-              valueText={latestWord}
-            />
-          </div>
-
-          {/* Last 30 days section */}
-          <div className='mt-6 md:mt-0 pb-6'>
-            <p className='pb-1 pt-2 text-zinc-400'>Last 30 days:</p>
-            <div className='grid w-[330px] grid-cols-15 gap-1 md:flex md:w-full md:flex-row'>
-              {userStats.map((item, idx) => (
-                <div
-                  className={`flex h-[18px] w-[18px] items-center justify-center rounded-sm border-white p-2 md:h-[20px] md:w-[20px] ${item.viewCount >= 50 ? 'bg-emerald-500' : item.viewCount > 0 ? 'bg-sky-500' : 'bg-zinc-700'}`}
-                  key={idx}
-                ></div>
-              ))}
+          <div className='custom-background flex max-w-[725px] flex-col items-stretch justify-between rounded-lg p-2'>
+            <div className='flex flex-row flex-wrap ml-6 gap-4 md:gap-12'>
+              <StatsContainer
+                icon={<IconLevel classes='w-6 h-6 text-sky-500' />}
+                titleText='Current level:'
+                // +1 is added so the current level displayed is what the user's next word will be, not current
+                valueText={calcLevel(latestWord + 1)}
+              />
+              <StatsContainer
+                icon={<IconRocket classes='w-6 h-6 text-emerald-500' />}
+                titleText='Awaiting review:'
+                valueText={wordsDueCount}
+              />
+              <StatsContainer
+                icon={<IconViews classes='w-6 h-6 text-rose-500' />}
+                titleText='Words learned:'
+                valueText={latestWord}
+              />
+            </div>
+            {/* Last 30 days section */}
+            <div className='mt-6 md:mt-0'>
+              <p className='pb-1 pt-2 text-zinc-400'>Last 30 days:</p>
+              <div className='grid w-[330px] grid-cols-15 gap-1 md:flex md:w-full md:flex-row'>
+                {userStats.map((item, idx) => (
+                  <div
+                    className={`flex h-[18px] w-[18px] items-center justify-center rounded-sm border-white p-2 md:h-[20px] md:w-[20px] ${item.viewCount >= 50 ? 'bg-emerald-500' : item.viewCount > 0 ? 'bg-sky-500' : 'bg-zinc-700'}`}
+                    key={idx}
+                  ></div>
+                ))}
+              </div>
             </div>
           </div>
 
           {/* Grammar Topic */}
-          <div className='mt-2'>
+          <div className='mt-2 ml-1'>
             <p className='pb-1 pt-2 text-zinc-400'>Select grammar topic: </p>
             <GrammarSelectMain />
           </div>
         </div>
 
         {/* Select learning goals section */}
-        <div className='mt-8'>
+        <div className='ml-1 mt-8'>
           <p className='mb-1 text-zinc-400'>Select your target:</p>
           <div className='flex flex-row flex-wrap gap-2'>
             {[20, 40, 60, 80, 100].map(item => (
