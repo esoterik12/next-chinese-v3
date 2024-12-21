@@ -3,7 +3,7 @@ import classes from './Loading.module.css'
 
 const Loading = ({ text }: { text?: string }) => {
   return (
-    <div className='flex flex-col items-center justify-center align-middle'>
+    <div className='flex flex-col mb-20 items-center justify-center align-middle'>
       <p>{text}</p>
       <div className={classes.ldsRipple}>
         <div></div>

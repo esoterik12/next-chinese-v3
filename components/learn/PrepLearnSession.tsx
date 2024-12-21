@@ -1,5 +1,5 @@
 'use client'
-import React, { SetStateAction, useState } from 'react'
+import React, { SetStateAction } from 'react'
 import DefaultButton from '@/components/buttons/DefaultButton'
 import IconLevel from '@/components/icons/IconLevel'
 import IconRocket from '@/components/icons/IconRocket'
@@ -13,8 +13,7 @@ import InlineError from '../shared/InlineError'
 import calcLevel from '@/lib/utils/calcLevel'
 import { BasicUserStatsData } from '@/types/user.types'
 import Link from 'next/link'
-import GrammarSelectMain from '../forms/GrammarSelectMain'
-import { SectionConceptsData, SubSectionConcept } from '@/types/grammar.types'
+import OpenGrammarModal from '../grammar/OpenGrammarModal'
 
 interface PrepLearnSessionProps {
   userId: string // converted from ObjectId in page.tsx
@@ -38,10 +37,6 @@ const PrepLearnSession = ({
   preferredChars
 }: PrepLearnSessionProps) => {
   const { dispatch, error } = useReviewContext()
-  const [selectedConcept, setSelectedConcept] =
-    useState<SectionConceptsData | null>(null)
-  const [selectedSection, setSelectedSection] =
-    useState<SubSectionConcept | null>(null)
 
   const handleStart = async () => {
     try {
@@ -84,7 +79,7 @@ const PrepLearnSession = ({
       initialY={-20}
       easeType={[0.22, 0, 0.42, 1]}
       exitY={20}
-      classes='h-full flex flex-col custom-dark-background px-4 md:px-0 py-4 rounded-lg'
+      classes='h-full flex flex-col custom-dark-background px-4 sm:px-4 py-4 rounded-lg'
     >
       <div>
         {/* Top section */}
@@ -102,8 +97,8 @@ const PrepLearnSession = ({
           )}
 
           {/* Top level primary stats boxes */}
-          <div className='custom-background flex max-w-[335px] md:max-w-[725px] flex-col items-stretch justify-between rounded-lg p-2'>
-            <div className='md:ml-6 flex flex-row flex-wrap gap-4 md:gap-12'>
+          <div className='custom-background mt-2 flex max-w-[335px] flex-col items-stretch justify-between rounded-lg p-2 md:max-w-[725px]'>
+            <div className='flex flex-row flex-wrap gap-4 md:ml-6 md:gap-12'>
               <StatsContainer
                 icon={<IconLevel classes='w-6 h-6 text-sky-500' />}
                 titleText='Current level:'
@@ -134,22 +129,11 @@ const PrepLearnSession = ({
               </div>
             </div>
           </div>
-
-          {/* Grammar Topic */}
-          <div className='ml-1 mt-2'>
-            <p className='pb-1 pt-2 text-zinc-400'>Select grammar topic: </p>
-            <GrammarSelectMain 
-                selectedConcept={selectedConcept}
-                setSelectedConcept={setSelectedConcept}
-                selectedSection={selectedSection}
-                setSelectedSection={setSelectedSection}
-            />
-          </div>
         </div>
 
         {/* Select learning goals section */}
-        <div className='ml-1 mt-8'>
-          <p className='mb-1 text-zinc-400'>Select your target:</p>
+        <div className='ml-1 mt-6'>
+          <p className='mb-1 text-zinc-400'>Select your words target:</p>
           <div className='flex flex-row flex-wrap gap-2'>
             {[20, 40, 60, 80, 100].map(item => (
               <DefaultButton
@@ -186,6 +170,7 @@ const PrepLearnSession = ({
                 <p className='font-semibold'>Settings</p>
               </DefaultButton>
             </Link>
+            <OpenGrammarModal />
             {error && (
               <div className=''>
                 <InlineError

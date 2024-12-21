@@ -18,7 +18,7 @@ const GrammarSelectMain = ({
 }: GrammarSelectMain) => {
   return (
     <div className=''>
-      <div className='flex flex-col gap-2 md:flex-row'>
+      <div className='flex flex-col gap-3'>
         {/* First Dropdown */}
         <CustomDropdown
           selectedItem={selectedConcept}
@@ -27,7 +27,7 @@ const GrammarSelectMain = ({
           placeholder='Select a concept'
           secondaryState={selectedSection}
           setSecondaryState={setSelectedSection}
-          width='w-[330px] md:w-[282px]'
+          width='w-[300px]'
         />
         {selectedConcept && selectedConcept.conceptNumber !== 0 && (
           <CustomDropdown
@@ -35,7 +35,7 @@ const GrammarSelectMain = ({
             setSelectedItem={setSelectedSection}
             placeholder='Select a section'
             dropdownItems={selectedConcept.sectionConcepts}
-            width='w-[330px] md:w-[432px]'
+            width='w-[300px]'
           />
         )}
       </div>

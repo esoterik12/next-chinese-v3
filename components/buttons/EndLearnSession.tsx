@@ -17,15 +17,20 @@ const EndLearnSession = ({ userId, latestWord, id }: EndLearnSessionProps) => {
   const router = useRouter()
 
   const onClickEnd = async () => {
-    await endLearnSession({
-      userId,
-      finishedWords,
-      characterState,
-      latestWord,
-      startTime
-    })
-    dispatch({ type: 'resetState' })
-    router.push('/')
+    try {
+      await endLearnSession({
+        userId,
+        finishedWords,
+        characterState,
+        latestWord,
+        startTime
+      })
+    } catch (error) {
+      dispatch({type: 'setError', error: 'Error ending session. Save may have been unsuccessful.'})
+    } finally {
+      dispatch({ type: 'resetState' })
+      router.push('/')
+    }
   }
 
   return (

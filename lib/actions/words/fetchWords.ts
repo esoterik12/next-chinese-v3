@@ -11,7 +11,7 @@ import { ReviewResultDocument } from '@/types/review.types'
 
 export async function fetchWords({
   userId,
-  sessionWordGoal = 10
+  sessionWordGoal = 10,
 }: {
   userId: mongoose.Types.ObjectId | string
   sessionWordGoal: number

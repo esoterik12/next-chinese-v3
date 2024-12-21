@@ -1,14 +1,18 @@
 import React from 'react'
 import { grammarPageLinks } from '@/lib/constants/grammarPageLinks'
 import Link from 'next/link'
+import IconPuzzle from '@/components/icons/IconPuzzle'
 
 const GrammarLibraryPage = () => {
   return (
     <section className='flex flex-col rounded-lg shadow-lg'>
       <h1 className='custom-header font-bold tracking-wide'>Grammar Library</h1>
-      <p className='text-gray-400'>
-        Use these grammar concepts in Next Chinese sentence generation to hit
-        two birds with one stone!
+      <p className='mt-2 text-zinc-400'>
+        You can add these concepts to your learning session to generate
+        sentences using the concepts you are learning.
+      </p>
+      <p className='mt-2 flex flex-row text-zinc-400'>
+        Look for this icon&nbsp;<IconPuzzle classes='h-6 w-6' />&nbsp;to select a grammar concept.
       </p>
       <div className='w-full'>
         {grammarPageLinks.map(item => (
@@ -17,10 +21,10 @@ const GrammarLibraryPage = () => {
             key={item.conceptNumber}
             className='flex-1 p-2'
           >
-            <div className='custom-hover-effect flex items-center justify-between rounded-md border border-gray-400 p-2 transition-shadow duration-300 hover:border-sky-500 hover:shadow-md'>
+            <div className='custom-hover-effect flex items-center justify-between rounded-md border border-zinc-400 p-2 transition-shadow duration-300 hover:border-sky-500 hover:shadow-md'>
               <p className='font-medium'>
                 Chapter {item.conceptNumber}{' '}
-                <span className='text-gray-400'>-</span> {item.sectionTitle}
+                <span className='text-zinc-400'>-</span> {item.sectionTitle}
               </p>
             </div>{' '}
           </Link>

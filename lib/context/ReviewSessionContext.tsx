@@ -3,6 +3,7 @@ import React, { createContext, useContext, useReducer, ReactNode } from 'react'
 import sm2 from '../sm2/sm2Algo'
 import { ReviewResultDocument } from '@/types/review.types'
 import { BaseSentenceProps } from '@/types/review.types'
+import { SubSectionConcept } from '@/types/grammar.types'
 
 // firstResult are the first 1-5 easeFactor outcome that the user inputs
 // correct and incorrect are subsequent views, incorrect returns the word to the unfinished queue
@@ -10,6 +11,7 @@ interface ReviewReducerAction {
   type:
     | 'setError'
     | 'loadWords'
+    | 'loadGrammar'
     | 'addSentence'
     | 'firstResult'
     | 'correctResult'
@@ -23,11 +25,13 @@ interface ReviewReducerAction {
   newSentence?: BaseSentenceProps
   error?: null | string
   characterState?: 'traditional' | 'simplified'
+  selectedGrammar?: SubSectionConcept
 }
 
 interface ReviewReducerState {
   unfinishedWords: ReviewResultDocument[]
   finishedWords: ReviewResultDocument[]
+  selectedGrammarSection: SubSectionConcept | null
   progress: string
   loadingState: boolean
   characterState: 'traditional' | 'simplified'
@@ -42,6 +46,7 @@ interface AppContextTypes extends ReviewReducerState {
 const initialContext: ReviewReducerState = {
   unfinishedWords: [],
   finishedWords: [],
+  selectedGrammarSection: null,
   progress: 'ready',
   loadingState: true,
   characterState: 'traditional',
@@ -96,6 +101,12 @@ const reducer = (
           loadingState: false,
           error: 'Unexpected error loading words in your review session.'
         }
+      }
+
+    case  'loadGrammar':
+      // Load grammar:
+      return {
+        ...state,
       }
 
     // Adds a generated sentence into an array for new sentences generated
@@ -256,6 +267,7 @@ const ReviewContextProvider: React.FC<{ children: ReactNode }> = ({
       value={{
         unfinishedWords: state.unfinishedWords,
         finishedWords: state.finishedWords,
+        selectedGrammarSection: state.selectedGrammarSection,
         progress: state.progress,
         loadingState: state.loadingState,
         characterState: state.characterState,
