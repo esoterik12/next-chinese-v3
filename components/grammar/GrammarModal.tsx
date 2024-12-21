@@ -106,7 +106,7 @@ const Modal = ({ isOpen, onClose, children }: ModalProps) => {
             {/* Modal Content */}
             <div className='p-6'>
               <div className='flex h-6 flex-row items-center'>
-                <IconPuzzle classes='h-6 w-6 text-zinc-900' />
+                <IconPuzzle classes='h-6 w-6 text-sky-500' />
                 <p className='custom-large-text font-medium text-zinc-900'>
                   &nbsp;Grammar Focus
                 </p>

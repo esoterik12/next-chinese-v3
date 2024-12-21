@@ -41,7 +41,7 @@ const LearnPage = async () => {
   }
 
   return (
-    <PageContainer customClasses='lg:px-12'>
+    <PageContainer customClasses=''>
       <ReviewCont
         userStats={userInfo.result.userStats.result}
         preferredChars={userInfo.result.user.preferredChars}

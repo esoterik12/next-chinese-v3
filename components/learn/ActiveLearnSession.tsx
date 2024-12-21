@@ -5,6 +5,7 @@ import { useReviewContext } from '@/lib/context/ReviewSessionContext'
 import { useState } from 'react'
 import ProgressBar from './ProgressBar'
 import JoyrideMain from '../joyride/JoyrideMain'
+import OpenGrammarModal from '../grammar/OpenGrammarModal'
 
 interface ActiveLearnSessionProps {
   userId: string
@@ -26,6 +27,10 @@ const ActiveLearnSession = ({
   return (
     <section className='flex h-full w-full flex-col items-center'>
       <ProgressBar goal={goal} progress={goal - unfinishedWords.length} />
+
+      <div className='flex w-full flex-row items-center justify-end'>
+        <OpenGrammarModal modalVersion='activeLearnSession' />
+      </div>
       <JoyrideMain />
       <div className='flex w-full flex-col items-center'>
         {unfinishedWords.length > 0 && (

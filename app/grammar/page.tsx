@@ -11,8 +11,9 @@ const GrammarLibraryPage = () => {
         You can add these concepts to your learning session to generate
         sentences using the concepts you are learning.
       </p>
-      <p className='mt-2 flex flex-row text-zinc-400'>
-        Look for this icon&nbsp;<IconPuzzle classes='h-6 w-6' />&nbsp;to select a grammar concept.
+      <p className='mt-2 inline-flex text-zinc-400'>
+        <IconPuzzle classes='h-6 w-6 text-sky-500 mr-2' />
+        Look for this icon to select a grammar concept.
       </p>
       <div className='w-full'>
         {grammarPageLinks.map(item => (

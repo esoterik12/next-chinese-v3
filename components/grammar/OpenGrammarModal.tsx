@@ -7,7 +7,11 @@ import GrammarSelectMain from '../forms/GrammarSelectMain'
 import { SectionConceptsData, SubSectionConcept } from '@/types/grammar.types'
 import { useReviewContext } from '@/lib/context/ReviewSessionContext'
 
-const OpenGrammarModal = () => {
+interface OpenGrammarModal {
+  modalVersion: 'prepLearnSession' | 'activeLearnSession'
+}
+
+const OpenGrammarModal = ({ modalVersion }: OpenGrammarModal) => {
   const { dispatch } = useReviewContext()
   const [selectedConcept, setSelectedConcept] =
     useState<SectionConceptsData | null>(null)
@@ -58,12 +62,22 @@ const OpenGrammarModal = () => {
           </div>
         )}
       </GrammarModal>
-      <DefaultButton
-        customClasses='md:w-[138px] w-[60px] h-[44px] flex flex-row items-center justify-center custom-border p-2'
-        handleClick={handleModalClick}
-      >
-        <IconPuzzle classes='h-6 w-6' />
-      </DefaultButton>
+      {modalVersion === 'prepLearnSession' && (
+        <DefaultButton
+          customClasses='md:w-[138px] w-[60px] h-[44px] flex flex-row items-center justify-center custom-border p-2'
+          handleClick={handleModalClick}
+        >
+          <IconPuzzle classes='h-6 w-6 text-sky-500' />
+        </DefaultButton>
+      )}
+      {modalVersion === 'activeLearnSession' && (
+        <DefaultButton
+          customClasses='flex flex-row items-center justify-center p-2 m-2'
+          handleClick={handleModalClick}
+        >
+          <IconPuzzle classes='h-6 w-6 text-sky-500' />
+        </DefaultButton>
+      )}
     </div>
   )
 }

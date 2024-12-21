@@ -93,7 +93,7 @@ const WordCard = ({
   useKeyboard({ show, fetching, completeCard, handleShow, voice })
 
   return (
-    <div className='custom-dark-background mt-14 h-[400px] w-[290px] custom-dark-border'>
+    <div className='custom-dark-background mt-2 h-[400px] w-[290px] custom-dark-border'>
       {/* Top Word section - fixed height */}
       <div className='mx-1 flex h-[60px] justify-between p-2'>
         <ToggleCharacters id='toggleCharacters' />

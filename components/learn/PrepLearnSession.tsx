@@ -79,7 +79,7 @@ const PrepLearnSession = ({
       initialY={-20}
       easeType={[0.22, 0, 0.42, 1]}
       exitY={20}
-      classes='h-full flex flex-col custom-dark-background px-4 sm:px-4 py-4 rounded-lg'
+      classes='h-full flex flex-col px-4 sm:px-4 py-4 rounded-lg'
     >
       <div>
         {/* Top section */}
@@ -153,7 +153,7 @@ const PrepLearnSession = ({
             {!error ? (
               <DefaultButton
                 handleClick={() => handleStart()}
-                customClasses='md:w-[138px] w-[128px] border-2 border-emerald-500 p-2'
+                customClasses='md:w-[138px] w-[128px] border border-emerald-500 p-2'
               >
                 <p className='font-semibold'>Start</p>
               </DefaultButton>
@@ -170,7 +170,7 @@ const PrepLearnSession = ({
                 <p className='font-semibold'>Settings</p>
               </DefaultButton>
             </Link>
-            <OpenGrammarModal />
+            <OpenGrammarModal modalVersion='prepLearnSession' />
             {error && (
               <div className=''>
                 <InlineError
