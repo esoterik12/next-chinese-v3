@@ -1,5 +1,4 @@
 import React, { SetStateAction } from 'react'
-import { grammarConcepts } from '@/lib/constants/grammar/grammarConcepts'
 import { SectionConceptsData, SubSectionConcept } from '@/types/grammar.types'
 import { CustomDropdown } from './CustomDropdown'
 
@@ -8,13 +7,15 @@ interface GrammarSelectMain {
   setSelectedConcept: React.Dispatch<SetStateAction<SectionConceptsData>>
   selectedSection: SubSectionConcept
   setSelectedSection: React.Dispatch<SetStateAction<SubSectionConcept>>
+  dynamicConcepts: SectionConceptsData[]
 }
 
 const GrammarSelectMain = ({
   selectedConcept,
   setSelectedConcept,
   selectedSection,
-  setSelectedSection
+  setSelectedSection,
+  dynamicConcepts
 }: GrammarSelectMain) => {
   return (
     <div className=''>
@@ -23,7 +24,7 @@ const GrammarSelectMain = ({
         <CustomDropdown
           selectedItem={selectedConcept}
           setSelectedItem={setSelectedConcept}
-          dropdownItems={grammarConcepts}
+          dropdownItems={dynamicConcepts}
           placeholder='Select a concept'
           secondaryState={selectedSection}
           setSecondaryState={setSelectedSection}

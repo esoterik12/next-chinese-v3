@@ -1,24 +1,57 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import GrammarModal from '../grammar/GrammarModal'
 import DefaultButton from '../buttons/DefaultButton'
 import IconPuzzle from '../icons/IconPuzzle'
 import GrammarSelectMain from '../forms/GrammarSelectMain'
 import { SectionConceptsData, SubSectionConcept } from '@/types/grammar.types'
 import { useReviewContext } from '@/lib/context/ReviewSessionContext'
+import {
+  grammarConcepts,
+  loadGrammarConcepts,
+  emptyConcept
+} from '@/lib/constants/grammar/grammarConcepts'
 
 interface OpenGrammarModal {
   modalVersion: 'prepLearnSession' | 'activeLearnSession'
 }
 
 const OpenGrammarModal = ({ modalVersion }: OpenGrammarModal) => {
-  const { dispatch } = useReviewContext()
+  const { dispatch, selectedGrammarSection } = useReviewContext()
+  const [isOpen, setIsOpen] = useState(false)
+
+  // Dynamically import concepts
+  const [dynamicConcepts, setDynamicConcepts] =
+    useState<SectionConceptsData[]>(grammarConcepts)
+
+  // Selected concept state
   const [selectedConcept, setSelectedConcept] =
     useState<SectionConceptsData | null>(null)
   const [selectedSection, setSelectedSection] =
-    useState<SubSectionConcept | null>(null)
+    useState<SubSectionConcept | null>(selectedGrammarSection)
 
-  const [isOpen, setIsOpen] = useState(false)
+  // Trigger dynamic import when needed
+  useEffect(() => {
+    if (dynamicConcepts.length === 1 && dynamicConcepts[0] === emptyConcept) {
+      ;(async () => {
+        const loadedConcepts = await loadGrammarConcepts()
+        setDynamicConcepts(loadedConcepts)
+      })()
+    }
+  }, [dynamicConcepts])
+
+  // find selected concept in grammarConcepts using the selectedGrammarSection
+  useEffect(() => {
+    if (selectedGrammarSection) {
+      const concept = dynamicConcepts.find(concept =>
+        concept.sectionConcepts.some(
+          section => section === selectedGrammarSection
+        )
+      )
+      setSelectedConcept(concept || null)
+    }
+  }, [selectedGrammarSection, dynamicConcepts])
+
   const handleModalClick = () => {
     setIsOpen(prevState => !prevState)
     if (selectedSection) {
@@ -39,11 +72,10 @@ const OpenGrammarModal = ({ modalVersion }: OpenGrammarModal) => {
           setSelectedConcept={setSelectedConcept}
           selectedSection={selectedSection}
           setSelectedSection={setSelectedSection}
+          dynamicConcepts={dynamicConcepts}
         />
         {selectedSection && (
           <div className='mt-4 gap-2'>
-            {/* <h3 className='custom-text mb-4'>Details & Explanation:</h3>
-            <p>{selectedSection.explanation}</p> */}
             <h3 className='custom-text'>Examples:</h3>
             <div className='mt-4 flex flex-col gap-2'>
               {selectedSection.examples.map((example, index) => (
