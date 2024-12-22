@@ -103,10 +103,11 @@ const reducer = (
         }
       }
 
-    case  'loadGrammar':
-      // Load grammar:
+    // Grammar sections can be conditionally used in sentence generation
+    case 'loadGrammar':
       return {
         ...state,
+        selectedGrammarSection: action.selectedGrammar
       }
 
     // Adds a generated sentence into an array for new sentences generated

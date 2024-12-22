@@ -79,7 +79,7 @@ const PrepLearnSession = ({
       initialY={-20}
       easeType={[0.22, 0, 0.42, 1]}
       exitY={20}
-      classes='h-full flex flex-col px-4 sm:px-4 py-4 rounded-lg'
+      classes='h-full flex flex-col px-4 md:px-12 sm:px-4 py-4 rounded-lg'
     >
       <div>
         {/* Top section */}

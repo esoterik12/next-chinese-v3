@@ -1,6 +1,7 @@
 'use server'
 import OpenAI from 'openai'
 import { AppError } from '@/lib/errors/AppError'
+import { SubSectionConcept } from '@/types/grammar.types'
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAPI_KEY
@@ -9,13 +10,15 @@ const openai = new OpenAI({
 interface GenerateSentenceProps {
   word: string
   level?: number
+  grammar?: SubSectionConcept
 }
 
 export default async function generateSentence({
   word,
-  level
+  level,
+  grammar
 }: GenerateSentenceProps) {
-  const userInput = `
+  let userInput = `
     Make a sentence using this Chinese word: ${word} at a difficulty of TOCFL level ${level}. 
     Only reply with the sentence in traditional chinese and simplified and no further comments. 
     Also include a translation of the sentence and the sentence in pinyin. 
@@ -23,6 +26,29 @@ export default async function generateSentence({
     { "sentTraditional": "", "sentSimplified": "", "sentPinyin": "", "sentTranslation": ""} 
     where the sentence, the pinyin sentence, and the translation are each a property of the JSON object. 
     `
+
+  if (grammar) {
+    // trim some content to shorten the prompt and save on input tokens
+    const minimalGrammar = {
+      title: grammar.title,
+      explanation: grammar.explanation,
+      // Randomly select one example from the examples array
+      examples: grammar.examples.length
+        ? [
+            grammar.examples[
+              Math.floor(Math.random() * grammar.examples.length)
+            ]
+          ].map(({ exNumber, exSimplified }) => ({
+            exNumber,
+            exSimplified
+          }))
+        : []
+    }
+
+    userInput += ` Make the sentence using this grammar concept:
+    ${minimalGrammar.title} - ${minimalGrammar.explanation}
+    Here is an example: ${minimalGrammar.examples[0].exSimplified}`
+  }
 
   try {
     const response = await openai.chat.completions.create({

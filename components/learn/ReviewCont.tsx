@@ -34,7 +34,7 @@ const ReviewCont = ({
   useEffect(() => {
     const handleBeforeUnload = async event => {
       event.returnValue = ''
-
+      
       try {
         await endLearnSession({
           userId,

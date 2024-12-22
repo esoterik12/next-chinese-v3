@@ -71,12 +71,12 @@ const OpenGrammarModal = ({ modalVersion }: OpenGrammarModal) => {
         </DefaultButton>
       )}
       {modalVersion === 'activeLearnSession' && (
-        <DefaultButton
-          customClasses='flex flex-row items-center justify-center p-2 m-2'
-          handleClick={handleModalClick}
+        <button
+          className='m-2 flex flex-row items-center justify-center p-2'
+          onClick={handleModalClick}
         >
-          <IconPuzzle classes='h-6 w-6 text-sky-500' />
-        </DefaultButton>
+          <IconPuzzle classes='hover:text-zinc-400 transition-colors duration-300 h-6 w-6 text-sky-500' />
+        </button>
       )}
     </div>
   )

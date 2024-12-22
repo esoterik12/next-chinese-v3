@@ -21,16 +21,21 @@ const SentenceCard = ({
   fetching,
   setFetching
 }: SentenceCardProps) => {
-  const { unfinishedWords, characterState, dispatch } = useReviewContext()
+  const { selectedGrammarSection, unfinishedWords, characterState, dispatch } =
+    useReviewContext()
   const [sentenceData, setSentenceData] = useState<SentenceProps | null>(null)
-  // TODO: Add a call for 
+  // TODO: Add a call for
 
   // Memoizes handleSentence function, stops unnecessary re-renders, triggers when showSentence/unfinishedWords change.
   // TODO: this process needs a change to consider selected grammar concept(s):
-    // - If there are grammar concepts selected then we don't load existing sentence
-    // We will generate a new sentence
+  // - If there are grammar concepts selected then we don't load existing sentence
+  // We will generate a new sentence
+
+  console.log('selectedGrammarSection in sentence card: ', selectedGrammarSection)
+
   const handleSentence = useCallback(async () => {
-    if (unfinishedWords[0].sentence) {
+    if (unfinishedWords[0].sentence && !selectedGrammarSection) {
+      console.log('Using existing sentence in sentence generation.')
       // If word has existing sentence, set as sentence data
       setSentenceData(unfinishedWords[0].sentence)
     } else {
@@ -38,7 +43,8 @@ const SentenceCard = ({
       setFetching(true)
       const sentenceResult = await generateSentence({
         word: unfinishedWords[0].wordTraditional,
-        level: unfinishedWords[0].tocflLevel
+        level: unfinishedWords[0].tocflLevel,
+        grammar: selectedGrammarSection
       })
       // Adds the new sentence to context for saving to DB at end of session
       dispatch({ type: 'addSentence', newSentence: sentenceResult.result })
@@ -47,7 +53,7 @@ const SentenceCard = ({
     }
 
     setShowSent('showSentence')
-  }, [unfinishedWords, dispatch, setFetching, setShowSent])
+  }, [unfinishedWords, dispatch, setFetching, setShowSent, selectedGrammarSection])
 
   // Allows for c key to trigger sentence generation
   useEffect(() => {
