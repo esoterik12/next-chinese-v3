@@ -1,11 +1,6 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with
 [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Error:
-- grammar loaded in modal to state
-- active in prep session
-- click start and it is reset in active learn session
-
 # TODO: 
 ## December Completion Game Plan
 - Complete Stripe Functionality

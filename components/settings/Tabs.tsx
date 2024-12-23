@@ -21,7 +21,7 @@ const SettingsTabs = ({
 }: TabsProbs) => {
   const [activeTab, setActiveTab] = useState(0)
 
-  const tabs = ['General Settings', 'Subscription']
+  const tabs = ['General Settings'] // Add 'Subscription' here when ready
   const tabContent = [
     <GeneralSettings
       userId={userId}

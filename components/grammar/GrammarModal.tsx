@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import IconPuzzle from '../icons/IconPuzzle'
+import IconXCircle from '../icons/IconXCircle'
 
 interface ModalProps {
   isOpen: boolean
@@ -26,9 +27,6 @@ const Modal = ({ isOpen, onClose, children }: ModalProps) => {
 
     if (isOpen) {
       document.addEventListener('keydown', handleKeyDown)
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = 'unset'
     }
 
     return () => {
@@ -55,7 +53,7 @@ const Modal = ({ isOpen, onClose, children }: ModalProps) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{duration: 0.3}}
+          transition={{ duration: 0.3 }}
           onMouseDown={handleOverlayClick} // Detect clicks on overlay
         >
           {/* Modal Container */}
@@ -65,7 +63,7 @@ const Modal = ({ isOpen, onClose, children }: ModalProps) => {
             role='dialog'
             aria-modal='true'
             aria-labelledby='modal-title'
-            className='relative h-screen w-screen max-w-[350px] overflow-hidden bg-zinc-300 shadow-xl'
+            className='relative h-screen w-screen max-w-[350px] overflow-auto bg-zinc-300 shadow-xl'
             initial={{ x: 450, opacity: 0.5 }}
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: 450, opacity: 0.5 }}
@@ -75,32 +73,19 @@ const Modal = ({ isOpen, onClose, children }: ModalProps) => {
               damping: 30
             }}
             onAnimationStart={() => {
-              animationCompleteRef.current = false 
+              animationCompleteRef.current = false
             }}
             onAnimationComplete={() => {
-              animationCompleteRef.current = true 
+              animationCompleteRef.current = true
             }}
           >
             {/* Close Button */}
             <button
               onClick={onClose}
-              className='absolute right-4 top-4 text-zinc-500 hover:text-zinc-300'
+              className='absolute right-4 top-4 mt-2 text-zinc-700 hover:text-zinc-500'
             >
               <span className='sr-only'>Close</span>
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                fill='none'
-                viewBox='0 0 24 24'
-                strokeWidth={1.5}
-                stroke='currentColor'
-                className='h-6 w-6'
-              >
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  d='M6 18L18 6M6 6l12 12'
-                />
-              </svg>
+              <IconXCircle classes='h-6 w-6' />
             </button>
 
             {/* Modal Content */}

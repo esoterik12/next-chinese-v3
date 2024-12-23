@@ -9,7 +9,7 @@ type HomepageCardProps = {
 
 const HomepageCard = ({ image, subtitle, text }: HomepageCardProps) => {
   return (
-    <div className='mt-6 flex h-[160px] md:h-[190px] w-[340px] lg:max-w-[320px] flex-col rounded-xl border border-gray-800 p-4 md:flex-col'>
+    <div className='mt-6 flex h-[140px] md:h-[200px] w-[340px] lg:max-w-[320px] flex-col rounded-xl border border-gray-800 p-4 md:flex-col'>
       {/* Top Section Icon Design */}
       <div
         style={{
@@ -40,9 +40,9 @@ const HomepageCard = ({ image, subtitle, text }: HomepageCardProps) => {
       </div>
 
       {/* Main/Bottom Section Text */}
-      <div className='md:ml-3 md:mt-4'>
+      <div className='md:ml-3 md:mt-2'>
         <p className='font-bold hidden md:block'>{subtitle}</p>
-        <p className='mt-2 font-light text-gray-400'>{text}</p>
+        <p className='mt-2 font-light custom-small-text text-gray-400'>{text}</p>
       </div>
     </div>
   )

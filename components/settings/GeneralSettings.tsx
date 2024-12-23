@@ -1,5 +1,4 @@
 'use client'
-import DefaultButton from '../buttons/DefaultButton'
 import LevelAdjustment from './LevelAdjustment'
 import ResetAccount from './ResetAccount'
 
@@ -40,7 +39,7 @@ const GeneralSettings = ({
       <div className='my-6 border border-gray-600' />
       <ResetAccount userId={userId} />
       <div className='my-6 border border-gray-600' />
-      <div className='w-full'>
+      {/* <div className='w-full'>
         <h3 className='custom-large-text font-bold'>Delete Account</h3>
         <div className='w-full p-2'>
           <p className='text-gray-400'>
@@ -54,7 +53,7 @@ const GeneralSettings = ({
             </DefaultButton>
           </div>
         </div>
-      </div>
+      </div> */}
     </section>
   )
 }
