@@ -59,6 +59,8 @@ const OpenGrammarModal = ({ modalVersion }: OpenGrammarModal) => {
     }
   }
 
+  console.log('selectedGrammarSection', selectedGrammarSection)
+
   return (
     <div className=''>
       <GrammarModal isOpen={isOpen} onClose={handleModalClick}>
@@ -99,7 +101,7 @@ const OpenGrammarModal = ({ modalVersion }: OpenGrammarModal) => {
           customClasses='md:w-[138px] w-[60px] h-[44px] flex flex-row items-center justify-center custom-border p-2'
           handleClick={handleModalClick}
         >
-          <IconPuzzle classes='h-6 w-6 text-sky-500' />
+          <IconPuzzle classes={`h-6 w-6 text-sky-500`} />
         </DefaultButton>
       )}
       {modalVersion === 'activeLearnSession' && (

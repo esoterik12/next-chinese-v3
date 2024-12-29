@@ -3,7 +3,6 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with
 
 # TODO: 
 ## December Completion Game Plan
-- Complete Stripe Functionality
 - Complete the Grammar Library
 - Complete a drop down menu system for grammar review
 - Complete the Homepage
@@ -12,7 +11,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with
 - Watch this podcast: https://www.youtube.com/watch?v=mBhreX30dbo
 - Hack Chinese website
 
-## Core Features
+## Core Features (Future)
 - Add Stripe subscription support
 - Perhaps: Add a resume session or start new session function if there is a session...
 - Add a daily goal setting to Settings that is used to determine last 30 days grid colors
@@ -49,6 +48,7 @@ does need to store a user's progress, completed section
   - will allow a user to clear grammar context and emphasize that this makes sentences more random
 
 ## Fixes / Tweaks
+- Implement theme?
 - Early end session should add finishedWords, doesn't seem to work
 - Mouse over of last 30 days to show each day's total
 - Test the sm2.ts function for correct output
@@ -114,6 +114,10 @@ does need to store a user's progress, completed section
 ### Taiwlind custom classes:
 
 - A few tailwind custom classes for text in `/app/global.css`
+
+### OpenAI GPT API
+
+- currently using `gpt-4o-mini` in `generateSentence.ts`
 
 ### Theme support:
 
