@@ -1,4 +1,4 @@
-// May require suppressHydrationWarning in html of layout.tsx
+// May require  in html of layout.tsx
 // Input Component designed for text/email to be used in conjunction with ReactHookForm
 // Has its own default styles as well as optional props for more Tailwind styling
 

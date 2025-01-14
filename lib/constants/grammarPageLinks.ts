@@ -18,5 +18,10 @@ export const grammarPageLinks = [
     sectionTitle: 'Specifiers and Demonstratives',
     sectionLink: '4-specifiers',
     conceptNumber: 4
+  },
+  {
+    sectionTitle: 'Classifiers',
+    sectionLink: '5-classifiers',
+    conceptNumber: 5
   }
 ]

@@ -14,7 +14,7 @@ export default function Home() {
               <span className='text-sky-500'>Fluency</span>
             </h1>
             <p className='mt-4 text-2xl font-light text-gray-400'>
-              8,000 Words prepared in traditional and simplifiedfor everyday
+              8,000 Words prepared in traditional and simplified for everyday
               language learners
             </p>
             <HomePageButton />

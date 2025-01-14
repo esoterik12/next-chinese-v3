@@ -78,7 +78,7 @@ const Accordion = ({
                     </div>
                   </div>
                 ))}
-                {notes && <p className='font-semibold text-rose-500'>Notes:</p>}
+                {notes && notes.length > 0 && <p className='font-semibold text-rose-500'>Notes:</p>}
                 <div>
                   <ul className='list-disc pl-5'>
                     {notes &&
