@@ -34,10 +34,10 @@ const Accordion = ({
         onClick={() => setExpanded(isOpen ? false : i)}
       >
         <div className='custom-small-text flec-row md:custom-text ml-4 flex'>
-          <p className='w-[30px] font-semibold'>
+          <p className='w-[30px] font-semibold '>
             {conceptNumber}.{conceptContent.subSectionNumber}
-          </p>{' '}
-          {conceptContent.title}
+          </p>
+          <p className='ml-3'>{conceptContent.title}</p>
         </div>
       </motion.header>
       <AnimatePresence initial={false}>
@@ -52,11 +52,11 @@ const Accordion = ({
               open: { opacity: 1, height: 'auto' },
               collapsed: { opacity: 0, height: 0 }
             }}
-            transition={{ duration: 0.3, ease: [0.04, 0.62, 0.23, 0.98] }}
+            transition={{ duration: 0.4, ease: [0.04, 0.62, 0.23, 0.98] }}
           >
             <motion.div
               variants={{ collapsed: { scale: 0.97 }, open: { scale: 1 } }}
-              transition={{ duration: 0.3 }}
+              transition={{ duration: 0.4 }}
             >
               <div className='p-4'>
                 <p className='mb-2'>{conceptContent.explanation}</p>
@@ -78,7 +78,9 @@ const Accordion = ({
                     </div>
                   </div>
                 ))}
-                {notes && notes.length > 0 && <p className='font-semibold text-rose-500'>Notes:</p>}
+                {notes && notes.length > 0 && (
+                  <p className='font-semibold text-rose-500'>Notes:</p>
+                )}
                 <div>
                   <ul className='list-disc pl-5'>
                     {notes &&
@@ -103,7 +105,7 @@ export const AccordionStack = ({
 }) => {
   // This approach is if you only want max one section open at a time. If you want multiple
   // sections to potentially be open simultaneously, they can all be given their own `useState`.
-  const [expanded, setExpanded] = useState<false | number>(0)
+  const [expanded, setExpanded] = useState<false | number>(false)
 
   return (
     <div className='w-full'>
