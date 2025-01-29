@@ -5,7 +5,7 @@ import ResultButton from '../buttons/ResultButton'
 import IconDownChevron from '../icons/IconDownChevron'
 import AnimatedSection from './AnimatedSection'
 import { useReviewContext } from '@/lib/context/ReviewSessionContext'
-import { SetStateAction, useState, useCallback } from 'react'
+import { SetStateAction, useCallback } from 'react'
 import CorrectButton from '../buttons/CorrectButton'
 import IconXCircle from '../icons/IconXCircle'
 import IconCheckCircle from '../icons/IconCheckCircle'
@@ -20,15 +20,18 @@ interface WordCardProps {
   fetching: boolean
   userId: string
   latestWord: number
+  show: boolean
+  setShow: React.Dispatch<SetStateAction<boolean>>
 }
 
 const WordCard = ({
   fetching,
   setShowSent,
   userId,
-  latestWord
+  latestWord,
+  show,
+  setShow
 }: WordCardProps) => {
-  const [show, setShow] = useState(false)
   const { dispatch, unfinishedWords, characterState } = useReviewContext()
   const voice = useVoices()
 
@@ -53,7 +56,7 @@ const WordCard = ({
     } else {
       console.log('Speech data is not available yet.')
     }
-  }, [unfinishedWords, voice])
+  }, [unfinishedWords, voice, setShow])
 
   // General function to clear up ui after each card
   const completeCard = () => {

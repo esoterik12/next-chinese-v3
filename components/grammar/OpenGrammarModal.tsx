@@ -59,8 +59,6 @@ const OpenGrammarModal = ({ modalVersion }: OpenGrammarModal) => {
     }
   }
 
-  console.log('selectedGrammarSection', selectedGrammarSection)
-
   return (
     <div className=''>
       <GrammarModal isOpen={isOpen} onClose={handleModalClick}>

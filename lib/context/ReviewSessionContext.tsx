@@ -4,6 +4,7 @@ import sm2 from '../sm2/sm2Algo'
 import { ReviewResultDocument } from '@/types/review.types'
 import { BaseSentenceProps } from '@/types/review.types'
 import { SubSectionConcept } from '@/types/grammar.types'
+import { getRandomFourtoSixMonthsInterval } from '../utils/randomKnownRepetitions'
 
 // firstResult are the first 1-5 easeFactor outcome that the user inputs
 // correct and incorrect are subsequent views, incorrect returns the word to the unfinished queue
@@ -164,6 +165,14 @@ const reducer = (
         interval: i,
         nextReviewDate: updatedNextReviewDate,
         seenToday: true
+      }
+
+      // Quick addition to enable KnownButton
+      if (action.firstResult === 6) {
+        const knownInterval = getRandomFourtoSixMonthsInterval()
+        console.log('Setting interval to: ', knownInterval)
+        updatedWordWithStats.interval = knownInterval
+        console.log('updatedWordWithStats', updatedWordWithStats)
       }
 
       // If result >= 3 then add the word to finishedWords
